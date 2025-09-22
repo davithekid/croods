@@ -2,7 +2,7 @@
 
 import { Scissors, User, Sparkles, Crown } from "lucide-react";
 
-export default function Chose() {
+export default function Chose({ onSelect }) {
   const services = [
     {
       icon: <Scissors className="h-5 w-5" />,
@@ -46,13 +46,16 @@ export default function Chose() {
             <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">
               Escolha seu serviço
             </h2>
+            <p className="text-muted-foreground text-sm">
+              Selecione o serviço que deseja para continuar
+            </p>
           </div>
 
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {services.map((service, index) => (
               <div
                 key={index}
-                className="border-border space-y-4 rounded-lg border p-5 transition-shadow hover:shadow-sm"
+                className="border-border space-y-4 rounded-lg border p-5 transition hover:shadow-lg hover:border-primary/40"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
@@ -81,6 +84,13 @@ export default function Chose() {
                     </div>
                   ))}
                 </div>
+
+                <button
+                  onClick={() => onSelect(service)}
+                  className="mt-4 w-full rounded-lg dark:bg-zinc-900 px-4 py-2 font-medium hover:bg-zinc-700/60 transition"
+                >
+                  Escolher
+                </button>
               </div>
             ))}
           </div>

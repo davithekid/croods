@@ -14,8 +14,8 @@ export default function Home() {
       <main className="mx-auto container">
         <Hero01 />
       </main>
-
-      <section className="px-8 container">
+        
+      <section className="mx-auto container">
         <Services4 />
       </section>
 

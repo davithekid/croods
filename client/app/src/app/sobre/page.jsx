@@ -11,12 +11,12 @@ export default function Sobre() {
                 <Navbar01Page />
             </header>
 
-            <main className="px-12 container">
+            <main className="mx-auto container">
                 <Team05Page />
                 <Feature197 />
             </main>
 
-            <section className="">
+            <section className="mx-auto container">
                 <Timeline />
             </section>
 

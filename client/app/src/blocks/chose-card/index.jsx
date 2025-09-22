@@ -2,65 +2,58 @@
 
 import { Button } from "@/components/ui/button";
 import {
-    Card,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
 } from "@/components/ui/card";
 import { User } from "lucide-react";
 
-export default function PricingCard() {
-    return (<>
-        <div className="flex flex-col">
-            <h1
-                className="text-5xl sm:text-6xl font-semibold text-center tracking-tighter">
-                Escolha seu barbeiro
-            </h1>
-            <div className="flex gap-9 justify-center py-6">
+export default function PricingCard({ onSelect }) {
+  const barbers = [
+    { id: 1, name: "Renan Souza", description: "Barbeiro Especialista" },
+    { id: 2, name: "Carlos Silva", description: "Barbeiro Profissional" },
+  ];
 
-                <Card className="max-w-xs w-full">
-                    <CardHeader className="flex flex-col items-center gap-2">
-                        <div className="bg-muted rounded-full p-4 flex items-center justify-center">
-                            <User className="h-12 w-12 text-muted-foreground" />
-                        </div>
+  return (
+    <div className="flex flex-col">
+      <h1 className="text-5xl sm:text-6xl font-semibold text-center tracking-tighter">
+        Escolha seu barbeiro
+      </h1>
 
-                        <CardTitle className="text-xl font-bold text-center">
-                            Nome do Barbeiro
-                        </CardTitle>
-                        <CardDescription className="text-center text-sm text-muted-foreground">
-                            Barbeiro Especialista
-                        </CardDescription>
-                    </CardHeader>
+      <div className="flex gap-6 justify-center flex-wrap py-6">
+        {barbers.map((barber) => (
+          <Card
+            key={barber.id}
+            className="max-w-xs w-full cursor-pointer transition-shadow hover:shadow-md"
+          >
+            <CardHeader className="flex flex-col items-center gap-2">
+              <div className="bg-muted rounded-full p-4 flex items-center justify-center">
+                <User className="h-12 w-12 text-muted-foreground" />
+              </div>
 
-                    <CardFooter className="mt-2 flex justify-center">
-                        <Button size="lg" className="w-full">
-                            Selecionar Barbeiro
-                        </Button>
-                    </CardFooter>
-                </Card>
-                <Card className="max-w-xs w-full">
-                    <CardHeader className="flex flex-col items-center gap-2">
-                        <div className="bg-muted rounded-full p-4 flex items-center justify-center">
-                            <User className="h-12 w-12 text-muted-foreground" />
-                        </div>
+              <CardTitle className="text-xl font-bold text-center">
+                {barber.name}
+              </CardTitle>
+              <CardDescription className="text-center text-sm text-muted-foreground">
+                {barber.description}
+              </CardDescription>
+            </CardHeader>
 
-                        <CardTitle className="text-xl font-bold text-center">
-                            Nome do Barbeiro
-                        </CardTitle>
-                        <CardDescription className="text-center text-sm text-muted-foreground">
-                            Barbeiro Especialista
-                        </CardDescription>
-                    </CardHeader>
-
-                    <CardFooter className="mt-2 flex justify-center">
-                        <Button size="lg" className="w-full">
-                            Selecionar Barbeiro
-                        </Button>
-                    </CardFooter>
-                </Card>
-            </div>
-        </div>
-    </>
-    );
+            <CardFooter className="mt-2 flex justify-center">
+              <Button
+                size="lg"
+                className="w-full"
+                onClick={() => onSelect(barber)}
+              >
+                Selecionar Barbeiro
+              </Button>
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
+    </div>
+  );
 }
+    
