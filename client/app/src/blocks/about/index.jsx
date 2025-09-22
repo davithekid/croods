@@ -57,7 +57,7 @@ const Feature197 = ({ features = aboutUs }) => {
             <div className="container mx-auto">
                 <h1
                     className="text-5xl sm:text-6xl font-semibold text-center tracking-tighter">
-                    Sobre nós
+                    Informações 
                 </h1>
                 <div className="mb-10 mt-12 flex w-full items-start justify-between gap-12">
                     <div className="w-full md:w-1/2">
