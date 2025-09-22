@@ -20,7 +20,7 @@ const Navbar01Page = () => {
             <Button variant="outline" className="hidden sm:inline-flex">
               <Link href='/login'>Login</Link>
             </Button>
-            <Button><Link href='/register'>Register</Link>
+            <Button><Link href='/register'>Registrar</Link>
             </Button>
             <ModeToggle />
 

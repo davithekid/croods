@@ -83,12 +83,12 @@ const Pricing03 = () => {
           <TabsTrigger
             value="monthly"
             className="rounded-full data-[state=active]:shadow-none px-4">
-            Monthly
+            Mensal
           </TabsTrigger>
           <TabsTrigger
             value="yearly"
             className="rounded-full data-[state=active]:shadow-none px-4">
-            Yearly (Save {YEARLY_DISCOUNT}%)
+            Anual (Save {YEARLY_DISCOUNT}%)
           </TabsTrigger>
         </TabsList>
       </Tabs>

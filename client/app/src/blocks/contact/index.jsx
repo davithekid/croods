@@ -21,66 +21,34 @@ const Contact02Page = () => (
       </p>
 
       <div className="mt-24 grid lg:grid-cols-2 gap-16 md:gap-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-12 items-center">
+
           <div>
-            <div
-              className="h-12 w-12 flex items-center justify-center bg-primary/5 dark:bg-primary/10 text-primary rounded-full">
-              <MailIcon />
-            </div>
-            <h3 className="mt-6 font-semibold text-xl">Email</h3>
-            <p className="my-2.5 text-muted-foreground">
-              Our friendly team is here to help.
-            </p>
-            <Link
-              className="font-medium text-primary"
-              href="mailto:akashmoradiya3444@gmail.com">
-              akashmoradiya3444@gmail.com
-            </Link>
-          </div>
-          <div>
-            <div
-              className="h-12 w-12 flex items-center justify-center bg-primary/5 dark:bg-primary/10 text-primary rounded-full">
-              <MessageCircle />
-            </div>
-            <h3 className="mt-6 font-semibold text-xl">Live chat</h3>
-            <p className="my-2.5 text-muted-foreground">
-              Our friendly team is here to help.
-            </p>
-            <Link className="font-medium text-primary" href="#">
-              Start new chat
-            </Link>
-          </div>
-          <div>
-            <div
-              className="h-12 w-12 flex items-center justify-center bg-primary/5 dark:bg-primary/10 text-primary rounded-full">
+            <div className="h-12 w-12 flex items-center justify-center bg-primary/5 dark:bg-primary/10 text-primary rounded-full">
               <MapPinIcon />
             </div>
-            <h3 className="mt-6 font-semibold text-xl">Office</h3>
+            <h3 className="mt-6 font-semibold text-xl">Nossa Barbearia</h3>
             <p className="my-2.5 text-muted-foreground">
-              Come say hello at our office HQ.
+              Venha nos visitar e aproveite um atendimento personalizado.
             </p>
             <Link
               className="font-medium text-primary"
               href="https://map.google.com"
               target="_blank">
-              100 Smith Street Collingwood <br /> VIC 3066 AU
+              Rua Exemplo, 123 <br /> Bairro Central, Sua Cidade
             </Link>
           </div>
           <div>
-            <div
-              className="h-12 w-12 flex items-center justify-center bg-primary/5 dark:bg-primary/10 text-primary rounded-full">
-              <PhoneIcon />
+            <div className="h-12 w-12 flex items-center justify-center bg-primary/5 dark:bg-primary/10 text-primary rounded-full">
+              <MessageCircle />
             </div>
-            <h3 className="mt-6 font-semibold text-xl">Phone</h3>
+            <h3 className="mt-6 font-semibold text-xl">Chat Online</h3>
             <p className="my-2.5 text-muted-foreground">
-              Mon-Fri from 8am to 5pm.
+              Converse com a gente agora e tire suas dúvidas!
             </p>
-            <Link
-              className="font-medium text-primary"
-              href="tel:akashmoradiya3444@gmail.com">
-              +1 (555) 000-0000
-            </Link>
           </div>
+
+
         </div>
 
         {/* Form */}
@@ -88,20 +56,14 @@ const Contact02Page = () => (
           <CardContent className="p-6 md:p-8">
             <form>
               <div className="grid md:grid-cols-2 gap-x-8 gap-y-6">
-                <div className="col-span-2 sm:col-span-1">
-                  <Label htmlFor="firstName">First Name</Label>
+                <div className="col-span-2 sm:col-span-2">
+                  <Label htmlFor="firstName">Nome</Label>
                   <Input
-                    placeholder="First name"
+                    placeholder="Insira o seu nome"
                     id="firstName"
                     className="mt-2 bg-white h-10 shadow-none" />
                 </div>
-                <div className="col-span-2 sm:col-span-1">
-                  <Label htmlFor="lastName">Last Name</Label>
-                  <Input
-                    placeholder="Last name"
-                    id="lastName"
-                    className="mt-2 bg-white h-10 shadow-none" />
-                </div>
+
                 <div className="col-span-2">
                   <Label htmlFor="email">Email</Label>
                   <Input
@@ -111,26 +73,17 @@ const Contact02Page = () => (
                     className="mt-2 bg-white h-10 shadow-none" />
                 </div>
                 <div className="col-span-2">
-                  <Label htmlFor="message">Message</Label>
+                  <Label htmlFor="message">Mensagem</Label>
                   <Textarea
                     id="message"
-                    placeholder="Message"
+                    placeholder="Digite sua mensagem"
                     className="mt-2 bg-white shadow-none"
                     rows={6} />
                 </div>
-                <div className="col-span-2 flex items-center gap-2">
-                  <Checkbox id="acceptTerms" className="bg-background" />
-                  <Label htmlFor="acceptTerms" className="gap-0">
-                    You agree to our
-                    <Link href="#" className="underline ml-1">
-                      terms and conditions
-                    </Link>
-                    <span>.</span>
-                  </Label>
-                </div>
+
               </div>
               <Button className="mt-6 w-full" size="lg">
-                Submit
+                Enviar
               </Button>
             </form>
           </CardContent>
