@@ -1,5 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
-
+import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
 import {
     Sidebar,
     SidebarContent,
@@ -9,54 +8,43 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
-} from "@/components/ui/sidebar"
-import { ModeToggle } from "./themes/button-theme"
+} from "@/components/ui/sidebar";
+import { ModeToggle } from "./themes/button-theme";
 
-// Menu items.
 const items = [
-    {
-        title: "Home",
-        url: "#",
-        icon: Home,
-    },
-    {
-        title: "Inbox",
-        url: "#",
-        icon: Inbox,
-    },
-    {
-        title: "Calendar",
-        url: "#",
-        icon: Calendar,
-    },
-    {
-        title: "Search",
-        url: "#",
-        icon: Search,
-    },
-    {
-        title: "Settings",
-        url: "#",
-        icon: Settings,
-    },
-]
+    { title: "Dashboard Principal", url: "#", icon: Home },
+    { title: "Agendamentos", url: "#", icon: Inbox },
+    { title: "Receitas", url: "#", icon: Calendar },
+    { title: "Folgas", url: "#", icon: Search },
+];
 
 export function AppSidebar() {
     return (
-        <Sidebar>
-            <SidebarContent>
+        <Sidebar className="w-64 bg-white dark:bg-zinc-900 border-r border-muted">
+            <SidebarContent className="px-4 py-6">
                 <SidebarGroup>
-                    <div className="flex justify-between">
-                        <SidebarGroupLabel>Application</SidebarGroupLabel>
+                    <div className="flex justify-between items-center mb-4">
+                        <SidebarGroupLabel className="text-lg font-semibold text-foreground">
+                            <div className="block dark:hidden">
+                                <img src="./logo-dark.svg" className="w-15" alt="" />
+                            </div>
+                            <div className="hidden dark:block">
+                                <img src="./logo.svg" className="w-15" alt="" />
+                            </div>
+                        </SidebarGroupLabel>
                         <ModeToggle />
                     </div>
+
                     <SidebarGroupContent>
-                        <SidebarMenu>
+                        <SidebarMenu className="space-y-2">
                             {items.map((item) => (
                                 <SidebarMenuItem key={item.title}>
                                     <SidebarMenuButton asChild>
-                                        <a href={item.url}>
-                                            <item.icon />
+                                        <a
+                                            href={item.url}
+                                            className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-foreground hover:bg-primary/10 hover:text-primary transition-colors duration-200"
+                                        >
+                                            <item.icon className="w-5 h-5" />
                                             <span>{item.title}</span>
                                         </a>
                                     </SidebarMenuButton>
@@ -67,5 +55,5 @@ export function AppSidebar() {
                 </SidebarGroup>
             </SidebarContent>
         </Sidebar>
-    )
+    );
 }
