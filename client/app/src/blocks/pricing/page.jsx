@@ -13,121 +13,126 @@ import { cn } from "@/lib/utils";
 import { CircleCheck, CircleHelp } from "lucide-react";
 import { useState } from "react";
 
-const tooltipContent = {
-  styles: "Choose from a variety of styles to suit your preferences.",
-  filters: "Choose from a variety of filters to enhance your portraits.",
-  credits: "Use these credits to retouch your portraits.",
-};
+const DESCONTO_ANUAL = 20;
 
-const YEARLY_DISCOUNT = 20;
-const plans = [
+const planos = [
   {
     name: "Básico",
     price: 40,
-    description:
-      "Corte de cabelo simples, rápido e estiloso, perfeito para o dia a dia.",
+    cortes: "1 corte por mês",
+    description: "Ideal para quem só quer manter o cabelo na régua todo mês.",
     features: [
-      { title: "Corte de cabelo personalizado" },
-      { title: "Uso de máquina ou tesoura" },
+      { title: "1 corte de cabelo personalizado" },
+      { title: "Máquina ou tesoura" },
       { title: "Degradê ou corte social" },
-      { title: "Atendimento rápido" },
     ],
     buttonText: "Agendar Corte",
   },
   {
     name: "Premium",
     price: 70,
-    isRecommended: true,
+    cortes: "2 cortes + 1 barba por mês",
     description:
-      "Pacote completo com corte de cabelo e barba, garantindo um visual alinhado.",
+      "Pacote perfeito para quem gosta de manter cabelo e barba sempre alinhados.",
     features: [
-      { title: "Corte de cabelo completo" },
-      { title: "Barba aparada e modelada" },
+      { title: "2 cortes de cabelo no mês" },
+      { title: "1 barba aparada e modelada" },
       { title: "Finalização profissional" },
       { title: "Hidratação leve opcional" },
     ],
-    buttonText: "Agendar Corte + Barba",
+    buttonText: "Agendar Premium",
     isPopular: true,
   },
   {
     name: "Super Premium",
-    price: 85,
+    price: 120,
+    cortes: "4 cortes + barba + sobrancelha por mês",
     description:
-      "Cabelo, barba e sobrancelha perfeitos para quem quer sair impecável da barbearia.",
+      "Plano completo para quem quer estar sempre impecável com benefícios exclusivos.",
     features: [
-      { title: "Corte de cabelo + Barba" },
+      { title: "4 cortes de cabelo no mês" },
+      { title: "Barba ilimitada no mês" },
       { title: "Sobrancelha definida" },
       { title: "Hidratação capilar" },
       { title: "Toalha quente e experiência premium" },
     ],
-    buttonText: "Agendar Pacote Completo",
+    buttonText: "Agendar Super Premium",
   },
 ];
 
-
 const Pricing03 = () => {
-  const [selectedBillingPeriod, setSelectedBillingPeriod] = useState("monthly");
+  const [selectedBillingPeriod, setSelectedBillingPeriod] = useState("mensal");
 
   return (
-    <div
-      className="min-h-screen flex flex-col items-center justify-center py-12 px-6">
-      <h1
-        className="text-5xl sm:text-6xl font-semibold text-center tracking-tighter">
+    <div className="min-h-screen flex flex-col items-center justify-center py-12 px-6">
+      <h1 className="text-5xl sm:text-6xl font-semibold text-center tracking-tighter">
         Planos
       </h1>
+
       <Tabs
         value={selectedBillingPeriod}
         onValueChange={setSelectedBillingPeriod}
-        className="mt-8">
+        className="mt-8"
+      >
         <TabsList className="h-11 rounded-full">
           <TabsTrigger
-            value="monthly"
-            className="rounded-full data-[state=active]:shadow-none px-4">
+            value="mensal"
+            className="rounded-full data-[state=active]:shadow-none px-4"
+          >
             Mensal
           </TabsTrigger>
           <TabsTrigger
-            value="yearly"
-            className="rounded-full data-[state=active]:shadow-none px-4">
-            Anual (Save {YEARLY_DISCOUNT}%)
+            value="anual"
+            className="rounded-full data-[state=active]:shadow-none px-4"
+          >
+            Anual (Economize {DESCONTO_ANUAL}%)
           </TabsTrigger>
         </TabsList>
       </Tabs>
-      <div
-        className="mt-12 max-w-(--breakpoint-lg) mx-auto grid grid-cols-1 lg:grid-cols-3 items-center gap-8">
-        {plans.map((plan) => (
+
+      <div className="mt-12 max-w-(--breakpoint-lg) mx-auto grid grid-cols-1 lg:grid-cols-3 items-center gap-8">
+        {planos.map((plano) => (
           <div
-            key={plan.name}
+            key={plano.name}
             className={cn("relative border rounded-xl p-6", {
-              "border-2 border-primary py-10": plan.isPopular,
-            })}>
-            {plan.isPopular && (
+              "border-2 border-primary py-10": plano.isPopular,
+            })}
+          >
+            {plano.isPopular && (
               <Badge className="absolute top-0 right-1/2 translate-x-1/2 -translate-y-1/2">
-                Most Popular
+                Mais Popular
               </Badge>
             )}
-            <h3 className="text-lg font-medium">{plan.name}</h3>
+
+            <h3 className="text-lg font-medium">{plano.name}</h3>
+            <p className="text-sm text-muted-foreground">{plano.cortes}</p>
+
             <p className="mt-2 text-4xl font-bold">
-              $
-              {selectedBillingPeriod === "monthly"
-                ? plan.price
-                : plan.price * ((100 - YEARLY_DISCOUNT) / 100)}
+              R$
+              {selectedBillingPeriod === "mensal"
+                ? plano.price
+                : plano.price * ((100 - DESCONTO_ANUAL) / 100)}
               <span className="ml-1.5 text-sm text-muted-foreground font-normal">
-                /month
+                /mês
               </span>
             </p>
+
             <p className="mt-4 font-medium text-muted-foreground">
-              {plan.description}
+              {plano.description}
             </p>
 
             <Button
-              variant={plan.isPopular ? "default" : "outline"}
+              variant={plano.isPopular ? "default" : "outline"}
               size="lg"
-              className="w-full mt-6">
-              {plan.buttonText}
+              className="w-full mt-6"
+            >
+              {plano.buttonText}
             </Button>
+
             <Separator className="my-8" />
+
             <ul className="space-y-2">
-              {plan.features.map((feature) => (
+              {plano.features.map((feature) => (
                 <li key={feature.title} className="flex items-start gap-1.5">
                   <CircleCheck className="h-4 w-4 mt-1 text-green-600" />
                   {feature.title}
