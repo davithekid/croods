@@ -38,7 +38,12 @@ const Footer05Page = () => {
         <div className="max-w-(--breakpoint-xl) mx-auto">
           <div className="py-12 flex flex-col justify-start items-center">
             {/* Logo */}
-          <img src="./logo.svg" className="w-25" alt="" />
+            <div className="block dark:hidden">
+              <img src="./logo-dark.svg" className="w-25" alt="" />
+            </div>
+            <div className="hidden dark:block">
+              <img src="./logo.svg" className="w-25" alt="" />
+            </div>
 
             <ul className="mt-6 flex items-center gap-4 flex-wrap">
               {footerLinks.map(({ title, href }) => (
@@ -65,7 +70,7 @@ const Footer05Page = () => {
             <div className="flex items-center gap-5 text-muted-foreground">
               <Link href="#" target="_blank">
                 <TwitterIcon className="h-5 w-5" />
-              </Link> 
+              </Link>
               <Link href="#" target="_blank">
                 <GithubIcon className="h-5 w-5" />
               </Link>
