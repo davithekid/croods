@@ -26,7 +26,7 @@ export default function PricingCard({ onSelect }) {
         {barbers.map((barber) => (
           <Card
             key={barber.id}
-            className="max-w-xs w-full cursor-pointer transition-shadow hover:shadow-md"
+            className="max-w-xs w-full transition-shadow hover:shadow-md"
           >
             <CardHeader className="flex flex-col items-center gap-2">
               <div className="bg-muted rounded-full p-4 flex items-center justify-center">
@@ -44,7 +44,7 @@ export default function PricingCard({ onSelect }) {
             <CardFooter className="mt-2 flex justify-center">
               <Button
                 size="lg"
-                className="w-full"
+                className="w-full cursor-pointer"
                 onClick={() => onSelect(barber)}
               >
                 Selecionar Barbeiro

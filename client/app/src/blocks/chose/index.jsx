@@ -87,7 +87,7 @@ export default function Chose({ onSelect }) {
 
                 <button
                   onClick={() => onSelect(service)}
-                  className="mt-4 w-full rounded-lg dark:bg-zinc-900 px-4 py-2 font-medium hover:bg-zinc-700/60 transition"
+                  className="mt-4 w-full rounded-lg cursor-pointer dark:bg-zinc-900 px-4 py-2 duration-200 font-medium hover:bg-zinc-700/60 transition"
                 >
                   Escolher
                 </button>

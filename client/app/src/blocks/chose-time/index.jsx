@@ -55,8 +55,8 @@ export default function TimeCard({ onConfirm }) {
       </div>
 
       {selectedTime && onConfirm && (
-        <div className="flex justify-center mt-6">
-          <Button size="lg" onClick={() => onConfirm(selectedTime)}>
+        <div className="flex justify-center mt-6 cursor-pointer">
+          <Button size="lg" className='cursor-pointer' onClick={() => onConfirm(selectedTime)}>
             Confirmar Horário
           </Button>
         </div>

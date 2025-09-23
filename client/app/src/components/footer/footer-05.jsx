@@ -70,7 +70,7 @@ const Footer05Page = () => {
             <span className="text-muted-foreground">
               &copy; {new Date().getFullYear()}{" "}
               <Link href="/" target="_blank">
-                Barbearia Croods - Todos os direitos reservados -   Desenvolvido por: Davi Chagas
+                Barber Shop Croods - Todos os direitos reservados -   Desenvolvido por: Davi Chagas
               </Link>
 
             </span>

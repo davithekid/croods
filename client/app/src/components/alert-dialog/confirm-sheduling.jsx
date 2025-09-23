@@ -16,7 +16,7 @@ export function Confirm({ onClose, clientName, whatsapp, service, barber, date, 
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline">Confirmar agendamento</Button>
+        <Button variant="outline" className='cursor-pointer'>Confirmar agendamento</Button>
       </AlertDialogTrigger>
 
       <AlertDialogContent className="rounded-2xl">
@@ -66,7 +66,7 @@ export function Confirm({ onClose, clientName, whatsapp, service, barber, date, 
 
         <AlertDialogFooter>
           <AlertDialogAction
-            className="w-full rounded-xl"
+            className="w-full rounded-xl cursor-pointer"
             onClick={onClose} // chama a função passada pelo pai
           >
             Fechar

@@ -1,4 +1,4 @@
-import { Services4 } from "@/blocks/services";
+import { Services4 } from "@/blocks/diff";
 import Hero01 from "@/blocks/hero";
 import Footer05Page from "@/components/footer/footer-05";
 import Navbar01Page from "@/components/navbar/navbar-01";

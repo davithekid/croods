@@ -9,7 +9,7 @@ export default function CardConfirmaAgendamento({
     barber,
     date,
     time,
-    onConfirm 
+    onConfirm
 }) {
     return (
         <Card className="w-[380px] bg-secondary/40 shadow-md rounded-2xl border border-muted">
@@ -34,16 +34,16 @@ export default function CardConfirmaAgendamento({
             </CardContent>
 
             <CardFooter>
-            
+
                 <Confirm
                     clientName="Renan Souza"
                     whatsapp="(11) 99999-9999"
-                    service={service?.title || service?.name} 
+                    service={service?.title || service?.name}
                     barber={barber?.title || barber?.name || barber}
                     date={date?.date}
                     time={time?.hour}
                     total="R$ 50,00"
-                    onClose={onConfirm} 
+                    onClose={onConfirm}
                 />
             </CardFooter>
         </Card>
