@@ -12,10 +12,10 @@ import {
 import { ModeToggle } from "./themes/button-theme";
 
 const items = [
-    { title: "Dashboard Principal", url: "#", icon: Home },
-    { title: "Agendamentos", url: "#", icon: Inbox },
-    { title: "Receitas", url: "#", icon: Calendar },
-    { title: "Folgas", url: "#", icon: Search },
+    { title: "Dashboard Principal", url: "/", icon: Home },
+    { title: "Agendamentos", url: "/agendamentos", icon: Inbox },
+    { title: "Receitas", url: "/receitas", icon: Calendar },
+    { title: "Folgas", url: "/folgas", icon: Search },
 ];
 
 export function AppSidebar() {
@@ -36,7 +36,7 @@ export function AppSidebar() {
                     </div>
 
                     <SidebarGroupContent>
-                        <SidebarMenu className="space-y-2">
+                        <SidebarMenu className="space-y-2 my-4">
                             {items.map((item) => (
                                 <SidebarMenuItem key={item.title}>
                                     <SidebarMenuButton asChild>
