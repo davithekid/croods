@@ -1,57 +1,69 @@
-"use client";
-
 import {
     Card,
+    CardContent,
     CardHeader,
     CardTitle,
-    CardDescription,
-} from "@/components/ui/card";
-
-export default function AdminDashboard() {
+  } from "@/components/ui/card";
+  
+  import {
+    DollarSignIcon,
+    UsersIcon,
+    TrendingUpIcon,
+    ActivityIcon,
+  } from "lucide-react";
+  
+  export default function CardStats() {
     const metrics = [
-        {
-            id: 1,
-            title: "Agendamentos Hoje",
-            value: 12,
-            description: "Número de cortes agendados para hoje",
-        },
-        {
-            id: 2,
-            title: "Lucro do Mês",
-            value: "R$ 8.450,00",
-            description: "Total de lucro acumulado neste mês",
-        },
-        {
-            id: 3,
-            title: "Receita Total",
-            value: "R$ 25.300,00",
-            description: "Receita total gerada até agora",
-        },
-        {
-            id: 4,
-            title: "Clientes Ativos",
-            value: 58,
-            description: "Clientes que realizaram algum serviço neste mês",
-        },
+      {
+        id: 1,
+        title: "Agendamentos Hoje",
+        value: 12,
+        icon: ActivityIcon,
+        description: "Cortes agendados para hoje",
+      },
+      {
+        id: 2,
+        title: "Lucro do Mês",
+        value: "R$ 8.450,00",
+        icon: DollarSignIcon,
+        description: "Lucro acumulado neste mês",
+      },
+      {
+        id: 3,
+        title: "Receita Total",
+        value: "R$ 25.300,00",
+        icon: TrendingUpIcon,
+        description: "Receita total gerada até agora",
+      },
+      {
+        id: 4,
+        title: "Clientes Ativos",
+        value: 58,
+        icon: UsersIcon,
+        description: "Clientes que utilizaram nossos serviços este mês",
+      },
     ];
-
+  
     return (
-        <div className="w-full py-6">
-            <h1 className="text-2xl font-bold mb-6 text-center">Painel Administrativo</h1>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {metrics.map((metric) => (
-                    <Card key={metric.id} className="p-4 hover:shadow-lg transition-shadow min-w-[250px]">
-                        <CardHeader>
-                            <CardTitle className="text-lg font-semibold">{metric.title}</CardTitle>
-                            <CardDescription className="text-2xl font-bold mt-2">{metric.value}</CardDescription>
-                            <CardDescription className="mt-1 text-sm text-muted-foreground">
-                                {metric.description}
-                            </CardDescription>
-                        </CardHeader>
-                    </Card>
-                ))}
-            </div>
+      <div className="w-full p-6 flex justify-center">
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 w-full max-w-6xl">
+          {metrics.map((metric) => {
+            const Icon = metric.icon;
+            return (
+              <Card key={metric.id}>
+                <CardHeader className="flex items-center justify-between pb-2">
+                  <CardTitle className="text-sm font-medium">{metric.title}</CardTitle>
+                  <Icon className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{metric.value}</div>
+                  <p className="text-xs text-muted-foreground">{metric.description}</p>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
+      </div>
     );
-}
+  }
+  
