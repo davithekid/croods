@@ -1,8 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { DribbbleIcon, TwitchIcon, TwitterIcon } from "lucide-react";
-import Link from "next/link";
 
 const teamMembers = [
   {
@@ -38,7 +36,7 @@ const Team05Page = () => {
 
 
         <div className="mt-8 flex flex-col sm:flex-row-reverse sm:justify-center gap-3">
-          <Button size="lg">Timeline</Button>
+          <Button size="lg">Linha do tempo</Button>
           <Button size="lg" variant="outline">
             Informações 
           </Button>
@@ -63,36 +61,6 @@ const Team05Page = () => {
             <p className="text-muted-foreground text-sm">{member.title}</p>
 
             <p className="mt-3 text-sm text-muted-foreground">{member.bio}</p>
-
-            <div className="mt-4 flex items-center gap-2.5">
-              <Button
-                className="bg-accent hover:bg-accent text-muted-foreground shadow-none"
-                size="icon"
-                asChild
-              >
-                <Link href="#" target="_blank">
-                  <TwitterIcon className="stroke-muted-foreground" />
-                </Link>
-              </Button>
-              <Button
-                className="bg-muted hover:bg-muted text-muted-foreground shadow-none"
-                size="icon"
-                asChild
-              >
-                <Link href="#" target="_blank">
-                  <DribbbleIcon className="stroke-muted-foreground" />
-                </Link>
-              </Button>
-              <Button
-                className="bg-muted hover:bg-muted text-muted-foreground shadow-none"
-                size="icon"
-                asChild
-              >
-                <Link href="#" target="_blank">
-                  <TwitchIcon className="stroke-muted-foreground" />
-                </Link>
-              </Button>
-            </div>
           </div>
         ))}
       </div>
