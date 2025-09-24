@@ -4,6 +4,7 @@ import { NavMenu } from "./nav-menu";
 import { NavigationSheet } from "./navigation-sheet";
 import { ModeToggle } from "../theme/button-theme";
 import Link from "next/link";
+import { AvatarDemo } from "../avatar/avatar";
 
 const Navbar01Page = () => {
   return (
@@ -17,6 +18,7 @@ const Navbar01Page = () => {
           <NavMenu className="hidden md:block" />
 
           <div className="flex items-center gap-3">
+            <AvatarDemo />
             <Button variant="outline" className="hidden sm:inline-flex">
               <Link href='/login'>Login</Link>
             </Button>
