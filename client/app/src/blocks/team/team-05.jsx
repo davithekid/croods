@@ -4,20 +4,21 @@ import { Button } from "@/components/ui/button";
 
 const teamMembers = [
   {
-    name: "John Doe",
-    title: "Founder & CEO",
-    bio: "Former co-founder of Opendoor. Early staff at Spotify and Clearbit.",
+    name: "Josué",
+    title: "Barbeiro Principal",
+    bio: "Especialista em cortes clássicos e modernos, sempre buscando deixar cada cliente com o melhor estilo.",
     imageUrl:
       "https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=600",
   },
   {
-    name: "Jane Doe",
-    title: "Engineering Manager",
-    bio: "Lead engineering teams at Figma, Pitch, and Protocol Labs.",
+    name: "Renan",
+    title: "Barbeiro Assistente",
+    bio: "Apaixonado por detalhes e acabamento perfeito, garante uma experiência incrível em cada atendimento.",
     imageUrl:
       "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=600",
   },
 ];
+
 
 const Team05Page = () => {
   return (
@@ -60,7 +61,6 @@ const Team05Page = () => {
             <h3 className="mt-4 text-lg font-semibold">{member.name}</h3>
             <p className="text-muted-foreground text-sm">{member.title}</p>
 
-            <p className="mt-3 text-sm text-muted-foreground">{member.bio}</p>
           </div>
         ))}
       </div>

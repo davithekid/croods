@@ -15,7 +15,7 @@ const Navbar01Page = () => {
           <Logo />
 
           {/* Desktop Menu */}
-          <NavMenu className="hidden md:block" />
+          <NavMenu className="hidden md:block font-semibold" />
 
           <div className="flex items-center gap-3">
             <AvatarDemo />
