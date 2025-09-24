@@ -5,7 +5,7 @@ export default function CardIncome() {
   const metrics = [
     {
       id: 1,
-      title: "Agendamentos Hoje",
+      title: "Receita Total",
       value: 12,
       icon: ActivityIcon,
       color: "bg-blue-100 text-blue-600",
@@ -13,7 +13,7 @@ export default function CardIncome() {
     },
     {
       id: 2,
-      title: "Lucro do Mês",
+      title: "Este mes",
       value: "R$ 8.450,00",
       icon: DollarSignIcon,
       color: "bg-green-100 text-green-600",
@@ -21,19 +21,11 @@ export default function CardIncome() {
     },
     {
       id: 3,
-      title: "Receita Total",
+      title: "Crescimento Mensal",
       value: "R$ 25.300,00",
       icon: TrendingUpIcon,
       color: "bg-yellow-100 text-yellow-600",
       description: "Receita total gerada até agora",
-    },
-    {
-      id: 4,
-      title: "Clientes Ativos",
-      value: 58,
-      icon: UsersIcon,
-      color: "bg-purple-100 text-purple-600",
-      description: "Clientes que utilizaram nossos serviços este mês",
     },
   ];
 

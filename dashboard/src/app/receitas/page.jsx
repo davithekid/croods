@@ -1,4 +1,6 @@
 import CardIncome from "@/blocks/card-income";
+import LineChart03 from "@/blocks/charts/line";
+import PieChart03 from "@/blocks/charts/pie";
 
 export default function Home() {
   return (
@@ -11,6 +13,11 @@ export default function Home() {
 
       <section className="mb-12">
         <CardIncome />
+      </section>
+
+      <section className="flex justify-center items-center gap-6">
+        <LineChart03 />
+        <PieChart03 />
       </section>
 
 
