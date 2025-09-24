@@ -6,7 +6,8 @@ import { ModeToggle } from "../themes/button-theme";
 const menuItems = [
     { title: "Dashboard", icon: HomeIcon, url: "/" },
     { title: "Agendamentos", icon: CalendarIcon, url: "/agendamentos" },
-    { title: "Clientes", icon: UsersIcon, url: "/clientes" },
+    { title: "Receitas", icon: UsersIcon, url: "/receitas" },
+    { title: "Folgas", icon: UsersIcon, url: "/folgas" },
 ];
 
 export default function Sidebar() {
