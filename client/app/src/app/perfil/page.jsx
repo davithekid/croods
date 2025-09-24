@@ -1,6 +1,7 @@
 import ProfileHeader from "../../components/examples/profile-page/components/profile-header";
 import ProfileContent from "../../components/examples/profile-page/components/profile-content";
 import Navbar01Page from "@/components/navbar/navbar-01";
+import Footer05Page from "@/components/footer/footer-05";
 
 export default function Page() {
     return (
@@ -8,10 +9,15 @@ export default function Page() {
             <header>
                 <Navbar01Page />
             </header>
-            <div className="mx-auto max-w-4xl space-y-6 px-4 py-10">
+
+            <main className="mx-auto max-w-4xl space-y-6 px-4 py-10">
                 <ProfileHeader />
                 <ProfileContent />
-            </div>
+            </main>
+
+            <footer>
+                <Footer05Page/> 
+            </footer>
         </>
     );
 }

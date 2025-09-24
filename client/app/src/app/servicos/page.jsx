@@ -1,4 +1,5 @@
 import { Services } from "@/blocks/services";
+import Footer05Page from "@/components/footer/footer-05";
 import Navbar01Page from "@/components/navbar/navbar-01";
 
 export default function Servicos() {
@@ -11,6 +12,10 @@ export default function Servicos() {
             <main className="mx-auto container">
                 <Services />
             </main>
+
+            <footer>    
+                <Footer05Page />
+            </footer>
         </>
     )
 }

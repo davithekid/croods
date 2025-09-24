@@ -81,7 +81,7 @@ const Pricing03 = () => {
           >
             Mensal
           </TabsTrigger>
-          <TabsTrigger
+          <TabsTrigger    
             value="anual"
             className="rounded-full data-[state=active]:shadow-none px-4"
           >
