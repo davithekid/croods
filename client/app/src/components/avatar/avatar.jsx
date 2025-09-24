@@ -31,12 +31,8 @@ export function AvatarDemo() {
           <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
           <DropdownMenuGroup>
             <DropdownMenuItem>
-                <Link href='/perfil'>Perfil</Link>
+                <Link href='/perfil'>Perfil e Agendamentos</Link>
               <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-                <Link href='/meus-agendamentos'>Meus Agendamentos</Link>
-              <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
             </DropdownMenuItem>
             <DropdownMenuItem>
               Sair
