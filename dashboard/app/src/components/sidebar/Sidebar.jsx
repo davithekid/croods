@@ -1,14 +1,16 @@
-'use client';
+"use client";
 import { useState } from "react";
-import { LogOutIcon, HomeIcon, CalendarIcon, UsersIcon, MenuIcon, XIcon } from "lucide-react";
+import { LogOutIcon, HomeIcon, CalendarIcon, DollarSignIcon, UserMinusIcon, LifeBuoyIcon, MenuIcon, XIcon } from "lucide-react";
 import { ModeToggle } from "../themes/button-theme";
 
 const menuItems = [
     { title: "Dashboard", icon: HomeIcon, url: "/" },
     { title: "Agendamentos", icon: CalendarIcon, url: "/agendamentos" },
-    { title: "Receitas", icon: UsersIcon, url: "/receitas" },
-    { title: "Folgas", icon: UsersIcon, url: "/folgas" },
+    { title: "Receitas", icon: DollarSignIcon, url: "/receitas" },
+    { title: "Folgas", icon: UserMinusIcon, url: "/folgas" },
+    { title: "Suporte", icon: LifeBuoyIcon, url: "/suporte" },
 ];
+
 
 export default function Sidebar() {
     const [mobileOpen, setMobileOpen] = useState(false);
