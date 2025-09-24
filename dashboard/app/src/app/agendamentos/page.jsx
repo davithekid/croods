@@ -11,7 +11,7 @@ export default function Agendamentos() {
                         Dashboard Agendamentos
                     </h1>
                     <p className="mb-6 text-muted-foreground">
-                        Gerencie seus agendamentos
+                        Gerencie seus agendamentos.
                     </p>
                     <TableScheduling />
                     <div className="grid gap-6 md:grid-cols-2">

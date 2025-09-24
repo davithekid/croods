@@ -13,7 +13,7 @@ export default function Home() {
             Dashboard Administrativa
           </h1>
           <p className="mb-6 text-muted-foreground">
-            Gerencie seus agendamentos, folgas e acompanhe o faturamento
+            Gerencie o seu negócio da melhor maneira.
           </p>
 
           <DashboardCards />

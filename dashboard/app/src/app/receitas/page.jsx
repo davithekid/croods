@@ -13,7 +13,7 @@ export default function Agendamentos() {
                         Dashboard Receitas
                     </h1>
                     <p className="mb-6 text-muted-foreground">
-                        Gerencie suas receitas
+                        Gerencie suas receitas.
                     </p>
                     <CardsIncome />
                     <div className="grid gap-6 md:grid-cols-2">
