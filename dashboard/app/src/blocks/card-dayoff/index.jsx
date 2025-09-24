@@ -1,19 +1,25 @@
 "use client";
 
 import { useState } from "react";
-import { PlusCircleIcon, Edit2Icon, Trash2Icon } from "lucide-react";
+import { PlusCircle, Edit2, Trash2 } from "lucide-react";
+import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 export default function CardFolgas() {
   const [folgas, setFolgas] = useState([]);
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(null);
   const [reason, setReason] = useState("");
   const [showForm, setShowForm] = useState(false);
 
   const handleAddFolga = () => {
-    if (!date || !reason) return;
+    if (!date || !reason.trim()) return;
     const newFolga = { id: Date.now(), date, reason };
     setFolgas([...folgas, newFolga]);
-    setDate("");
+    setDate(null);
     setReason("");
     setShowForm(false);
   };
@@ -33,47 +39,56 @@ export default function CardFolgas() {
 
   return (
     <div className="w-full max-w-3xl mx-auto space-y-6">
-      {/* Card principal */}
       <div className="p-6 rounded-2xl shadow-md border">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-bold">Gerenciar Folgas</h2>
-          <button
-            className="px-4 py-2 rounded-lg flex items-center gap-2 border hover:shadow-md transition"
+          <Button
+            variant="outline"
             onClick={() => setShowForm(!showForm)}
+            className="flex items-center gap-2"
           >
-            <PlusCircleIcon className="w-5 h-5" />
+            <PlusCircle className="w-5 h-5" />
             {showForm ? "Cancelar" : "Adicionar"}
-          </button>
+          </Button>
         </div>
 
-        {/* Formulário expandido */}
         {showForm && (
           <div className="mt-4 flex flex-col sm:flex-row gap-4">
-            <input
-              type="date"
-              className="border rounded-lg px-4 py-2 flex-1 focus:outline-none focus:ring-2 focus:ring-accent/50"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            />
-            <input
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="flex-1 justify-start text-left font-normal"
+                >
+                  {date ? format(date, "dd/MM/yyyy", { locale: ptBR }) : "Selecione a data"}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="p-0" align="start">
+                <Calendar
+                  mode="single"
+                  selected={date}
+                  onSelect={setDate}
+                  locale={ptBR}
+                />
+              </PopoverContent>
+            </Popover>
+
+            <Input
               type="text"
-              className="border rounded-lg px-4 py-2 flex-1 focus:outline-none focus:ring-2 focus:ring-accent/50"
               placeholder="Motivo da folga"
               value={reason}
               onChange={(e) => setReason(e.target.value)}
+              className="flex-1"
             />
-            <button
-              className="px-6 py-2 rounded-lg flex items-center gap-2 border hover:shadow-md transition"
-              onClick={handleAddFolga}
-            >
-              <PlusCircleIcon className="w-5 h-5" />
+
+            <Button onClick={handleAddFolga} className="flex items-center gap-2">
+              <PlusCircle className="w-5 h-5" />
               Salvar
-            </button>
+            </Button>
           </div>
         )}
       </div>
 
-      {/* Lista de folgas cadastradas */}
       <div className="grid gap-4">
         {folgas.map((folga) => (
           <div
@@ -81,22 +96,26 @@ export default function CardFolgas() {
             className="p-4 rounded-xl border shadow-sm hover:shadow-md transition flex justify-between items-center"
           >
             <div>
-              <p className="font-semibold">{folga.date}</p>
-              <p className="text-sm">{folga.reason}</p>
+              <p className="font-semibold">
+                {format(folga.date, "dd/MM/yyyy", { locale: ptBR })}
+              </p>
+              <p className="text-sm text-muted-foreground">{folga.reason}</p>
             </div>
             <div className="flex gap-2">
-              <button
-                className="p-2 rounded-lg border hover:shadow transition"
+              <Button
+                variant="outline"
+                size="icon"
                 onClick={() => handleEdit(folga.id)}
               >
-                <Edit2Icon className="w-4 h-4" />
-              </button>
-              <button
-                className="p-2 rounded-lg border hover:shadow transition"
+                <Edit2 className="w-4 h-4" />
+              </Button>
+              <Button
+                variant="destructive"
+                size="icon"
                 onClick={() => handleDelete(folga.id)}
               >
-                <Trash2Icon className="w-4 h-4" />
-              </button>
+                <Trash2 className="w-4 h-4" />
+              </Button>
             </div>
           </div>
         ))}
