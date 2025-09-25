@@ -1,7 +1,9 @@
 import jwt from "jsonwebtoken"
 import User from "../models/User.js"
+import bcrypt from "bcryptjs";
 
-export default async function login(request, reply) {
+
+export  async function login(request, reply) {
   const { email, password } = request.body
 
   try {
@@ -38,7 +40,7 @@ export default async function login(request, reply) {
   }
 }
 
-export async function registerClient(request, reply) {
+export async function register(request, reply) {
   const { name, email, cpf, password } = request.body
 
   try {

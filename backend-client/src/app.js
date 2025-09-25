@@ -1,6 +1,6 @@
 import fastify from 'fastify';
-import userRoutes from './routes/UserRoutes';
-import authRoutes from './routes/AuthRoutes';
+import userRoutes from './routes/UserRoutes.js';
+import authRoutes from './routes/AuthRoutes.js';
 import cors from '@fastify/cors';
 
 const app = fastify({
