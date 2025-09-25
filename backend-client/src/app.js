@@ -3,6 +3,8 @@ import cors from '@fastify/cors';
 import userRoutes from './routes/UserRoutes.js';
 import authRoutes from './routes/AuthRoutes.js';
 import dayOffRoutes from './routes/DayOffRoutes.js';
+import serviceRoutes from './routes/ServiceRoutes.js';
+import extraServiceRoutes from './routes/ExtraServicesRoutes.js';
 
 const app = fastify({
     logger: {
@@ -23,5 +25,8 @@ app.get('/', (request, reply) => {
 app.register(userRoutes, { prefix: '/users' });
 app.register(dayOffRoutes, { prefix: '/dayoffs' });
 app.register(authRoutes, {prefix: '/auth'});
+app.register(serviceRoutes, {prefix: '/services'})
+app.register(extraServiceRoutes, {prefix: '/extra-services'})
+
 
 export default app;

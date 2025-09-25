@@ -1,9 +1,9 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database.js";
 
-export default class Services extends Model {}
+export default class ExtraServices extends Model {}
 
-Services.init({
+ExtraServices.init({
     id: {
         type: DataTypes.INTEGER     ,
         primaryKey: true,
@@ -16,13 +16,9 @@ Services.init({
     price: {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false
-    },
-    type: {
-        type: DataTypes.ENUM('cortes', 'barba', 'especiais'),
-        allowNull: false
     }
 }, {
     sequelize,
-    tableName: 'services',
+    tableName: 'extra_services',
     timestamps: false
 })
