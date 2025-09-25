@@ -1,23 +1,42 @@
-import MessageTable from "@/blocks/support";
-import Sidebar from "@/components/sidebar/Sidebar";
+import { AppSidebar } from "@/components/app-sidebar"
+import { SiteHeader } from "@/components/site-header"
+import {
+    SidebarInset,
+    SidebarProvider,
+} from "@/components/ui/sidebar"
+import MessageTable from "@/blocks/support"
 
 export default function Suporte() {
     return (
-        <div className="flex min-h-screen">
-            <Sidebar />
-            <main className="flex-1 p-6 md:ml-64 flex justify-center ">
-                <div className="w-full flex flex-col gap-6 bg-zinc-100 lg:dark:bg-zinc-900 lg:rounded-2xl lg:p-6">
-                    <h1 className="text-5xl sm:text-6xl font-semibold tracking-tighter">
-                        Dashboard Suporte
-                    </h1>
-                    <p className="mb-6 text-muted-foreground">
-                        Gerencie e Responda as mensagens de seus clientes.
-                    </p>
-                    <MessageTable />
-                    <div className="grid gap-6 md:grid-cols-2">
+        <SidebarProvider
+            style={
+                {
+                    "--sidebar-width": "calc(var(--spacing) * 72)",
+                    "--header-height": "calc(var(--spacing) * 12)"
+                }
+            }>
+            <AppSidebar variant="inset" />
+            <SidebarInset>
+                <SiteHeader />
+                <div className="flex flex-1 flex-col">
+                    <div className="@container/main flex flex-1 flex-col gap-2">
+                        <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+                            <div className="">
+                            <h1 className="text-5xl sm:text-6xl font-semibold tracking-tighter flex justify-center">
+                                Suporte
+                            </h1>
+                                
+                            <p className="mb-6 text-muted-foreground flex justify-center py-2">
+                                Gerencie e responda as dúvidas de seus clientes.
+                            </p>
+                            </div>
+                            <div className="px-4 lg:px-6 flex justify-center gap-5">
+                                <MessageTable />
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </main>
-        </div>
+            </SidebarInset>
+        </SidebarProvider>
     );
 }

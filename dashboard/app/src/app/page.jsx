@@ -1,29 +1,39 @@
-import DashboardCards from "@/blocks/card-index";
-import CardAgendamentosHoje from "@/blocks/card-scheduling-today";
-import CardServicosMais from "@/blocks/card-services";
-import Sidebar from "@/components/sidebar/Sidebar";
+import { AppSidebar } from "@/components/app-sidebar"
+import { ChartAreaInteractive } from "@/components/chart-area-interactive"
+import { DataTable } from "@/components/data-table"
+import { SectionCards } from "@/components/section-cards"
+import { SiteHeader } from "@/components/site-header"
+import {
+  SidebarInset,
+  SidebarProvider,
+} from "@/components/ui/sidebar"
 
-export default function Home() {
+import data from "./data.json"
+
+export default function Page() {
   return (
-    <div className="flex min-h-screen">
-      <Sidebar />
-      <main className="flex-1 p-6 md:ml-64 flex justify-center ">
-        <div className="w-full flex flex-col gap-6 bg-zinc-100 lg:dark:bg-zinc-900 lg:rounded-2xl lg:p-6">
-          <h1 className="text-5xl sm:text-6xl font-semibold tracking-tighter">
-            Dashboard Administrativa
-          </h1>
-          <p className="mb-6 text-muted-foreground">
-            Gerencie o seu negócio da melhor maneira.
-          </p>
-
-          <DashboardCards />
-
-          <div className="grid gap-6 md:grid-cols-2">
-            <CardAgendamentosHoje />
-            <CardServicosMais />
+    <SidebarProvider
+      style={
+        {
+          "--sidebar-width": "calc(var(--spacing) * 72)",
+          "--header-height": "calc(var(--spacing) * 12)"
+        }
+      }>
+      <AppSidebar variant="inset" />
+      <SidebarInset>
+        <SiteHeader />
+        <div className="flex flex-1 flex-col">
+          <div className="@container/main flex flex-1 flex-col gap-2">
+            <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+              <SectionCards />
+              <div className="px-4 lg:px-6">
+                <ChartAreaInteractive />
+              </div>
+              <DataTable data={data} />
+            </div>
           </div>
         </div>
-      </main>
-    </div>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }
