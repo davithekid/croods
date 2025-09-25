@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken"
-import bcrypt from "bcrypt"
 import User from "../models/User.js"
 
 export default async function login(request, reply) {
@@ -12,7 +11,7 @@ export default async function login(request, reply) {
       return reply.status(404).send({ message: "Usuário não encontrado" })
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.senha)
+    const isPasswordValid = await bcrypt.compare(password, user.password)
     if (!isPasswordValid) {
       return reply.status(401).send({ message: "Senha inválida" })
     }
@@ -28,7 +27,7 @@ export default async function login(request, reply) {
       token,
       user: {
         id: user.id,
-        nome: user.nome,
+        name: user.name,
         email: user.email,
         role: user.role,
       },
@@ -40,7 +39,7 @@ export default async function login(request, reply) {
 }
 
 export async function registerClient(request, reply) {
-  const { nome, email, cpf, senha, role } = request.body
+  const { name, email, cpf, password } = request.body
 
   try {
     const existingUser = await User.findOne({ where: { email } })
@@ -48,21 +47,19 @@ export async function registerClient(request, reply) {
       return reply.code(400).send({ message: "Email já cadastrado" })
     }
 
-    const hashedPassword = await bcrypt.hash(senha, 10)
-
     const user = await User.create({
-      nome,
+      name,
       email,
       cpf,
-      senha: hashedPassword,
-      role: role || "usuario",
+      password,
+      role: 'usuario',
     })
 
     return reply.code(201).send({
       message: "Usuário registrado com sucesso",
       user: {
         id: user.id,
-        nome: user.nome,
+        name: user.name,
         email: user.email,
         role: user.role,
       },

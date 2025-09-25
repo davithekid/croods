@@ -23,18 +23,6 @@ export default class UserController {
         }
     }
 
-    static async create(request, reply) {
-        try {
-            const { name, password, cpf, email, role } = request.body;
-            const user = await User.create({
-                name, password, cpf, email, role
-            })
-            return reply.status(201).send(user);
-        } catch (error) {
-            return reply.status(500).send({ error: 'Failed to create user', error });
-        }
-    }
-
     static async update(request, reply) {
         try {
             const { id } = request.params;
