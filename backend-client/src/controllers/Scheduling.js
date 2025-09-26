@@ -1,68 +1,60 @@
-import Scheduling from "../models/Scheduling.js";
+import SchedulingService from "../services/SchedulingService.js";
 
 export default class SchedulingController {
-    static async getAll(request, reply) {
+    static async getAll(req, reply) {
         try {
-            const schedulings = await Scheduling.findAll();
+            const schedulings = await SchedulingService.getAll();
             return reply.status(200).send(schedulings);
         } catch (error) {
-            return reply.status(500).send({ error: 'Failed to fetch all scheduilings', error })
+            return reply.status(500).send({ message: "Failed to fetch all schedulings", error: error.message });
         }
     }
 
-    static async getById(request, reply) {
+    static async getById(req, reply) {
         try {
-            const { id } = request.params;
-            const scheduiling = await Scheduling.findByPk(id);
-            if (!scheduiling) {
-                return reply.status(404).send({ message: 'Scheduling not found' })
-            }
-            return reply.status(200).send(scheduiling);
+            const scheduling = await SchedulingService.getById(req.params.id);
+            return reply.status(200).send(scheduling);
         } catch (error) {
-            return reply.status(500).send({ error: 'Failed to fetch scheduling' })
-        }
-    }
-
-    static async create(request, reply) {
-        try {
-            const { user_id, barber_id, service_id, extra_services_id, date, dayoff, status } = request.body;
-            const scheduiling = await Scheduling.create({
-                user_id, barber_id, service_id, extra_services_id, date, dayoff, status
-            })
-            return reply.status(201).send(scheduiling);
-        } catch (error) {
-            return reply.status(500).send({ error: 'Failed to create scheduling' });
-        }
-    }
-
-    static async update(request, reply) {
-        try {
-            const { id } = request.params;
-            const { user_id, barber_id, service_id, extra_services_id, date, dayoff, status } = request.body;
-            const scheduiling = await Scheduling.findByPk(id);
-            if (!scheduiling) {
-                return reply.status(404).send({ message: 'Scheduling not found' })
+            if (error.message === "NOT_FOUND") {
+                return reply.status(404).send({ message: "Scheduling not found" });
             }
-            await scheduiling.update({
-                user_id, barber_id, service_id, extra_services_id, date, dayoff, status
-            })
-            return reply.status(200).send(scheduiling);
-        } catch (error) {
-            return reply.status(500).send({ error: 'failed to update scheduling' })
+            return reply.status(500).send({ message: "Failed to fetch scheduling", error: error.message });
         }
     }
 
-    static async delete(request, reply) {
+    static async create(req, reply) {
         try {
-            const { id }= request.params;
-            const scheduiling = await Scheduling.findByPk(id);
-            if (!scheduiling) {
-                return reply.status(404).send({ message: 'Scheduling not found' })
+            const scheduling = await SchedulingService.create(req.body);
+            return reply.status(201).send(scheduling);
+        } catch (error) {
+            if (error.message === "DATE_CONFLICT") {
+                return reply.status(400).send({ message: "This barber already has a scheduling at this date" });
             }
-            await scheduiling.destroy();
-            return reply.status(200).send({message: 'Deleted successfully!!!'});
-        } catch (error ){
-            return reply.status(500).send({error: 'Failed to delete scheduling'});
+            return reply.status(500).send({ message: "Failed to create scheduling", error: error.message });
+        }
+    }
+
+    static async update(req, reply) {
+        try {
+            const scheduling = await SchedulingService.update(req.params.id, req.body);
+            return reply.status(200).send(scheduling);
+        } catch (error) {
+            if (error.message === "NOT_FOUND") {
+                return reply.status(404).send({ message: "Scheduling not found" });
+            }
+            return reply.status(500).send({ message: "Failed to update scheduling", error: error.message });
+        }
+    }
+
+    static async delete(req, reply) {
+        try {
+            await SchedulingService.delete(req.params.id);
+            return reply.status(200).send({ message: "Deleted successfully!!!" });
+        } catch (error) {
+            if (error.message === "NOT_FOUND") {
+                return reply.status(404).send({ message: "Scheduling not found" });
+            }
+            return reply.status(500).send({ message: "Failed to delete scheduling", error: error.message });
         }
     }
 }
