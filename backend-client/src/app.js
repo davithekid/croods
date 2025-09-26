@@ -5,6 +5,7 @@ import authRoutes from './routes/AuthRoutes.js';
 import dayOffRoutes from './routes/DayOffRoutes.js';
 import serviceRoutes from './routes/ServiceRoutes.js';
 import extraServiceRoutes from './routes/ExtraServicesRoutes.js';
+import schedulingRoutes from './routes/SchedulingRoutes.js';
 
 const app = fastify({
     logger: {
@@ -27,6 +28,7 @@ app.register(dayOffRoutes, { prefix: '/dayoffs' });
 app.register(authRoutes, {prefix: '/auth'});
 app.register(serviceRoutes, {prefix: '/services'})
 app.register(extraServiceRoutes, {prefix: '/extra-services'})
+app.register(schedulingRoutes, {prefix: '/schedulings'})
 
 
 export default app;
