@@ -1,8 +1,8 @@
 import { Services4 } from "@/blocks/diff";
-import Hero01 from "@/blocks/hero";
+import { Hero1 } from "@/blocks/hero";
+import Testimonial04 from "@/blocks/testimonial-04/testimonial-04";
 import Footer05Page from "@/components/footer/footer-05";
 import Navbar01Page from "@/components/navbar/navbar-01";
-import Image from "next/image";
 
 export default function Home() {
   return (
@@ -12,11 +12,14 @@ export default function Home() {
       </header>
 
       <main className="mx-auto container">
-        <Hero01 />
+        <Hero1 />
       </main>
-        
+
       <section className="mx-auto container">
         <Services4 />
+      </section>
+      <section>
+        <Testimonial04 />
       </section>
 
       <footer>
