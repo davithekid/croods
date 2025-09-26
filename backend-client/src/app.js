@@ -6,6 +6,7 @@ import dayOffRoutes from './routes/DayOffRoutes.js';
 import serviceRoutes from './routes/ServiceRoutes.js';
 import extraServiceRoutes from './routes/ExtraServicesRoutes.js';
 import schedulingRoutes from './routes/SchedulingRoutes.js';
+import errorHandler from './plugins/errorHandler.js';
 
 const app = fastify({
     logger: {
@@ -23,6 +24,7 @@ app.get('/', (request, reply) => {
     return reply.status(200).send({ message: 'Hello API!!!' });
 })
 
+app.register(errorHandler)
 app.register(userRoutes, { prefix: '/users' });
 app.register(dayOffRoutes, { prefix: '/dayoffs' });
 app.register(authRoutes, {prefix: '/auth'});
