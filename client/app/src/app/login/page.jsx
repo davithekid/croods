@@ -1,6 +1,7 @@
 "use client";
 
 import { Logo } from "@/components/logo";
+import { ModeToggle } from "@/components/theme/button-theme";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -39,7 +40,13 @@ const Login03Page = () => {
     <div className="h-screen flex items-center justify-center">
       <div className="w-full h-full grid lg:grid-cols-2">
         <div className="max-w-xs m-auto w-full flex flex-col items-center">
-          <Logo className="h-9 w-9" />
+          <div className="block dark:hidden">
+            <img src="./logo-dark.svg" className="w-13" alt="" />
+          </div>
+          <div className="hidden dark:block">
+            <img src="./logo.svg" className="w-13" alt="" />
+          </div>
+          <ModeToggle />
           <p className="mt-4 text-xl font-semibold tracking-tight">
             Bem-vindo aos Croods!
           </p>
