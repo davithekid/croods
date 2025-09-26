@@ -1,4 +1,4 @@
-import { Services } from "@/blocks/services";
+import { Services } from "@/blocks/our-services";
 import Footer05Page from "@/components/footer/footer-05";
 import Navbar01Page from "@/components/navbar/navbar-01";
 

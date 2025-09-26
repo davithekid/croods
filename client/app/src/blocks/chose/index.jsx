@@ -26,12 +26,7 @@ export default function Chose({ onSelect }) {
       description: "Pacote completo para quem quer sair impecável da barbearia.",
       price: 85,
     },
-    {
-      icon: <Crown className="h-5 w-5" />,
-      title: "Pacote Premium",
-      description: "Experiência completa com cuidados extras para cabelo, barba e pele.",
-      price: 120,
-    },
+
   ];
 
   const extraOptions = [
@@ -68,7 +63,7 @@ export default function Chose({ onSelect }) {
         </div>
 
         {/* Serviços principais */}
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {services.map((service, index) => (
             <div
               key={index}
