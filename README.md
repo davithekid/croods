@@ -2,21 +2,30 @@
 
 API para uma barbearia, com plataforma para clientes agendarem serviços e dashboard para barbeiros administrarem o negócio.
 
-## Tech Stack
-- **Back-end:** Fastify, Sequelize, MySQL
-- **Front-end:** Next.js
+O projeto está dividido em **4 setores isolados**:  
 
+- **Back-end Cliente** ↔ **Front-end Cliente**  
+- **Back-end Barbeiro** ↔ **Front-end Barbeiro**  
+
+Cada par se comunica apenas internamente, garantindo isolamento entre clientes e barbeiros.
 ## Como usar
 
-### Back-end
+### Back-end (cliente)
 ```bash
-cd back-end
+cd back-end-client
 npm install
 node --watch src/server.js
 ```
-### Front-end
+### Cliente
 ```bash
-cd client/app e dashboard/app
+cd client/app 
+npm install
+npm run dev
+```
+
+### Barbeiro
+```bash
+cd dashboard/app
 npm install
 npm run dev
 ```
@@ -63,3 +72,19 @@ Em desenvolvimento — funcionalidades principais implementadas, melhorias e int
 - Aba de suporte
   - Visualizar perguntas de clientes
   - Responder perguntas de clientes
+
+## Tech Stack
+
+- **Back-end:** 
+  - Fastify
+  - Sequelize
+  - MySQL
+  - JWT
+  - Cookie
+  - Cors
+
+- **Front-end:** 
+  - Next.js
+  - TailwindCSS
+  - Shadcn
+  - Tweakcn
