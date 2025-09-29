@@ -7,6 +7,7 @@ import serviceRoutes from './routes/ServiceRoutes.js';
 import extraServiceRoutes from './routes/ExtraServicesRoutes.js';
 import schedulingRoutes from './routes/SchedulingRoutes.js';
 import errorHandler from './plugins/errorHandler.js';
+import fastifyCookie from '@fastify/cookie'
 
 const app = fastify({
     logger: {
@@ -24,6 +25,11 @@ app.get('/', (request, reply) => {
     return reply.status(200).send({ message: 'Hello API!!!' });
 })
 
+// register cookies...
+app.register(fastify.fastifyCookie, {
+    secret: process.env.COOKIE_SECRET || 'supersecret',
+    parseOptions: {}
+})
 app.register(errorHandler)
 app.register(userRoutes, { prefix: '/users' });
 app.register(dayOffRoutes, { prefix: '/dayoffs' });
