@@ -5,8 +5,7 @@ import { Button } from "@/components/ui/button";
 
 
 const Hero1 = ({
-  badge = "Barber Shop Croods",
-  heading = "Cortes que definem seu estilo",
+  heading = "Barber Shop Croods",
   description = "Agende seu horário com nossos barbeiros especializados e viva a experiência da nossa barbearia.",
   buttons = {
     primary: { text: "Agendar Agora", url: "/agendar" },
@@ -14,7 +13,7 @@ const Hero1 = ({
   },
 
   image = {
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/placeholder-1.svg",
+    src: "./logo.svg",
     alt: "Hero section demo image showing interface components",
   },
 }) => {
@@ -23,12 +22,8 @@ const Hero1 = ({
       <div className="container">
         <div className="grid items-center gap-8 lg:grid-cols-2">
           <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
-            {badge && (
-              <Badge variant="outline">
-                {badge}
-                <ArrowUpRight className="ml-2 size-4" />
-              </Badge>
-            )}
+           
+               
             <h1 className="my-6 text-pretty text-4xl font-bold lg:text-6xl">
               {heading}
             </h1>

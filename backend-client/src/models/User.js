@@ -18,7 +18,8 @@ User.init({
     },
     cpf: {
         type: DataTypes.STRING(14),
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
     name: {
         type: DataTypes.STRING(255),
@@ -26,7 +27,8 @@ User.init({
     },
     email: {
         type: DataTypes.STRING(255),
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
     password: {
         type: DataTypes.STRING(255),
@@ -34,7 +36,8 @@ User.init({
     },
     role: {
         type: DataTypes.ENUM('user', 'barber'),
-        allowNull: false
+        allowNull: false,
+        unique: true
     }
 }, {
     sequelize,
@@ -43,7 +46,7 @@ User.init({
     createdAt: 'created_at',
     updatedAt: 'update_at',
 
-     hooks: {
+    hooks: {
         beforeCreate: async (user) => {
             if (user.password) {
                 const salt = await bcrypt.genSalt(10);
