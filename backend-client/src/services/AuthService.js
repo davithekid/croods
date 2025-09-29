@@ -37,7 +37,6 @@ export default class AuthService {
             throw new Error("EMAIL_EXISTS");
         }
 
-        // 🔑 nunca salvar senha em texto puro
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = await User.create({
