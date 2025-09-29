@@ -25,3 +25,41 @@ npm run dev
 
 Status do projeto
 Em desenvolvimento — funcionalidades principais implementadas, melhorias e integração contínua em andamento.
+
+## Requisitos Funcionais (Cliente)
+- **Login de usuário**
+- **Registro de usuário**
+- **Agendamento**
+  - Escolha de serviço
+  - Escolha de adicional
+  - Escolha de barbeiro
+  - Escolha de data e horário
+- **Visualização de serviços de cada barbeiro**
+- **Consulta de planos de cada barbeiro**
+- **Página "Sobre a Barbearia"**
+- **Contato**
+- **Perfil do usuário**
+  - Conferir agendamentos
+  - Alertas de cancelamento
+  - Histórico de agendamentos
+  - Editar perfil
+
+## Requisitos Não Funcionais (Cliente)
+- Acessibilidade
+- Modo claro e escuro
+- Autenticação segura
+- Segurança geral
+- Velocidade nas requisições
+
+## Requisitos Funcionais (Dashboard)
+- Login exclusivo para barbeiros
+- Dashboard com informações sobre agendamentos
+- Aba de receitas (filtrável por períodos)
+- Aba de serviços
+  - Cadastrar serviços
+  - Editar serviços
+  - Remover serviços
+- Aba de folgas e horários de não funcionamento
+- Aba de suporte
+  - Visualizar perguntas de clientes
+  - Responder perguntas de clientes
