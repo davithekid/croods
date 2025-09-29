@@ -5,7 +5,7 @@ export default async function authRoutes(app) {
   app.post("/login", async (request, reply) => {
     const { email, password } = request.body;
 
-    // validade user
+    // validar user
     const user = await login(request, reply); // controller valida
     if (!user) return;
 
@@ -17,9 +17,9 @@ export default async function authRoutes(app) {
 
     reply
       .setCookie('Token', token, {
-        httpOnly: true, // evita acesso via js no browser e protege cookue de XSS
+        httpOnly: true, // evita acesso via js no browser e protege cookies de XSS
         secure: process.env.NODE_ENV === 'production', // evita token interceptado em http inseguro
-        sameSite: 'strict', // restringe envio de cookie apenas para req originados no msm site
+        sameSite: 'strict', // restringe envio de cookies apenas para reqs originadas no site
         maxAge: parseInt(process.env.COOKIE_MAX_AGE) || 3600,
       })
       .send({ message: 'login successfull!' })

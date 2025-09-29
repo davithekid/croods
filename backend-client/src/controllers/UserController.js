@@ -4,8 +4,8 @@ export default class UserController {
     static async getAll(req, reply) {
 
         // parametros para o front-end
-        const page = parseInt(req.query.page) || 1; // 1 page
-        const limit = parseInt(req.query.limit) || 10; // com 10 users
+        const page = parseInt(req.query.page) || 1; // garante uma pagina caso nao selecionar
+        const limit = parseInt(req.query.limit) || 10; // com 10 users cada
 
         // busca dados no service
         const result = await UserService.getAllUsers(page, limit);
