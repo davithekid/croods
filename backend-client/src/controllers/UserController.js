@@ -2,8 +2,20 @@ import UserService from "../services/UserService.js";
 
 export default class UserController {
     static async getAll(req, reply) {
-        const users = await UserService.getAllUsers();
-        return reply.status(200).send(users);
+
+        // parametros para o front-end
+        const page = parseInt(req.query.page) || 1; // 1 page
+        const limit = parseInt(req.query.limit) || 10; // com 10 users
+
+        // busca dados no service
+        const result = await UserService.getAllUsers(page, limit);
+
+        // formata e devolve para o front
+        return {
+            data: result.docs,
+            totalPages: result.pages,
+            currentPage: result.page
+        }
     }
 
     static async getById(req, reply) {

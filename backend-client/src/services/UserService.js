@@ -1,8 +1,16 @@
 import User from "../models/User.js";
+import sequelizePaginate from "sequelize-paginate";
+sequelizePaginate.paginate(User);
 
 export default class UserService {
-    static async getAllUsers() {
-        return await User.findAll();
+
+    static async getAllUsers(page = 1, limit = 10) {
+        const result = await User.paginate({
+            page,
+            paginate: limit,
+            order: [['createdAt', 'DESC']]
+        })
+        return result;
     }
 
     static async getUserById(id) {
