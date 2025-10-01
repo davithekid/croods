@@ -1,47 +1,57 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Link from "next/link"
+import * as React from "react";
+import Link from "next/link";
 import {
-  IconDashboard,
-  IconChartBar,
-  IconFolder,
-  IconUsers,
-} from "@tabler/icons-react"
+  IconLayoutDashboard,
+  IconReceipt,
+  IconTools,
+  IconCalendar,
+  IconHeadset,
+} from "@tabler/icons-react";
 
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar"
-import { NavUser } from "@/components/nav-user"
-import { ModeToggle } from "./themes/button-theme"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar";
+import { NavUser } from "@/components/nav-user";
+import { ModeToggle } from "./themes/button-theme";
 
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
+    name: "Davi Chagas",
+    email: "davi@example.com",
     avatar: "/avatars/shadcn.jpg",
   },
   navMain: [
-    { title: "Dashboard", url: "/", icon: IconDashboard },
-    { title: "Receitas", url: "/receitas", icon: IconChartBar },
-    { title: "Serviços", url: "/servicos", icon: IconChartBar },
-    { title: "Agenda & Folgas", url: "/folgas", icon: IconFolder },
-    { title: "Suporte", url: "/suporte", icon: IconUsers },
+    { title: "Dashboard", url: "/", icon: IconLayoutDashboard },
+    { title: "Receitas", url: "/receitas", icon: IconReceipt },
+    { title: "Serviços", url: "/servicos", icon: IconTools },
+    { title: "Agenda & Folgas", url: "/folgas", icon: IconCalendar },
+    { title: "Suporte", url: "/suporte", icon: IconHeadset },
   ],
-}
+};
 
 export function AppSidebar(props) {
   return (
     <Sidebar collapsible="offcanvas" {...props}>
-      {/* HEADER */}
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]">
-              <div className="flex justify-between items-center py-8 text-2xl font-bold text-foreground dark:text-white">
-                <div className="block dark:hidden">
-                  <img src="./logo-dark.svg" className="w-13" alt="Logo Dark" />
-                </div>
-                <div className="hidden dark:block">
-                  <img src="./logo.svg" className="w-13" alt="Logo Light" />
+            <SidebarMenuButton asChild>
+              <div className="flex justify-between items-center py-6 px-4 text-2xl font-bold text-foreground dark:text-white">
+                <div className="flex items-center gap-2">
+                  <div className="block dark:hidden">
+                    <img src="/logo-dark.svg" className="w-14" alt="Logo Dark" />
+                  </div>
+                  <div className="hidden dark:block">
+                    <img src="/logo.svg" className="w-14" alt="Logo Light" />
+                  </div>
                 </div>
                 <ModeToggle />
               </div>
@@ -50,27 +60,30 @@ export function AppSidebar(props) {
         </SidebarMenu>
       </SidebarHeader>
 
-      {/* CONTENT */}
       <SidebarContent>
-        <SidebarMenu>
+        <SidebarMenu className="mt-4">
           {data.navMain.map((item) => (
             <SidebarMenuItem key={item.url}>
               <Link
                 href={item.url}
-                className="flex items-center gap-2 p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800"
+                className="
+                  flex items-center gap-3 px-4 py-2 rounded-lg
+                  text-gray-700 dark:text-gray-200
+                  hover:bg-gray-200 dark:hover:bg-gray-700
+                  transition-colors duration-200
+                "
               >
-                <item.icon className="w-5 h-5" />
-                <span>{item.title}</span>
+                <item.icon className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+                <span className="font-medium">{item.title}</span>
               </Link>
             </SidebarMenuItem>
           ))}
         </SidebarMenu>
       </SidebarContent>
 
-      {/* FOOTER */}
-      <SidebarFooter>
+      <SidebarFooter className="mt-auto px-4 py-4 border-t border-gray-200 dark:border-gray-700">
         <NavUser user={data.user} />
       </SidebarFooter>
     </Sidebar>
-  )
+  );
 }
