@@ -1,60 +1,45 @@
-import { ArrowRight, ArrowUpRight } from "lucide-react";
-
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ArrowUpRight, CirclePlay, Scissors } from "lucide-react"; 
+import Link from "next/link";
+import React from "react";
 
-
-const Hero1 = ({
-  heading = "Barber Shop Croods",
-  description = "Agende seu horário com nossos barbeiros especializados e viva a experiência da nossa barbearia.",
-  buttons = {
-    primary: { text: "Agendar Agora", url: "/agendar" },
-    secondary: { text: "Ver Planos", url: "/planos" },
-  },
-
-  image = {
-    src: "./logo.svg",
-    alt: "Hero section demo image showing interface components",
-  },
-}) => {
+const Hero01 = () => {
   return (
-    <section className="py-32">
-      <div className="container">
-        <div className="grid items-center gap-8 lg:grid-cols-2">
-          <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
-           
-               
-            <h1 className="my-6 text-pretty text-4xl font-bold lg:text-6xl">
-              {heading}
-            </h1>
-            <p className="text-muted-foreground mb-8 max-w-xl lg:text-xl">
-              {description}
-            </p>
-            <div className="flex w-full flex-col justify-center gap-2 sm:flex-row lg:justify-start">
-              {buttons.primary && (
-                <Button asChild className="w-full sm:w-auto">
-                  <a href={buttons.primary.url}>{buttons.primary.text}</a>
-                </Button>
-              )}
-              {buttons.secondary && (
-                <Button asChild variant="outline" className="w-full sm:w-auto">
-                  <a href={buttons.secondary.url}>
-                    {buttons.secondary.text}
-                    <ArrowRight className="size-4" />
-                  </a>
-                </Button>
-              )}
-            </div>
-          </div>
-          <img
-            src={image.src}
-            alt={image.alt}
-            className="max-h-96 w-full rounded-md object-cover"
-          />
+    <div className="min-h-screen flex items-center justify-center px-6">
+      <div className="text-center max-w-3xl">
+        <Badge
+          variant="secondary"
+          className="rounded-full py-1 border-border"
+          asChild
+        >
+          <Link href="#">
+          --
+            <Scissors className="size-4" /> 
+            --
+          </Link>
+        </Badge>
+        <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl lg:text-7xl md:leading-[1.2] font-semibold tracking-tighter">
+          Barbearia Croods
+        </h1>
+        <p className="mt-6 md:text-lg">
+          Tradição, estilo e excelência em cada detalhe. Experiência premium de barbearia.
+        </p>
+        <div className="mt-12 flex items-center justify-center gap-4">
+          <Button size="lg" className="rounded-full text-base">
+            Agendar um horário <ArrowUpRight className="size-5" />
+          </Button>
+          <Button
+            variant="outline"
+            size="lg"
+            className="rounded-full text-base shadow-none"
+          >
+            <CirclePlay className="size-5" /> Nossos Serviços
+          </Button>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
-export { Hero1 };
+export default Hero01;
