@@ -54,7 +54,7 @@ export default function Chose({ onSelect }) {
     <section className="py-5">
       <div className="container mx-auto max-w-5xl space-y-10">
         <div className="space-y-2 text-center">
-          <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">
+          <h2 className="text-2xl font-semibold tracking-tight md:text-3xl font-serif">
             Escolha seu serviço
           </h2>
           <p className="text-muted-foreground text-sm">

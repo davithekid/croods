@@ -34,7 +34,7 @@ export default function DateCard({
   return (
     <>
       <div className="text-center space-y-2">
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">
+        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight font-serif">
           Escolha sua data e horário
         </h1>
         <p className="text-muted-foreground">Barbeiro: <span className="font-semibold">{barber}</span></p>

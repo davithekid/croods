@@ -30,10 +30,10 @@ export default function TimeCard({ onConfirm }) {
   return (
     <>
       <div className="text-center space-y-2">
-        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">
+        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight font-serif">
           Escolha seu horário
         </h1>
-        <p className="text-muted-foreground">
+        <p className="text-muted-foreground ">
           Selecione o melhor horário para seu atendimento
         </p>
       </div>

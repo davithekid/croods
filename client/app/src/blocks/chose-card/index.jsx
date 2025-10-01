@@ -18,7 +18,7 @@ export default function PricingCard({ onSelect }) {
 
   return (
     <div className="flex flex-col">
-      <h1 className="text-5xl sm:text-6xl font-semibold text-center tracking-tighter">
+      <h1 className="text-4xl sm:text-5xl font-semibold text-center tracking-tighter font-serif">
         Escolha seu barbeiro
       </h1>
 
