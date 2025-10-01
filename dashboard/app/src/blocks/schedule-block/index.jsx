@@ -28,61 +28,67 @@ import {
 } from "@/components/ui/table";
 import { Calendar } from "@/components/ui/calendar";
 
-export function DayOff() {
-  const [dayOffs, setDayOffs] = useState([]);
+export function ScheduleBlock() {
+  const [blocks, setBlocks] = useState([]); // lista de dias com horários bloqueados
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedTime, setSelectedTime] = useState("");
   const [reason, setReason] = useState("");
   const [editingId, setEditingId] = useState(null);
 
   const handleSubmit = (e, closeModal) => {
     e.preventDefault();
 
-    const newDayOff = {
-      id: editingId || dayOffs.length + 1,
+    if (!selectedTime) return alert("Escolha um horário!");
+
+    const newBlock = {
+      id: editingId || blocks.length + 1,
       date: selectedDate,
+      time: selectedTime,
       reason,
     };
 
     if (editingId) {
-      setDayOffs((prev) =>
-        prev.map((d) => (d.id === editingId ? newDayOff : d))
+      setBlocks((prev) =>
+        prev.map((b) => (b.id === editingId ? newBlock : b))
       );
       setEditingId(null);
     } else {
-      setDayOffs((prev) => [...prev, newDayOff]);
+      setBlocks((prev) => [...prev, newBlock]);
     }
 
     setSelectedDate(new Date());
+    setSelectedTime("");
     setReason("");
 
     closeModal();
   };
 
-  const handleEdit = (dayOff, openModal) => {
-    setEditingId(dayOff.id);
-    setSelectedDate(dayOff.date);
-    setReason(dayOff.reason);
+  const handleEdit = (block, openModal) => {
+    setEditingId(block.id);
+    setSelectedDate(block.date);
+    setSelectedTime(block.time);
+    setReason(block.reason);
     openModal();
   };
 
   const handleDelete = (id) => {
-    setDayOffs((prev) => prev.filter((d) => d.id !== id));
+    setBlocks((prev) => prev.filter((b) => b.id !== id));
   };
 
   return (
     <div className="flex flex-col gap-8 w-full max-w-5xl mx-auto py-8">
       <Card>
         <CardHeader className="flex justify-between items-center">
-          <CardTitle>Folgas Cadastradas</CardTitle>
+          <CardTitle>Horários Bloqueados</CardTitle>
 
           <Dialog>
             <DialogTrigger asChild>
-              <Button>Adicionar Folga</Button>
+              <Button>Adicionar Bloqueio</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[500px]">
               <DialogHeader>
                 <DialogTitle>
-                  {editingId ? "Editar Folga" : "Adicionar Folga"}
+                  {editingId ? "Editar Bloqueio" : "Adicionar Bloqueio"}
                 </DialogTitle>
               </DialogHeader>
 
@@ -93,11 +99,21 @@ export function DayOff() {
                 }
               >
                 <div className="flex flex-col gap-1">
-                  <Label>Data da Folga</Label>
+                  <Label>Data</Label>
                   <Calendar
                     mode="single"
                     selected={selectedDate}
                     onSelect={setSelectedDate}
+                  />
+                </div>
+
+                <div className="flex flex-col gap-1">
+                  <Label htmlFor="time">Horário (HH:MM)</Label>
+                  <Input
+                    id="time"
+                    type="time"
+                    value={selectedTime}
+                    onChange={(e) => setSelectedTime(e.target.value)}
                   />
                 </div>
 
@@ -107,13 +123,13 @@ export function DayOff() {
                     id="reason"
                     value={reason}
                     onChange={(e) => setReason(e.target.value)}
-                    placeholder="Ex: Descanso, Evento, etc."
+                    placeholder="Ex: Reunião, Evento"
                   />
                 </div>
 
                 <DialogFooter>
                   <Button type="submit" className="w-full">
-                    {editingId ? "Salvar Alterações" : "Adicionar Folga"}
+                    {editingId ? "Salvar Alterações" : "Adicionar Bloqueio"}
                   </Button>
                 </DialogFooter>
               </form>
@@ -122,24 +138,26 @@ export function DayOff() {
         </CardHeader>
 
         <CardContent>
-          {dayOffs.length === 0 ? (
-            <p>Nenhuma folga cadastrada.</p>
+          {blocks.length === 0 ? (
+            <p>Nenhum horário bloqueado.</p>
           ) : (
             <Table>
               <TableHeader>
                 <TableRow>
                   <TableHead>Data</TableHead>
+                  <TableHead>Horário</TableHead>
                   <TableHead>Motivo</TableHead>
                   <TableHead>Ações</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {dayOffs.map((day) => (
-                  <TableRow key={day.id}>
+                {blocks.map((block) => (
+                  <TableRow key={block.id}>
                     <TableCell>
-                      {day.date.toLocaleDateString("pt-BR")}
+                      {block.date.toLocaleDateString("pt-BR")}
                     </TableCell>
-                    <TableCell>{day.reason || "-"}</TableCell>
+                    <TableCell>{block.time}</TableCell>
+                    <TableCell>{block.reason || "-"}</TableCell>
                     <TableCell className="flex gap-2">
                       <Dialog>
                         <DialogTrigger asChild>
@@ -149,7 +167,7 @@ export function DayOff() {
                         </DialogTrigger>
                         <DialogContent className="sm:max-w-[500px]">
                           <DialogHeader>
-                            <DialogTitle>Editar Folga</DialogTitle>
+                            <DialogTitle>Editar Bloqueio</DialogTitle>
                           </DialogHeader>
                           <form
                             className="flex flex-col gap-4"
@@ -160,11 +178,20 @@ export function DayOff() {
                             }
                           >
                             <div className="flex flex-col gap-1">
-                              <Label>Data da Folga</Label>
+                              <Label>Data</Label>
                               <Calendar
                                 mode="single"
                                 selected={selectedDate}
                                 onSelect={setSelectedDate}
+                              />
+                            </div>
+                            <div className="flex flex-col gap-1">
+                              <Label htmlFor="time">Horário (HH:MM)</Label>
+                              <Input
+                                id="time"
+                                type="time"
+                                value={selectedTime}
+                                onChange={(e) => setSelectedTime(e.target.value)}
                               />
                             </div>
                             <div className="flex flex-col gap-1">
@@ -186,7 +213,7 @@ export function DayOff() {
                       <Button
                         size="sm"
                         variant="destructive"
-                        onClick={() => handleDelete(day.id)}
+                        onClick={() => handleDelete(block.id)}
                       >
                         Remover
                       </Button>

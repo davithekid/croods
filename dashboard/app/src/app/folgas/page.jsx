@@ -8,7 +8,8 @@ import {
 
 import { ChartLineLinear } from "@/components/ui/shadcn-io/line-chart-03"
 import { ChartPieLabel } from "@/components/ui/shadcn-io/pie-chart-03"
-import CardFolgas from "@/blocks/card-dayoff"
+import CardFolgas, { DayOff } from "@/blocks/card-dayoff"
+import { ScheduleBlock } from "@/blocks/schedule-block"
 
 export default function Folgas() {
     return (
@@ -25,14 +26,15 @@ export default function Folgas() {
                 <div className="flex flex-1 flex-col">
                     <div className="@container/main flex flex-1 flex-col gap-2">
                         <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-                            <h1 className="text-5xl sm:text-6xl font-semibold tracking-tighter flex justify-center">
+                            <h1 className="text-3xl sm:text-4xl font-semibold tracking-tighter flex justify-center">
                                 Folgas
                             </h1>
-                            <p className="mb-6 text-muted-foreground flex justify-center">
-                                Gerencie suas folgas.
+                            <p className="text-muted-foreground flex justify-center">
+                                Gerencie suas folgas e horários.
                             </p>
-                            <div className="px-4 lg:px-6 flex justify-center gap-5">
-                                <CardFolgas />
+                            <div className="px-4 lg:px-6 flex flex-col justify-center gap-5">
+                                <DayOff />
+                                <ScheduleBlock />
                             </div>
                         </div>
                     </div>

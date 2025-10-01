@@ -23,7 +23,7 @@ const data = {
     { title: "Dashboard", url: "/", icon: IconDashboard },
     { title: "Receitas", url: "/receitas", icon: IconChartBar },
     { title: "Serviços", url: "/servicos", icon: IconChartBar },
-    { title: "Folgas", url: "/folgas", icon: IconFolder },
+    { title: "Agenda & Folgas", url: "/folgas", icon: IconFolder },
     { title: "Suporte", url: "/suporte", icon: IconUsers },
   ],
 }

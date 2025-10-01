@@ -1,4 +1,5 @@
-'use client'
+"use client";
+
 import { useState } from "react";
 import {
   Table,
@@ -30,16 +31,16 @@ export default function MessageTable() {
     },
   ]);
 
-  const handleDeletar = (id) => {
-    setMessages((prev) => prev.filter((m) => m.id !== id));
-  };
-
-  const handleResponder = (id) => {
+  const markAsRespondida = (id) => {
     setMessages((prev) =>
       prev.map((msg) =>
         msg.id === id ? { ...msg, respondida: true } : msg
       )
     );
+  };
+
+  const deleteMessage = (id) => {
+    setMessages((prev) => prev.filter((msg) => msg.id !== id));
   };
 
   return (
@@ -56,7 +57,10 @@ export default function MessageTable() {
         </TableHeader>
         <TableBody>
           {messages.map((msg) => (
-            <TableRow key={msg.id}>
+            <TableRow
+              key={msg.id}
+              className={msg.respondida ? "opacity-60" : ""}
+            >
               <TableCell>{msg.cliente}</TableCell>
               <TableCell>{msg.email}</TableCell>
               <TableCell>{msg.mensagem}</TableCell>
@@ -65,7 +69,7 @@ export default function MessageTable() {
                 <Button
                   size="sm"
                   variant={msg.respondida ? "outline" : "default"}
-                  onClick={() => handleResponder(msg.id)}
+                  onClick={() => markAsRespondida(msg.id)}
                   disabled={msg.respondida}
                 >
                   {msg.respondida ? "Respondida" : "Marcar como respondida"}
@@ -73,7 +77,7 @@ export default function MessageTable() {
                 <Button
                   size="sm"
                   variant="destructive"
-                  onClick={() => handleDeletar(msg.id)}
+                  onClick={() => deleteMessage(msg.id)}
                 >
                   Deletar
                 </Button>
@@ -82,6 +86,12 @@ export default function MessageTable() {
           ))}
         </TableBody>
       </Table>
+
+      {messages.length === 0 && (
+        <p className="p-4 text-center text-gray-500 dark:text-gray-400">
+          Nenhuma mensagem encontrada.
+        </p>
+      )}
     </div>
   );
 }
