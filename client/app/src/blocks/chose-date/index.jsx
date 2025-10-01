@@ -8,62 +8,77 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { CheckCircle2 } from "lucide-react";
 
-const dates = [
-  { id: 1, date: "22/09", dayOfweek: "Monday" },
-  { id: 2, date: "23/09", dayOfweek: "Tuesday" },
-  { id: 3, date: "24/09", dayOfweek: "Wednesday" },
-  { id: 4, date: "25/09", dayOfweek: "Thursday" },
-  { id: 5, date: "26/09", dayOfweek: "Friday" },
-  { id: 6, date: "27/09", dayOfweek: "Saturday" },
-  { id: 7, date: "28/09", dayOfweek: "Sunday" },
+const datas = [
+  { id: 1, data: "22/09", diaSemana: "Segunda-feira" },
+  { id: 2, data: "23/09", diaSemana: "Terça-feira" },
+  { id: 3, data: "24/09", diaSemana: "Quarta-feira" },
+  { id: 4, data: "25/09", diaSemana: "Quinta-feira" },
+  { id: 5, data: "26/09", diaSemana: "Sexta-feira" },
+  { id: 6, data: "27/09", diaSemana: "Sábado" },
+  { id: 7, data: "28/09", diaSemana: "Domingo" },
 ];
 
-export default function DateCard({ barber = "Renan Souza", service = "Corte selecionado", onConfirm }) {
+export default function DateCard({
+  barber = "Renan Souza",
+  service = "Corte de cabelo",
+  onConfirm,
+}) {
   const [selectedDate, setSelectedDate] = useState(null);
 
   const handleSelect = (date) => {
     setSelectedDate(date);
-    if (onConfirm) onConfirm(date);
   };
 
   return (
     <>
-      <div>
-        <h1 className="text-5xl sm:text-6xl font-semibold text-center tracking-tighter">
-          Selecione data e horário
+      <div className="text-center space-y-2">
+        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">
+          Escolha sua data e horário
         </h1>
-        <p className="flex justify-center">Barbeiro: {barber}</p>
-        <p className="flex justify-center">{service}</p>
+        <p className="text-muted-foreground">Barbeiro: <span className="font-semibold">{barber}</span></p>
+        <p className="text-muted-foreground">{service}</p>
       </div>
 
-      <div className="mx-auto container flex gap-6 justify-center py-6 flex-wrap">
-        {dates.map((date) => (
+      {/* Cards de datas */}
+      <div className="mx-auto container flex gap-6 justify-center py-8 flex-wrap">
+        {datas.map((date) => (
           <Card
             key={date.id}
-            className={`max-w-md w-72 cursor-pointer transition-shadow ${
+            className={`relative max-w-md w-72 cursor-pointer transition-all rounded-xl ${
               selectedDate?.id === date.id
-                ? "border-2 border-primary shadow-lg"
-                : "border border-border hover:shadow-md"
+                ? "border-2 border-primary shadow-lg scale-105"
+                : "border border-border hover:shadow-md hover:scale-105"
             }`}
             onClick={() => handleSelect(date)}
           >
             <CardHeader className="flex flex-col items-center gap-2">
-              <CardTitle className="text-xl font-bold text-center">
-                {date.date}
+              <CardTitle className="text-2xl font-bold text-center">
+                {date.data}
               </CardTitle>
-              <CardDescription className="text-center text-sm text-muted-foreground">
-                {date.dayOfweek}
+              <CardDescription className="text-center text-base">
+                {date.diaSemana}
               </CardDescription>
             </CardHeader>
+
+            {/* Ícone de seleção */}
+            {selectedDate?.id === date.id && (
+              <CheckCircle2 className="absolute top-3 right-3 text-primary h-6 w-6" />
+            )}
           </Card>
         ))}
       </div>
 
-      {selectedDate && onConfirm && (
+      {/* Botão de confirmar */}
+      {selectedDate && (
         <div className="flex justify-center mt-6">
-          <Button onClick={() => onConfirm(selectedDate)} size="lg">
-            Confirmar Data
+          <Button
+            onClick={() => onConfirm && onConfirm(selectedDate)}
+            size="lg"
+            className="px-8"
+          >
+            Confirmar {selectedDate.data}
           </Button>
         </div>
       )}

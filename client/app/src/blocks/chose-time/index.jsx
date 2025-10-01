@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { CheckCircle2 } from "lucide-react";
 
 const times = [
   { id: 1, hour: "09:00" },
@@ -28,40 +29,51 @@ export default function TimeCard({ onConfirm }) {
 
   return (
     <>
-      <div>
-        <h1 className="text-5xl sm:text-6xl font-semibold text-center tracking-tighter">
-          Escolha um horário
+      <div className="text-center space-y-2">
+        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">
+          Escolha seu horário
         </h1>
+        <p className="text-muted-foreground">
+          Selecione o melhor horário para seu atendimento
+        </p>
       </div>
 
-      <div className="mx-auto container flex gap-6 justify-center py-6 flex-wrap">
+      <div className="mx-auto container flex gap-6 justify-center py-8 flex-wrap">
         {times.map((time) => (
           <Card
             key={time.id}
-            className={`max-w-md w-72 cursor-pointer transition-shadow ${
+            className={`relative max-w-md w-40 cursor-pointer transition-all rounded-xl ${
               selectedTime?.id === time.id
-                ? "border-2 border-primary shadow-lg"
-                : "border border-border hover:shadow-md"
+                ? "border-2 border-primary shadow-lg scale-105"
+                : "border border-border hover:shadow-md hover:scale-105"
             }`}
             onClick={() => handleSelect(time)}
           >
-            <CardHeader className="flex flex-col items-center gap-2">
-              <CardTitle className="text-xl font-bold text-center">
+            <CardHeader className="flex flex-col items-center gap-2 py-6">
+              <CardTitle className="text-2xl font-semibold text-center">
                 {time.hour}
               </CardTitle>
             </CardHeader>
+
+            {/* Ícone de seleção */}
+            {selectedTime?.id === time.id && (
+              <CheckCircle2 className="absolute top-3 right-3 text-primary h-5 w-5" />
+            )}
           </Card>
         ))}
       </div>
 
-      {selectedTime && onConfirm && (
-        <div className="flex justify-center mt-6 cursor-pointer">
-          <Button size="lg" className='cursor-pointer' onClick={() => onConfirm(selectedTime)}>
-            Confirmar Horário
+      {selectedTime && (
+        <div className="flex justify-center mt-6">
+          <Button
+            size="lg"
+            className="px-8"
+            onClick={() => onConfirm && onConfirm(selectedTime)}
+          >
+            Confirmar {selectedTime.hour}
           </Button>
         </div>
       )}
     </>
   );
 }
-    

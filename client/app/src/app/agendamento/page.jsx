@@ -8,6 +8,7 @@ import CardDadosAgendamento from "@/blocks/data-scheduling";
 import CardConfirmaAgendamento from "@/blocks/finalize-scheduling";
 import Footer05Page from "@/components/footer/footer-05";
 import Navbar01Page from "@/components/navbar/navbar-01";
+import { Button } from "@/components/ui/button";
 
 export default function Agendamento() {
     const [step, setStep] = useState(1);
@@ -53,16 +54,25 @@ export default function Agendamento() {
                 </div>
 
                 {step > 1 && (
-                    <div className="mb-4">
-                        <button
+                    <div className="mb-6 flex justify-start">
+                        <Button
                             onClick={goBack}
-                            className="px-4 py-2 rounded-lg border cursor-pointer"
+                            variant="outline"
+                            className="flex items-center gap-2 rounded-full transition hover:shadow-md"
                         >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-4 w-4"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                            </svg>
                             Voltar
-                        </button>
+                        </Button>
                     </div>
                 )}
-
                 {step === 1 && (
                     <Chose
                         onSelect={(service) => {
@@ -129,7 +139,7 @@ export default function Agendamento() {
                             Agendamento confirmado!
                         </h2>
                         <p className="mt-2 text-muted-foreground">
-                            Seu horário foi reservado com sucesso. Checar na sua aba perfil a confirmação e 
+                            Seu horário foi reservado com sucesso. Checar na sua aba perfil a confirmação e
                             os futuros eventos
                         </p>
                     </section>

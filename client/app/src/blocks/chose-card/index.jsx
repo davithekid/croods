@@ -13,7 +13,7 @@ import { User } from "lucide-react";
 export default function PricingCard({ onSelect }) {
   const barbers = [
     { id: 1, name: "Renan Souza", description: "Barbeiro Especialista" },
-    { id: 2, name: "Carlos Silva", description: "Barbeiro Profissional" },
+    { id: 2, name: "Josué", description: "Barbeiro Especialista" },
   ];
 
   return (

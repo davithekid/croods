@@ -4,16 +4,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { CircleCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { CircleCheck, CircleHelp } from "lucide-react";
 import { useState } from "react";
-
-const DESCONTO_ANUAL = 20;
 
 const planos = [
   {
@@ -26,7 +19,6 @@ const planos = [
       { title: "Máquina ou tesoura" },
       { title: "Degradê ou corte social" },
     ],
-    buttonText: "Agendar Corte",
   },
   {
     name: "Premium",
@@ -40,7 +32,6 @@ const planos = [
       { title: "Finalização profissional" },
       { title: "Hidratação leve opcional" },
     ],
-    buttonText: "Agendar Premium",
     isPopular: true,
   },
   {
@@ -56,12 +47,15 @@ const planos = [
       { title: "Hidratação capilar" },
       { title: "Toalha quente e experiência premium" },
     ],
-    buttonText: "Agendar Super Premium",
   },
 ];
 
+const barbers = ["Josue", "Renan"];
+
 const Pricing03 = () => {
-  const [selectedBillingPeriod, setSelectedBillingPeriod] = useState("mensal");
+  const [selectedBarber, setSelectedBarber] = useState(barbers[0]);
+
+  const planosFiltrados = planos;
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center py-12 px-6">
@@ -70,28 +64,25 @@ const Pricing03 = () => {
       </h1>
 
       <Tabs
-        value={selectedBillingPeriod}
-        onValueChange={setSelectedBillingPeriod}
-        className="mt-8"
+        value={selectedBarber}
+        onValueChange={setSelectedBarber}
+        className="mt-8 w-full max-w-lg"
       >
-        <TabsList className="h-11 rounded-full">
-          <TabsTrigger
-            value="mensal"
-            className="rounded-full data-[state=active]:shadow-none px-4"
-          >
-            Mensal
-          </TabsTrigger>
-          <TabsTrigger    
-            value="anual"
-            className="rounded-full data-[state=active]:shadow-none px-4"
-          >
-            Anual (Economize {DESCONTO_ANUAL}%)
-          </TabsTrigger>
+        <TabsList className="h-11 rounded-full m-auto">
+          {barbers.map((barber) => (
+            <TabsTrigger
+              key={barber}
+              value={barber}
+              className="rounded-full data-[state=active]:shadow-none px-4"
+            >
+              {barber}
+            </TabsTrigger>
+          ))}
         </TabsList>
       </Tabs>
 
-      <div className="mt-12 max-w-(--breakpoint-lg) mx-auto grid grid-cols-1 lg:grid-cols-3 items-center gap-8">
-        {planos.map((plano) => (
+      <div className="mt-12 max-w-(--breakpoint-lg) mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {planosFiltrados.map((plano) => (
           <div
             key={plano.name}
             className={cn("relative border rounded-xl p-6", {
@@ -108,10 +99,7 @@ const Pricing03 = () => {
             <p className="text-sm text-muted-foreground">{plano.cortes}</p>
 
             <p className="mt-2 text-4xl font-bold">
-              R$
-              {selectedBillingPeriod === "mensal"
-                ? plano.price
-                : plano.price * ((100 - DESCONTO_ANUAL) / 100)}
+              R$ {plano.price}
               <span className="ml-1.5 text-sm text-muted-foreground font-normal">
                 /mês
               </span>
@@ -125,8 +113,11 @@ const Pricing03 = () => {
               variant={plano.isPopular ? "default" : "outline"}
               size="lg"
               className="w-full mt-6"
+              onClick={() =>
+                alert(`Entre em contato com ${selectedBarber} para assinar este plano!`)
+              }
             >
-              {plano.buttonText}
+              Entre em contato
             </Button>
 
             <Separator className="my-8" />
@@ -136,14 +127,6 @@ const Pricing03 = () => {
                 <li key={feature.title} className="flex items-start gap-1.5">
                   <CircleCheck className="h-4 w-4 mt-1 text-green-600" />
                   {feature.title}
-                  {feature.tooltip && (
-                    <Tooltip>
-                      <TooltipTrigger className="cursor-help">
-                        <CircleHelp className="h-4 w-4 mt-1 text-gray-500" />
-                      </TooltipTrigger>
-                      <TooltipContent>{feature.tooltip}</TooltipContent>
-                    </Tooltip>
-                  )}
                 </li>
               ))}
             </ul>
