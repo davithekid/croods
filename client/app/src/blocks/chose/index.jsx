@@ -62,7 +62,6 @@ export default function Chose({ onSelect }) {
           </p>
         </div>
 
-        {/* Serviços principais */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {services.map((service, index) => (
             <div
@@ -89,12 +88,11 @@ export default function Chose({ onSelect }) {
           ))}
         </div>
 
-        {/* Extras aparecem só depois que o usuário escolhe um serviço */}
         {selectedService && (
           <div className="space-y-6">
             <h3 className="text-xl font-semibold flex items-center gap-2">
               <PlusCircle className="h-5 w-5 text-primary" />
-              Adicionais
+              Adicionais <span className="text-red-500">*opcional</span>
             </h3>
             <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
               {extraOptions.map((extra, i) => (

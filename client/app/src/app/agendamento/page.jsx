@@ -9,6 +9,7 @@ import CardConfirmaAgendamento from "@/blocks/finalize-scheduling";
 import Footer05Page from "@/components/footer/footer-05";
 import Navbar01Page from "@/components/navbar/navbar-01";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Agendamento() {
     const [step, setStep] = useState(1);
@@ -139,9 +140,14 @@ export default function Agendamento() {
                             Agendamento confirmado!
                         </h2>
                         <p className="mt-2 text-muted-foreground">
-                            Seu horário foi reservado com sucesso. Checar na sua aba perfil a confirmação e
-                            os futuros eventos
+                            Seu horário foi reservado com sucesso. Checar na sua aba perfil o status do agendamento
                         </p>
+
+                        <Button className={'mt-5'}>
+                            <Link href='/perfil'>       
+                            Visualizar agendamento e status
+                            </Link>
+                        </Button>
                     </section>
                 )}
             </main>
