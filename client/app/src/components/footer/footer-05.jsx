@@ -7,6 +7,7 @@ const footerLinks = [
   { title: "Agendamentos", href: "/agendar" },
   { title: "Serviços", href: "/servicos" },
   { title: "Planos", href: "/planos" },
+  { title: "Sobre Nós", href: "/sobre" },
   { title: "Contato", href: "/contato" },
 ];
 
