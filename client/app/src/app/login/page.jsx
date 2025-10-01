@@ -40,18 +40,18 @@ const Login03Page = () => {
     <div className="h-screen flex items-center justify-center">
       <div className="w-full h-full grid lg:grid-cols-2">
         <div className="max-w-xs m-auto w-full flex flex-col items-center">
-          <div className="block dark:hidden">
-            <img src="./logo-dark.svg" className="w-13" alt="" />
+          <div className="flex items-center gap-8">
+            <div className="block dark:hidden">
+              <img src="./logo-dark.svg" className="w-13" alt="" />
+            </div>
+            <div className="hidden dark:block">
+              <img src="./logo.svg" className="w-13" alt="" />
+            </div>
+            <ModeToggle />
           </div>
-          <div className="hidden dark:block">
-            <img src="./logo.svg" className="w-13" alt="" />
-          </div>
-          <ModeToggle />
           <p className="mt-4 text-xl font-semibold tracking-tight">
             Bem-vindo aos Croods!
           </p>
-
-
           <Form {...form}>
             <form className="w-full space-y-4 mt-6" onSubmit={form.handleSubmit(onSubmit)}>
               <FormField
@@ -98,7 +98,14 @@ const Login03Page = () => {
             </p>
           </div>
         </div>
-        <div className="bg-muted hidden lg:block border-l" />
+        <div
+          className="hidden lg:block border-l bg-cover bg-center"
+          style={{
+            backgroundImage: "url('https://illustrations.popsy.co/yellow/app-launch.svg')",
+            height: "100%",
+            width: "100%",
+          }}
+        />
       </div>
     </div>
   );
