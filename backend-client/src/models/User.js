@@ -37,14 +37,14 @@ User.init({
     role: {
         type: DataTypes.ENUM('user', 'barber'),
         allowNull: false,
-        unique: true
+        defaultValue: 'user'
     }
 }, {
     sequelize,
     tableName: 'users',
     timestamps: true,
     createdAt: 'created_at',
-    updatedAt: 'update_at',
+    updatedAt: 'updated_at',
 
     hooks: {
         beforeCreate: async (user) => {

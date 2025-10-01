@@ -8,7 +8,7 @@ export default class UserService {
         const result = await User.paginate({
             page,
             paginate: limit,
-            order: [['createdAt', 'DESC']]
+            order: [['created_At', 'DESC']]
         })
         return result;
     }

@@ -1,5 +1,6 @@
-import { login, register } from '../controllers/AuthController.js'
 import jwt from 'jsonwebtoken';
+import login from '../controllers/AuthController.js'
+import register from '../controllers/AuthController.js'
 
 export default async function authRoutes(app) {
   app.post("/login", async (request, reply) => {

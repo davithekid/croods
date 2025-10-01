@@ -1,8 +1,8 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../config/database.js";
 import User from "./User.js";
-import Services from "./Services";
-import DayOff from "./DayOff";
+import Services from './Services.js'
+import DayOff from "./DayOff.js";
 
 export default class Scheduling extends Model { }
 

@@ -1,7 +1,7 @@
 import AuthService from "../services/AuthService.js";
 
 export default class AuthController {
-    static async login(req, reply) {
+    async login(req, reply) {
         const { email, password } = req.body;
 
         try {
@@ -21,7 +21,7 @@ export default class AuthController {
         }
     }
 
-    static async register(req, reply) {
+    async register(req, reply) {
         try {
             const user = await AuthService.register(req.body);
             return reply.status(201).send({

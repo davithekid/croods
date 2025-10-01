@@ -26,7 +26,7 @@ app.get('/', (request, reply) => {
 })
 
 // register cookies...
-app.register(fastify.fastifyCookie, {
+app.register(fastifyCookie, {
     secret: process.env.COOKIE_SECRET || 'supersecret',
     parseOptions: {}
 })
