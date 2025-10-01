@@ -41,9 +41,11 @@ const Login02Page = () => {
       <div
         className="max-w-sm w-full flex flex-col items-center border rounded-lg px-6 py-8 shadow-sm/5 bg-card">
         <div className="flex flex-col gap-5 items-center">
+          <div className="flex items-center gap-8">
           <Logo className="h-9 w-9" />
           <ModeToggle />
         </div>
+          </div>
         <p className="mt-4 text-xl font-semibold tracking-tight">
           Acesso ao Sistema
         </p>

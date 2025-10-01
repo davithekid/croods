@@ -49,7 +49,6 @@ const Register = () => {
                 />
                 <div className="max-w-xs m-auto w-full flex flex-col items-center">
                     <div className="flex items-center gap-8">
-
                     <div className="block dark:hidden">
                         <img src="./logo-dark.svg" className="w-13" alt="" />
                     </div>
