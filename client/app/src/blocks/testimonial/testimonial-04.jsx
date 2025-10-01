@@ -66,34 +66,22 @@ const Testimonial04 = () => {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center py-12 gap-12 relative">
       <h2 className="text-5xl font-semibold text-center tracking-[-0.03em] px-6 text-pretty">
-        Histórias de Sucesso
+        Feedback de nossos clientes
       </h2>
-      <p className="text-center text-muted-foreground text-xl max-w-2xl">
-        Depoimentos reais de pessoas que usam e amam o Zenith todos os dias
-      </p>
 
-      {/* Primeira fileira com fade nas laterais */}
       <div className="relative w-full overflow-hidden">
-        {/* Gradiente de fade à esquerda */}
         <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-        
-        {/* Gradiente de fade à direita */}
         <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
-        
+
         <div className="marquee-track-left flex gap-6 min-w-max">
           <TestimonialList testimonials={testimonials} />
           <TestimonialList testimonials={testimonials} />
         </div>
       </div>
-
-      {/* Segunda fileira com fade nas laterais */}
       <div className="relative w-full overflow-hidden">
-        {/* Gradiente de fade à esquerda */}
         <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-        
-        {/* Gradiente de fade à direita */}
         <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
-        
+
         <div className="marquee-track-right flex gap-6 min-w-max">
           <TestimonialList testimonials={testimonials} />
           <TestimonialList testimonials={testimonials} />

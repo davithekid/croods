@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Scissors, Sun, Sparkles, Brush, Droplets, Flame, Stars } from "lucide-react";
+import Link from "next/link";
 
 const ServicosIndex = () => {
     const barbers = [
@@ -11,20 +12,20 @@ const ServicosIndex = () => {
             services: [
                 {
                     title: "Corte Completo",
-                    price: "R$ 50,00",
+                    price: "R$ 35,00",
                     icon: <Scissors className="h-6 w-6" />,
                     description: "Corte moderno e bem finalizado.",
                     items: ["Tesoura ou máquina", "Acabamento detalhado"]
                 },
                 {
                     title: "Barba Completa",
-                    price: "R$ 35,00",
+                    price: "R$ 50,00",
                     icon: <Sun className="h-6 w-6" />,
                     description: "Barba alinhada e estilosa.",
                     items: ["Modelagem da barba", "Toalha quente"]
                 },
                 {
-                    title: "Barba Completa",
+                    title: "Combo Premium",
                     price: "R$ 35,00",
                     icon: <Sun className="h-6 w-6" />,
                     description: "Barba alinhada e estilosa.",
@@ -36,15 +37,22 @@ const ServicosIndex = () => {
             name: "Renan",
             services: [
                 {
-                    title: "Luzes Masculinas",
-                    price: "R$ 120,00",
+                    title: "Corte",
+                    price: "R$40,00",
                     icon: <Sparkles className="h-6 w-6" />,
                     description: "Transforme seu visual com luzes.",
                     items: ["Descoloração", "Matização"]
                 },
                 {
                     title: "Sobrancelha",
-                    price: "R$ 20,00",
+                    price: "R$5,00",
+                    icon: <Brush className="h-6 w-6" />,
+                    description: "Design de sobrancelha discreto.",
+                    items: ["Limpeza com pinça", "Correção de falhas"]
+                },
+                {
+                    title: "Luzes",
+                    price: "R$ 80,00",
                     icon: <Brush className="h-6 w-6" />,
                     description: "Design de sobrancelha discreto.",
                     items: ["Limpeza com pinça", "Correção de falhas"]
@@ -55,12 +63,9 @@ const ServicosIndex = () => {
 
     return (
         <section className="py-20">
-            <div className="container mx-auto max-w-6xl space-y-12">
+            <div className="container mx-auto max-w-6xl space-y-8">
                 <div className="text-center space-y-4">
                     <h2 className="text-3xl font-semibold md:text-4xl">Nossos Serviços</h2>
-                    <p className="text-muted-foreground mx-auto max-w-2xl text-lg md:text-xl">
-                        Escolha seu barbeiro e descubra os serviços que ele oferece.
-                    </p>
                 </div>
 
                 <Tabs defaultValue={barbers[0].name}>
@@ -81,16 +86,16 @@ const ServicosIndex = () => {
                                         className="border-border space-y-6 rounded-lg border p-8 transition-shadow hover:shadow-md"
                                     >
                                         <div className="flex items-center justify-between">
-                                            <div className="flex items-center gap-4">
+                                            <div className="flex flex-col m-auto items-center gap-4">
                                                 <div className="bg-muted rounded-full p-3">{service.icon}</div>
                                                 <h3 className="text-xl font-semibold">{service.title}</h3>
+                                                <span className="text-primary font-bold">{service.price}</span>
                                             </div>
-                                            <span className="text-primary font-bold">{service.price}</span>
                                         </div>
-                                        <p className="text-muted-foreground leading-relaxed">{service.description}</p>
+                                        <p className="text-muted-foreground leading-relaxed flex justify-center">{service.description}</p>
                                         <div className="space-y-2">
                                             {service.items.map((item, itemIndex) => (
-                                                <div key={itemIndex} className="flex items-center gap-2">
+                                                <div key={itemIndex} className="flex items-center gap-2 justify-center">
                                                     <div className="bg-foreground h-1.5 w-1.5 rounded-full" />
                                                     <span className="text-sm font-medium">{item}</span>
                                                 </div>
@@ -102,7 +107,9 @@ const ServicosIndex = () => {
                         </TabsContent>
                     ))}
                     <Button className={'m-auto'}>
-                        Ver todos os serviços
+                        <Link href='/servicos'>
+                            Ver todos os serviços
+                        </Link>
                     </Button>
                 </Tabs>
             </div>
