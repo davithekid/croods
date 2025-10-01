@@ -22,6 +22,20 @@ const Services = () => {
           description: "Barba alinhada e estilosa.",
           items: ["Modelagem da barba", "Toalha quente"]
         },
+        {
+          title: "Barba Completa",
+          price: "R$ 35,00",
+          icon: <Sun className="h-6 w-6" />,
+          description: "Barba alinhada e estilosa.",
+          items: ["Modelagem da barba", "Toalha quente"]
+        },
+        {
+          title: "Barba Completa",
+          price: "R$ 35,00",
+          icon: <Sun className="h-6 w-6" />,
+          description: "Barba alinhada e estilosa.",
+          items: ["Modelagem da barba", "Toalha quente"]
+        },
       ],
     },
     {
@@ -41,6 +55,20 @@ const Services = () => {
           description: "Design de sobrancelha discreto.",
           items: ["Limpeza com pinça", "Correção de falhas"]
         },
+        {
+          title: "Sobrancelha",
+          price: "R$ 20,00",
+          icon: <Brush className="h-6 w-6" />,
+          description: "Design de sobrancelha discreto.",
+          items: ["Limpeza com pinça", "Correção de falhas"]
+        },
+        {
+          title: "Sobrancelha",
+          price: "R$ 20,00",
+          icon: <Brush className="h-6 w-6" />,
+          description: "Design de sobrancelha discreto.",
+          items: ["Limpeza com pinça", "Correção de falhas"]
+        },
       ],
     },
   ];
@@ -49,13 +77,12 @@ const Services = () => {
     <section className="py-12">
       <div className="container mx-auto max-w-6xl space-y-12">
         <div className="text-center space-y-4">
-          <h2 className="text-3xl font-semibold md:text-4xl">Nossos Serviços</h2>
+          <h2 className="text-3xl font-semibold md:text-4xl font-serif">Nossos Serviços</h2>
           <p className="text-muted-foreground mx-auto max-w-2xl text-lg md:text-xl">
             Escolha seu barbeiro e descubra os serviços que ele oferece.
           </p>
         </div>
 
-        {/* Componente de abas */}
         <Tabs defaultValue={barbers[0].name}>
           <TabsList className="justify-center m-auto mb-8">
             {barbers.map((barber) => (

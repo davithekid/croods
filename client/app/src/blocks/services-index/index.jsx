@@ -106,7 +106,7 @@ const ServicosIndex = () => {
                             </div>
                         </TabsContent>
                     ))}
-                    <Button className={'m-auto'}>
+                    <Button className={'m-auto mt-5'}>
                         <Link href='/servicos'>
                             Ver todos os serviços
                         </Link>

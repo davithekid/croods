@@ -30,13 +30,17 @@ export default function CardConfirmaAgendamento({
                         <Label htmlFor="whatsapp">WhatsApp</Label>
                         <Input id="whatsapp" placeholder="(11) 99999-9999" />
                     </div>
+                    <div className="flex flex-col space-y-1.5">
+                        <Label htmlFor="name">Email</Label>
+                        <Input id="name" placeholder="Insira o seu nome completo" />
+                    </div>
                 </form>
             </CardContent>
 
             <CardFooter>
 
                 <Confirm
-                    clientName="Renan Souza"
+                    clientName="Davi Chagas"
                     whatsapp="(11) 99999-9999"
                     service={service?.title || service?.name}
                     barber={barber?.title || barber?.name || barber}

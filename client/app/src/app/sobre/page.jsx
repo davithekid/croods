@@ -13,7 +13,6 @@ export default function Sobre() {
 
             <main className="mx-auto container">
                 <Team05Page />
-                <Feature197 />
             </main>
 
             <section className="mx-auto container">

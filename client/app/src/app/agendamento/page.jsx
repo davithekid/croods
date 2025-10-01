@@ -126,10 +126,11 @@ export default function Agendamento() {
                 {step === 6 && (
                     <section className="text-center py-10">
                         <h2 className="text-2xl font-bold text-green-600">
-                            Agendamento concluído com sucesso!
+                            Agendamento confirmado!
                         </h2>
                         <p className="mt-2 text-muted-foreground">
-                            Você receberá a confirmação no seu WhatsApp em instantes.
+                            Seu horário foi reservado com sucesso. Checar na sua aba perfil a confirmação e 
+                            os futuros eventos
                         </p>
                     </section>
                 )}
