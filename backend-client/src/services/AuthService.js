@@ -33,18 +33,14 @@ export default class AuthService {
 
     static async register({ name, email, cpf, password }) {
         const existingUser = await User.findOne({ where: { email } });
-        if (existingUser) {
-            throw new Error("EMAIL_EXISTS");
-        }
-
-        const hashedPassword = await bcrypt.hash(password, 10);
+        if (existingUser) throw new Error("EMAIL_EXISTS");
 
         const user = await User.create({
             name,
             email,
             cpf,
-            password: hashedPassword,
-            role: "usuario",
+            password,  
+            role: "user",
         });
 
         return {

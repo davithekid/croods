@@ -1,29 +1,44 @@
+import AuthService from '../services/AuthService.js';
 import jwt from 'jsonwebtoken';
-import login from '../controllers/AuthController.js'
-import register from '../controllers/AuthController.js'
 
 export default async function authRoutes(app) {
-  app.post("/login", async (request, reply) => {
-    const { email, password } = request.body;
+  app.post('/login', async (req, reply) => {
+    const { email, password } = req.body;
 
-    // validar user
-    const user = await login(request, reply); // controller valida
-    if (!user) return;
+    try {
+      // pega o usuário e token do service
+      const { user } = await AuthService.login(email, password);
 
-    const token = jwt.sign({
-      id: user.id, role: user.role
-    }, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_EXPIRES_IN || '1h'
-    });
+      // cria JWT
+      const token = jwt.sign(
+        { id: user.id, role: user.role },
+        process.env.JWT_SECRET,
+        { expiresIn: process.env.JWT_EXPIRES_IN || '1h' }
+      );
 
-    reply
-      .setCookie('Token', token, {
-        httpOnly: true, // evita acesso via js no browser e protege cookies de XSS
-        secure: process.env.NODE_ENV === 'production', // evita token interceptado em http inseguro
-        sameSite: 'strict', // restringe envio de cookies apenas para reqs originadas no site
-        maxAge: parseInt(process.env.COOKIE_MAX_AGE) || 3600,
-      })
-      .send({ message: 'login successfull!' })
-  })
-  app.post("/register", register)
+      reply
+        .setCookie('Token', token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'strict',
+          maxAge: parseInt(process.env.COOKIE_MAX_AGE) || 3600,
+        })
+        .send({ message: 'Login realizado com sucesso!', user , token});
+
+    } catch (error) {
+      if (error.message === 'NOT_FOUND') return reply.status(404).send({ message: 'Usuário não encontrado' });
+      if (error.message === 'INVALID_PASSWORD') return reply.status(401).send({ message: 'Senha inválida' });
+      return reply.status(500).send({ message: 'Erro no servidor' });
+    }
+  });
+
+  app.post('/register', async (req, reply) => {
+    try {
+      const user = await AuthService.register(req.body);
+      reply.status(201).send({ message: 'Usuário registrado com sucesso', user });
+    } catch (error) {
+      if (error.message === 'EMAIL_EXISTS') return reply.status(400).send({ message: 'Email já cadastrado' });
+      return reply.status(500).send({ message: 'Erro no servidor' });
+    }
+  });
 }
