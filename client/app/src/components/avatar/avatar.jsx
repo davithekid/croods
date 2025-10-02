@@ -1,6 +1,6 @@
 'use client';
 
-import { logoutAction } from "@/lib/auth"; // caminho pro seu arquivo 'use server'
+import { logoutAction } from "@/lib/auth"; 
 import {
   Avatar,
   AvatarFallback,

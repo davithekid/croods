@@ -58,8 +58,8 @@ export default class AuthController {
     }
 
     // Logout
-    async logout(req, reply) {
-        reply.clearCookie('Token', { path: '/' });
+    async logout(req, reply) {  
+        reply.clearCookie('Token', { path: '/' });      
         return reply.send({ message: 'Logout realizado' });
     }
 }

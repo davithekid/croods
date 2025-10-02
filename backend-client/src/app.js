@@ -24,12 +24,12 @@ await app.register(cors, {
     credentials: true,
 })
 
-app.register(fastifyFormbody);
+app.register(fastifyFormbody);  
 
 app.get('/', (request, reply) => {
     return reply.status(200).send({ message: 'Hello API!!!' });
 })
-
+    
 // register cookies...
 app.register(fastifyCookie, {
     secret: process.env.COOKIE_SECRET || 'supersecret',

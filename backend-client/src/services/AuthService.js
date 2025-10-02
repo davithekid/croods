@@ -54,7 +54,7 @@ export default class AuthService {
         if (!token) return null;
 
         try {
-            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);      
             const user = await User.findOne({ where: { id: decoded.id } });
 
             if (!user) return null;

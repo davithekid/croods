@@ -69,3 +69,25 @@ export async function logoutAction() {
     cookies().delete('Token');
     redirect('/login')
 }
+export const handleRegister = async (_prev, formData) => {
+  try {
+    const body = { ...formData, role: 'user' };
+
+    const res = await fetch(`${API_URL}/auth/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+      cache: "no-store",
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      return { error: data.message || "Erro ao registrar" };
+    }
+    return { success: true, user: data.user };
+  } catch (err) {
+    console.error("Erro no handleRegister:", err);
+    return { error: "Erro no servidor. Tente novamente." };
+  }
+};
