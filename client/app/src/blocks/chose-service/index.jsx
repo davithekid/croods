@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { Scissors, User, Sparkles, Crown, PlusCircle } from "lucide-react";
 import { useState } from "react";
 
@@ -11,19 +12,16 @@ export default function Chose({ onSelect }) {
     {
       icon: <Scissors className="h-5 w-5" />,
       title: "Corte de Cabelo",
-      description: "Corte clássico ou moderno, feito sob medida para o seu estilo.",
       price: 40,
     },
     {
       icon: <User className="h-5 w-5" />,
       title: "Corte + Barba",
-      description: "Um visual completo, com corte de cabelo alinhado e barba bem desenhada.",
       price: 70,
     },
     {
       icon: <Sparkles className="h-5 w-5" />,
       title: "Cabelo + Barba + Sobrancelha",
-      description: "Pacote completo para quem quer sair impecável da barbearia.",
       price: 85,
     },
 
@@ -81,9 +79,6 @@ export default function Chose({ onSelect }) {
                 </span>
               </div>
 
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                {service.description}
-              </p>
             </div>
           ))}
         </div>
@@ -111,12 +106,12 @@ export default function Chose({ onSelect }) {
               ))}
             </div>
 
-            <button
+            <Button
               onClick={handleConfirm}
-              className="mt-4 w-full rounded-lg cursor-pointer dark:bg-zinc-900 px-4 py-2 duration-200 font-medium hover:bg-zinc-700/60 transition"
+              className="mt-4 w-full rounded-lg cursor-pointer  px-4 py-2 duration-200 font-medium transition"
             >
-              Confirmar Pedido
-            </button>
+              Confirmar Seleção
+            </Button>
           </div>
         )}
       </div>

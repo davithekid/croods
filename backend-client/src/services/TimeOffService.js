@@ -1,12 +1,12 @@
-import DayOff from "../models/DayOff.js";
+import TimeOff from "../models/TimeOff.js";
 
-export default class DayOffService {
+export default class TimeOffService {
     static async getAllDayOffs() {
-        return await DayOff.findAll();
+        return await TimeOff.findAll();
     }
 
     static async getDayOffById(id) {
-        const dayoff = await DayOff.findByPk(id);
+        const dayoff = await TimeOff.findByPk(id);
         if (!dayoff) {
             throw new Error("NOT_FOUND");
         }
@@ -14,11 +14,11 @@ export default class DayOffService {
     }
 
     static async createDayOff({ barber_id, date }) {
-        return await DayOff.create({ barber_id, date });
+        return await TimeOff.create({ barber_id, date });
     }
 
     static async updateDayOff(id, { barber_id, date }) {
-        const dayoff = await DayOff.findByPk(id);
+        const dayoff = await TimeOff.findByPk(id);
         if (!dayoff) {
             throw new Error("NOT_FOUND");
         }
@@ -27,7 +27,7 @@ export default class DayOffService {
     }
 
     static async deleteDayOff(id) {
-        const dayoff = await DayOff.findByPk(id);
+        const dayoff = await TimeOff.findByPk(id);
         if (!dayoff) {
             throw new Error("NOT_FOUND");
         }

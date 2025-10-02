@@ -1,6 +1,6 @@
 import { Feature16 } from "@/blocks/features";
 import Hero01 from "@/blocks/hero";
-import { ServicosIndex } from "@/blocks/services-index";
+import { ServicosIndex } from "@/blocks/services-landing";
 import Testimonial04 from "@/blocks/testimonial/testimonial-04";
 import Footer05Page from "@/components/footer/footer-05";
 import Navbar01Page from "@/components/navbar/navbar-01";

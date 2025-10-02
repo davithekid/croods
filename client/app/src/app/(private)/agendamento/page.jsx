@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
-import Chose from "@/blocks/chose";
-import PricingCard from "@/blocks/chose-card";
+import Chose from "@/blocks/chose-service";
+import PricingCard from "@/blocks/chose-barber";
 import DateCard from "@/blocks/chose-date";
 import TimeCard from "@/blocks/chose-time";
-import CardDadosAgendamento from "@/blocks/data-scheduling";
-import CardConfirmaAgendamento from "@/blocks/finalize-scheduling";
+import CardDadosAgendamento from "@/blocks/data-appointment";
+import CardConfirmaAgendamento from "@/blocks/final-appointment";
 import Footer05Page from "@/components/footer/footer-05";
 import Navbar01Page from "@/components/navbar/navbar-01";
 import { Button } from "@/components/ui/button";
@@ -18,7 +18,7 @@ export default function Agendamento() {
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
 
-    const steps = ["Serviço", "Barbeiro", "Data", "Horário", "Dados", "Finalizado"];
+    const steps = ["Barbeiro", "Serviço", "Data", "Horário", "Dados", "Finalizado"];
 
     const goBack = () => {
         if (step > 1) setStep(step - 1);
@@ -75,24 +75,24 @@ export default function Agendamento() {
                     </div>
                 )}
                 {step === 1 && (
-                    <Chose
-                        onSelect={(service) => {
-                            setSelectedService(service);
-                            setStep(2);
-                        }}
-                    />
-                )}
-
-                {step === 2 && (
                     <section className="mx-auto container">
                         <PricingCard
                             onSelect={(barber) => {
                                 setSelectedBarber(barber);
-                                setStep(3);
+                                setStep(2);
                             }}
                         />
                     </section>
                 )}
+                {step === 2 && (
+                    <Chose
+                        onSelect={(service) => {
+                            setSelectedService(service);
+                            setStep(3);
+                        }}
+                    />
+                )}
+
 
                 {step === 3 && (
                     <section>
@@ -144,8 +144,8 @@ export default function Agendamento() {
                         </p>
 
                         <Button className={'mt-5'}>
-                            <Link href='/perfil'>       
-                            Visualizar agendamento e status
+                            <Link href='/perfil'>
+                                Visualizar agendamento e status
                             </Link>
                         </Button>
                     </section>

@@ -2,11 +2,11 @@ import { Model, DataTypes } from "sequelize";
 import sequelize from "../config/database.js";
 import User from "./User.js";
 import Services from './Services.js'
-import DayOff from "./DayOff.js";
+import DayOff from "./TimeOff.js";
 
-export default class Scheduling extends Model { }
+export default class Appointments extends Model { }
 
-Scheduling.init({
+Appointments.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -40,11 +40,23 @@ Scheduling.init({
     status: {
         type: DataTypes.ENUM('agendado', 'cancelado', 'concluido'),
         allowNull: false
+    },
+    full_name: {
+        type: DataTypes.STRING(255),
+        allowNull: true
+    },
+    phone: {
+        type: DataTypes.STRING(13),
+        allowNull: true
+    },
+    email: {
+        type: DataTypes.STRING(255),
+        allowNull: true
     }
 }, {
     sequelize,
-    tableName: 'schedulings',
+    tableName: 'appointments',
     timestamps: true,
     createdAt: 'created_at',
-    updatedAt: false
+    updatedAt: 'updated_at'
 })
