@@ -1,17 +1,29 @@
 'use server';
-
+import { z } from 'zod';
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-const API_URL = 'http://127.0.0.1:3333'; 
+const API_URL = 'http://127.0.0.1:3333';
 
+// login auth 
+const loginSchema = z.object({
+    email: z.string().email(),
+    password: z.string().min(6)
+})
 
 export const handleLogin = async (prevState, formData) => {
-    const email = formData.get('email');
-    const password = formData.get('password');
-    const endpoint = 'auth/login';
-
     try {
+        const parsed = loginSchema.safeParse({
+            email: formData.get('email'),
+            password: formData.get('password')
+        })
+
+        if(!parsed.success){
+            return { error: 'Dados inválidos enviados ao servidor.'}
+        }
+        const { email, password} = parsed.data;
+        const endpoint = 'auth/login';
+
         const response = await fetch(`${API_URL}/${endpoint}`, {
             method: 'POST',
             headers: {
@@ -21,7 +33,7 @@ export const handleLogin = async (prevState, formData) => {
             cache: 'no-store'
         });
 
-        const data = await response.json().catch(() => ({})); 
+        const data = await response.json().catch(() => ({}));
 
         if (!response.ok) {
             const errorMessage = data.message || `Erro no servidor com status ${response.status}`;
@@ -29,7 +41,7 @@ export const handleLogin = async (prevState, formData) => {
         }
 
         const token = data.token;
-        
+
         if (!token) {
             return { error: 'O token de autenticação está ausente na resposta da API.' };
         }
@@ -45,7 +57,7 @@ export const handleLogin = async (prevState, formData) => {
     } catch (error) {
         console.error("Erro fatal durante o login:", error);
         if (error.message === 'NEXT_REDIRECT') {
-             throw error; 
+            throw error;
         }
 
         return { error: "Não foi possível conectar ao servidor de autenticação. Verifique a rede." };

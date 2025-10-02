@@ -20,7 +20,7 @@ import { z } from "zod";
 
 const formSchema = z.object({
   email: z.string().email("O e-mail fornecido é inválido."),
-  password: z.string().min(6, "A senha deve ter no mínimo 8 caracteres."),
+  password: z.string().min(6, "A senha deve ter no mínimo 6 caracteres."),
 });
 
 const Login03Page = () => {
