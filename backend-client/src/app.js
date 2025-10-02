@@ -1,14 +1,15 @@
 import fastify from 'fastify';
 import cors from '@fastify/cors';
-import userRoutes from './routes/UserRoutes.js';
-import authRoutes from './routes/AuthRoutes.js';
-import dayOffRoutes from './routes/TimeOffRoutes.js';
-import serviceRoutes from './routes/ServiceRoutes.js';
-import extraServiceRoutes from './routes/ExtraServicesRoutes.js';
-import schedulingRoutes from './routes/AppointmentsRoutes.js';
-import errorHandler from './plugins/errorHandler.js';
 import fastifyCookie from '@fastify/cookie'
 import fastifyFormbody from '@fastify/formbody'
+
+import userRoutes from './routes/UserRoutes.js';
+import authRoutes from './routes/AuthRoutes.js';
+import timeOffRoutes from './routes/TimeOffRoutes.js';
+import serviceRoutes from './routes/ServiceRoutes.js';
+import extraServiceRoutes from './routes/ExtraServicesRoutes.js';
+import appointmentsRoutes from './routes/AppointmentsRoutes.js';
+import errorHandler from './plugins/errorHandler.js';
 
 const app = fastify({
     logger: {
@@ -23,7 +24,7 @@ await app.register(cors, {
     credentials: true,
 })
 
-app.register(fastifyFormbody); 
+app.register(fastifyFormbody);
 
 app.get('/', (request, reply) => {
     return reply.status(200).send({ message: 'Hello API!!!' });
@@ -36,11 +37,10 @@ app.register(fastifyCookie, {
 })
 app.register(errorHandler)
 app.register(userRoutes, { prefix: '/users' });
-app.register(dayOffRoutes, { prefix: '/dayoffs' });
-app.register(authRoutes, {prefix: '/auth'});
-app.register(serviceRoutes, {prefix: '/services'})
-app.register(extraServiceRoutes, {prefix: '/extra-services'})
-app.register(schedulingRoutes, {prefix: '/schedulings'})
-
+app.register(timeOffRoutes, { prefix: '/timeoff' });
+app.register(authRoutes, { prefix: '/auth' });
+app.register(serviceRoutes, { prefix: '/services' })
+app.register(extraServiceRoutes, { prefix: '/extra-services' })
+app.register(appointmentsRoutes, { prefix: '/appointments' })
 
 export default app;

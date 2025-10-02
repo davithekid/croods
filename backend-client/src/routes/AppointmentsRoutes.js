@@ -1,6 +1,6 @@
 import AppointmentsController from "../controllers/AppointmentsController.js";
 
-export default async function schedulingRoutes(app) {
+export default async function appointmentsRoutes(app) {
     app.get('/', AppointmentsController.getAll);
     app.post('/', AppointmentsController.create);
     app.get('/:id', AppointmentsController.getById);
