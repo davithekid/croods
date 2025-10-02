@@ -1,6 +1,6 @@
-import SchedulingService from "../services/SchedulingService.js";
+import SchedulingService from "../services/AppointmentsController.js";
 
-export default class SchedulingController {
+export default class AppointmentsController {
     static async getAll(req, reply) {
         const schedulings = await SchedulingService.getAll();
         return reply.status(200).send(schedulings);

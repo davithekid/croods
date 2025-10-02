@@ -2,9 +2,9 @@ import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database.js";
 import User from "./User.js";
 
-export default class DayOff extends Model {}
+export default class TimeOff extends Model {}
 
-DayOff.init({
+TimeOff.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -21,6 +21,6 @@ DayOff.init({
     }
 }, {
     sequelize,
-    tableName: 'daysoff',
+    tableName: 'time_off',
     timestamps: false
 })

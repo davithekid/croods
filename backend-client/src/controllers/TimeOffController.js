@@ -1,6 +1,6 @@
-import DayOffService from "../services/DayOffService.js";
+import TimeOffController from "../services/TimeOffService.js";
 
-export default class DayOffController {
+export default class TimeOffController {
     static async getAll(req, reply) {
         const dayoffs = await DayOffService.getAllDayOffs();
         return reply.status(200).send(dayoffs);

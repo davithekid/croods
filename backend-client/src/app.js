@@ -2,10 +2,10 @@ import fastify from 'fastify';
 import cors from '@fastify/cors';
 import userRoutes from './routes/UserRoutes.js';
 import authRoutes from './routes/AuthRoutes.js';
-import dayOffRoutes from './routes/DayOffRoutes.js';
+import dayOffRoutes from './routes/TimeOffRoutes.js';
 import serviceRoutes from './routes/ServiceRoutes.js';
 import extraServiceRoutes from './routes/ExtraServicesRoutes.js';
-import schedulingRoutes from './routes/SchedulingRoutes.js';
+import schedulingRoutes from './routes/AppointmentsRoutes.js';
 import errorHandler from './plugins/errorHandler.js';
 import fastifyCookie from '@fastify/cookie'
 import fastifyFormbody from '@fastify/formbody'

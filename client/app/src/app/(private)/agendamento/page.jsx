@@ -18,7 +18,7 @@ export default function Agendamento() {
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
 
-    const steps = ["Serviço", "Barbeiro", "Data", "Horário", "Dados", "Finalizado"];
+    const steps = ["Barbeiro", "Serviço", "Data", "Horário", "Dados", "Finalizado"];
 
     const goBack = () => {
         if (step > 1) setStep(step - 1);
@@ -75,24 +75,24 @@ export default function Agendamento() {
                     </div>
                 )}
                 {step === 1 && (
-                    <Chose
-                        onSelect={(service) => {
-                            setSelectedService(service);
-                            setStep(2);
-                        }}
-                    />
-                )}
-
-                {step === 2 && (
                     <section className="mx-auto container">
                         <PricingCard
                             onSelect={(barber) => {
                                 setSelectedBarber(barber);
-                                setStep(3);
+                                setStep(2);
                             }}
                         />
                     </section>
                 )}
+                {step === 2 && (
+                    <Chose
+                        onSelect={(service) => {
+                            setSelectedService(service);
+                            setStep(3);
+                        }}
+                    />
+                )}
+
 
                 {step === 3 && (
                     <section>
@@ -144,8 +144,8 @@ export default function Agendamento() {
                         </p>
 
                         <Button className={'mt-5'}>
-                            <Link href='/perfil'>       
-                            Visualizar agendamento e status
+                            <Link href='/perfil'>
+                                Visualizar agendamento e status
                             </Link>
                         </Button>
                     </section>

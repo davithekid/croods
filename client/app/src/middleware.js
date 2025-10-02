@@ -7,6 +7,7 @@ const publicRoutes = [
   { path: '/servicos', whenAuthentication: 'next' },
   { path: '/planos', whenAuthentication: 'next' },
   { path: '/sobre', whenAuthentication: 'next' },
+  { path: '/agendamento', whenAuthentication: 'next' },
 ];
     
 const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = '/login';
