@@ -1,6 +1,7 @@
 "use client";
+import React, { useState } from 'react'; 
+import { handleLogin } from "../../../lib/auth"; 
 
-import { Logo } from "@/components/logo";
 import { ModeToggle } from "@/components/theme/button-theme";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,18 +13,20 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const formSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8, "Password must be at least 8 characters long"),
+  email: z.string().email("O e-mail fornecido é inválido."),
+  password: z.string().min(6, "A senha deve ter no mínimo 8 caracteres."),
 });
 
 const Login03Page = () => {
+  const [serverError, setServerError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
   const form = useForm({
     defaultValues: {
       email: "",
@@ -32,8 +35,25 @@ const Login03Page = () => {
     resolver: zodResolver(formSchema),
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    setIsLoading(true);
+    setServerError(null); // Limpa o erro de submissões anteriores
+
+    const formData = new FormData();
+    formData.append('email', data.email);
+    formData.append('password', data.password);
+
+    const result = await handleLogin(null, formData);
+
+    if (result && result.error) {
+      setServerError(result.error);
+      setIsLoading(false);
+      
+      // Opcional: Você pode usar setError do RHF para destacar os campos
+      form.setError("email", { type: "server", message: "Credenciais incorretas." });
+      form.setError("password", { type: "server", message: "Credenciais incorretas." });
+    }
+    
   };
 
   return (
@@ -54,6 +74,12 @@ const Login03Page = () => {
           </p>
           <Form {...form}>
             <form className="w-full space-y-4 mt-6" onSubmit={form.handleSubmit(onSubmit)}>
+              {serverError && (
+                <div className="bg-red-500/10 border border-red-500 text-red-700 dark:text-red-400 p-3 rounded-lg text-sm text-center">
+                  {serverError}
+                </div>
+              )}
+
               <FormField
                 control={form.control}
                 name="email"
@@ -61,7 +87,7 @@ const Login03Page = () => {
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="Email" className="w-full" {...field} />
+                      <Input type="email" placeholder="email@exemplo.com" className="w-full" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -78,8 +104,10 @@ const Login03Page = () => {
                     <FormMessage />
                   </FormItem>
                 )} />
-              <Button type="submit" className="mt-4 w-full">
-                Login
+              
+              {/* 5. Usa o estado de loading e desabilita o botão */}
+              <Button type="submit" className="mt-4 w-full" disabled={isLoading || !form.formState.isValid}>
+                {isLoading ? "Entrando..." : "Login"}
               </Button>
             </form>
           </Form>

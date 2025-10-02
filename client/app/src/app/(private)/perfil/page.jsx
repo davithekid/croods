@@ -1,5 +1,5 @@
-import ProfileHeader from "../../components/examples/profile-page/components/profile-header";
-import ProfileContent from "../../components/examples/profile-page/components/profile-content";
+import ProfileHeader from "../../../components/examples/profile-page/components/profile-header";
+import ProfileContent from "../../../components/examples/profile-page/components/profile-content";
 import Navbar01Page from "@/components/navbar/navbar-01";
 import Footer05Page from "@/components/footer/footer-05";
 

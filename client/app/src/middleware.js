@@ -14,7 +14,7 @@ const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = '/login';
 export function middleware(request) {
   const path = request.nextUrl.pathname;
   const publicRoute = publicRoutes.find(route => route.path === path);
-  const authToken = request.cookies.get('token');
+  const authToken = request.cookies.get('Token');
 
   // Usuário não autenticado
   if (!authToken) {
@@ -34,14 +34,7 @@ export function middleware(request) {
     return NextResponse.redirect(redirectUrl);
   }
 
-  // Usuário autenticado acessando rota privada
-  // Aqui você pode checar JWT expirado
-  // Exemplo:
-  // if (isTokenExpired(authToken)) {
-  //   const redirectUrl = request.nextUrl.clone();
-  //   redirectUrl.pathname = '/login';
-  //   return NextResponse.redirect(redirectUrl);
-  // }
+
 
   return NextResponse.next();
 }

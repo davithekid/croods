@@ -8,6 +8,7 @@ import extraServiceRoutes from './routes/ExtraServicesRoutes.js';
 import schedulingRoutes from './routes/SchedulingRoutes.js';
 import errorHandler from './plugins/errorHandler.js';
 import fastifyCookie from '@fastify/cookie'
+import fastifyFormbody from '@fastify/formbody'
 
 const app = fastify({
     logger: {
@@ -18,8 +19,11 @@ const app = fastify({
 });
 
 await app.register(cors, {
-    origin: 'http://localhost:3000'
+    origin: 'http://localhost:3000',
+    credentials: true,
 })
+
+app.register(fastifyFormbody); 
 
 app.get('/', (request, reply) => {
     return reply.status(200).send({ message: 'Hello API!!!' });
