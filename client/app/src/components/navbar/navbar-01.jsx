@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -10,14 +10,26 @@ import Link from "next/link";
 import { AvatarDemo } from "../avatar/avatar";
 
 const Navbar01Page = () => {
-  const [user, setUser] = useState ();
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    if (token) {
-      setUser({ name: "Josue", avatar: "/avatar.png" });
+    async function fetchUser() {
+      try {
+        const res = await fetch("http://localhost:3333/auth/me", {
+          credentials: "include", 
+          cache: "no-store",
+        });
+        const data = await res.json();
+        setUser(data.user);
+      } catch (err) {
+        console.error("Erro ao buscar usuário:", err);
+      } finally {
+        setLoading(false); 
+      }
     }
+
+    fetchUser();
   }, []);
 
   return (
@@ -29,13 +41,11 @@ const Navbar01Page = () => {
           <NavMenu className="hidden md:block font-semibold" />
 
           <div className="flex items-center gap-3">
-            {user ? (
-              <>
-                <div className="flex items-center gap-2">
-                  <AvatarDemo />
-                  <span className="hidden sm:inline font-medium">{user.name}</span>
-                </div>
-              </>
+            {/* enquanto carrega, não mostra nada */}
+            {loading ? null : user ? (
+              <div className="flex items-center gap-2">
+                <AvatarDemo src={user.avatar} />
+              </div>
             ) : (
               <>
                 <Button variant="outline" className="hidden sm:inline-flex">

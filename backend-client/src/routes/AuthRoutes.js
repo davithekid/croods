@@ -23,7 +23,7 @@ export default async function authRoutes(app) {
           sameSite: 'strict',
           maxAge: parseInt(process.env.COOKIE_MAX_AGE) || 3600,
         })
-        .send({ message: 'Login realizado com sucesso!', user , token});
+        .send({ message: 'Login realizado com sucesso!', user, token });
 
     } catch (error) {
       if (error.message === 'NOT_FOUND') return reply.status(404).send({ message: 'Usuário não encontrado' });
@@ -40,5 +40,18 @@ export default async function authRoutes(app) {
       if (error.message === 'EMAIL_EXISTS') return reply.status(400).send({ message: 'Email já cadastrado' });
       return reply.status(500).send({ message: 'Erro no servidor' });
     }
+  });
+  
+  app.get('/me', async (req, reply) => {
+    const token = req.cookies.Token;
+    if (!token) return reply.send({ user: null });
+
+    const user = await AuthService.getUserFromToken(token);
+    return reply.send({ user });
+  });
+
+  app.post('/logout', async (req, reply) => {
+    reply.clearCookie('Token', { path: '/' });
+    return reply.send({ message: 'Logout realizado' });
   });
 }

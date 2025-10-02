@@ -39,7 +39,7 @@ export default class AuthService {
             name,
             email,
             cpf,
-            password,  
+            password,
             role: "user",
         });
 
@@ -49,5 +49,25 @@ export default class AuthService {
             email: user.email,
             role: user.role,
         };
+    }
+    static async getUserFromToken(token) {
+        if (!token) return null;
+
+        try {
+            const decoded = jwt.verify(token, process.env.JWT_SECRET);
+            const user = await User.findOne({ where: { id: decoded.id } });
+
+            if (!user) return null;
+
+            return {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                avatar: user.avatar || "/avatar.png"
+            };
+        } catch (err) {
+            return null;
+        }
     }
 }

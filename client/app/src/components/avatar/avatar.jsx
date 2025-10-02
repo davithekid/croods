@@ -1,10 +1,13 @@
+'use client';
+
+import { logoutAction } from "@/lib/auth"; // caminho pro seu arquivo 'use server'
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@/components/ui/avatar"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
+} from "@/components/ui/avatar";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,17 +16,21 @@ import {
   DropdownMenuLabel,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
 
-export function AvatarDemo() {
+export function AvatarDemo({ user }) {
+  async function handleLogout() {
+    await logoutAction();
+  }
+
   return (
     <div className="flex flex-row flex-wrap items-center gap-12">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" className="p-0 rounded-full w-12 h-12 cursor-pointer">
             <Avatar className="w-12 h-12">
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarImage src={user?.avatar || "https://github.com/shadcn.png"} alt={user?.name} />
+              <AvatarFallback>{user?.name?.[0] || "?"}</AvatarFallback>
             </Avatar>
           </Button>
         </DropdownMenuTrigger>
@@ -31,10 +38,10 @@ export function AvatarDemo() {
           <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
           <DropdownMenuGroup>
             <DropdownMenuItem>
-                <Link href='/perfil'>Perfil e Agendamentos</Link>
+              <Link href='/perfil'>Perfil e Agendamentos</Link>
               <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout}>
               Sair
               <DropdownMenuShortcut>⌘Q</DropdownMenuShortcut>
             </DropdownMenuItem>
@@ -42,5 +49,5 @@ export function AvatarDemo() {
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
-  )
+  );
 }
