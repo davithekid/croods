@@ -37,7 +37,7 @@ const Login03Page = () => {
 
   const onSubmit = async (data) => {
     setIsLoading(true);
-    setServerError(null); // Limpa o erro de submissões anteriores
+    setServerError(null); 
 
     const formData = new FormData();
     formData.append('email', data.email);
@@ -48,8 +48,6 @@ const Login03Page = () => {
     if (result && result.error) {
       setServerError(result.error);
       setIsLoading(false);
-      
-      // Opcional: Você pode usar setError do RHF para destacar os campos
       form.setError("email", { type: "server", message: "Credenciais incorretas." });
       form.setError("password", { type: "server", message: "Credenciais incorretas." });
     }
@@ -104,8 +102,6 @@ const Login03Page = () => {
                     <FormMessage />
                   </FormItem>
                 )} />
-              
-              {/* 5. Usa o estado de loading e desabilita o botão */}
               <Button type="submit" className="mt-4 w-full" disabled={isLoading || !form.formState.isValid}>
                 {isLoading ? "Entrando..." : "Login"}
               </Button>

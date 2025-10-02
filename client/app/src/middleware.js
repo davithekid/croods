@@ -34,8 +34,6 @@ export function middleware(request) {
     return NextResponse.redirect(redirectUrl);
   }
 
-
-
   return NextResponse.next();
 }
 
