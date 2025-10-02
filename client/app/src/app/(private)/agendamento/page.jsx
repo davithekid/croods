@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
-import Chose from "@/blocks/chose";
-import PricingCard from "@/blocks/chose-card";
+import Chose from "@/blocks/chose-service";
+import PricingCard from "@/blocks/chose-barber";
 import DateCard from "@/blocks/chose-date";
 import TimeCard from "@/blocks/chose-time";
-import CardDadosAgendamento from "@/blocks/data-scheduling";
-import CardConfirmaAgendamento from "@/blocks/finalize-scheduling";
+import CardDadosAgendamento from "@/blocks/data-appointment";
+import CardConfirmaAgendamento from "@/blocks/final-appointment";
 import Footer05Page from "@/components/footer/footer-05";
 import Navbar01Page from "@/components/navbar/navbar-01";
 import { Button } from "@/components/ui/button";
