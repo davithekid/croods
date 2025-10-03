@@ -1,5 +1,6 @@
 import fastify from 'fastify'
 import errorHandler from './plugins/erroHandler'
+import userRoutes from './routes/userRoutes'
 const app = fastify({
     logger: {
         transport: {
@@ -13,5 +14,6 @@ app.get('/', (request, reply) => {
 })
 
 app.register(errorHandler)
+app.register(userRoutes, {prefix: '/users'})
 
 export default app;
