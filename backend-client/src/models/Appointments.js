@@ -17,7 +17,7 @@ Appointments.init({
         allowNull: false,
         references: { model: User, key: 'id' }
     },
-    barbeiro_id: {
+    barber_id: {
         type: DataTypes.CHAR(36),
         allowNull: false,
         references: { model: User, key: 'id' }
@@ -27,8 +27,7 @@ Appointments.init({
         allowNull: false,
         references: { model: Services, key: 'id' }
     },
-
-    date: {
+    schedule_at: {
         type: DataTypes.DATE,
         allowNull: false
     },
@@ -52,6 +51,11 @@ Appointments.init({
     email: {
         type: DataTypes.STRING(255),
         allowNull: true
+    },
+    service_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: { model: Services, id: 'id' }
     }
 }, {
     sequelize,
