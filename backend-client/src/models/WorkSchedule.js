@@ -16,7 +16,7 @@ WorkSchedule.init({
         references: { model: User, key: 'id' }
     },
     day_of_week: {
-        type: DataTypes.ENUM('segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sabado', 'domingo'),
+        type: DataTypes.ENUM('domingo','segunda','terca','quarta','quinta','sexta','sabado'),
         allowNull: false
     },
     start_time: {
@@ -29,6 +29,6 @@ WorkSchedule.init({
     }
 }, {
     sequelize,
-    tableName: 'work_schedule',
+    tableName: 'work_schedules',
     timestamp: false
 })
