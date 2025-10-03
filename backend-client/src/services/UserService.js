@@ -4,15 +4,6 @@ sequelizePaginate.paginate(User);
 
 export default class UserService {
 
-    static async getAllUsers(page = 1, limit = 10) {
-        const result = await User.paginate({
-            page,
-            paginate: limit,
-            order: [['created_At', 'DESC']]
-        })
-        return result;
-    }
-
     static async getUserById(id) {
         const user = await User.findByPk(id);
         if (!user) {
@@ -30,12 +21,4 @@ export default class UserService {
         return user;
     }
 
-    static async deleteUser(id) {
-        const user = await User.findByPk(id);
-        if (!user) {
-            throw new Error("NOT_FOUND");
-        }
-        await user.destroy();
-        return true;
-    }
 }

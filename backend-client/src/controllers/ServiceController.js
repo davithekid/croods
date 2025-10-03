@@ -11,18 +11,4 @@ export default class ServiceController {
         return reply.status(200).send(service);
     }
 
-    static async create(req, reply) {
-        const service = await Service.create(req.body);
-        return reply.status(201).send(service);
-    }
-
-    static async update(req, reply) {
-        const service = await Service.update(req.params.id, req.body);
-        return reply.status(200).send(service);
-    }
-
-    static async delete(req, reply) {
-        await Service.delete(req.params.id);
-        return reply.status(200).send({ message: "Deleted successfully!!!" });
-    }
 }
