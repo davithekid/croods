@@ -22,3 +22,23 @@ export async function post(endpoint, payload) {
     }
     return response.json();
 }
+
+export async function get(endpoint) {
+    const url = `${API_URL}/${endpoint}`;
+    const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json().catch(() => ({
+            message: `Erro no servidor com status ${response.status}.`
+        }));
+        throw new Error(errorData.message || `Erro no servidor com status ${response.status}`);
+    }
+
+    return response.json();
+}

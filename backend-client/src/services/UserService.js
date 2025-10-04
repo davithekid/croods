@@ -4,6 +4,14 @@ sequelizePaginate.paginate(User);
 
 export default class UserService {
 
+    static async getAllBarbers(){
+        const barbers = await User.findAll({
+            where: {role: 'barber'},
+            attributes: ['name']
+        })
+        return barbers; 
+    }
+
     static async getUserById(id) {
         const user = await User.findByPk(id);
         if (!user) {

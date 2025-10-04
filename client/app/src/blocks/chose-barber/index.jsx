@@ -1,5 +1,6 @@
-"use client";
+'use client';
 
+import { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,12 +10,31 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { User } from "lucide-react";
+import { get } from '@/lib/api';
 
 export default function PricingCard({ onSelect }) {
-  const barbers = [
-    { id: 1, name: "Renan Souza", description: "Barbeiro Especialista" },
-    { id: 2, name: "Josué", description: "Barbeiro Especialista" },
-  ];
+  const [barbers, setBarbers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function fetchBarbers() {
+      try {
+        const data = await get('users/barbers'); // endpoint da sua API
+        setBarbers(data);
+      } catch (err) {
+        console.error(err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchBarbers();
+  }, []);
+
+  if (loading) return <p className="text-center py-10">Carregando barbeiros...</p>;
+  if (error) return <p className="text-center py-10 text-red-500">{error}</p>;
 
   return (
     <div className="flex flex-col">
@@ -23,9 +43,9 @@ export default function PricingCard({ onSelect }) {
       </h1>
 
       <div className="flex gap-6 justify-center flex-wrap py-6">
-        {barbers.map((barber) => (
+        {barbers.map((barber, index) => (
           <Card
-            key={barber.id}
+            key={`${barber.id}-${index}`} // garante unicidade
             className="max-w-xs w-full transition-shadow hover:shadow-md"
           >
             <CardHeader className="flex flex-col items-center gap-2">
@@ -36,9 +56,6 @@ export default function PricingCard({ onSelect }) {
               <CardTitle className="text-xl font-bold text-center">
                 {barber.name}
               </CardTitle>
-              <CardDescription className="text-center text-sm text-muted-foreground">
-                {barber.description}
-              </CardDescription>
             </CardHeader>
 
             <CardFooter className="mt-2 flex justify-center">
@@ -51,9 +68,8 @@ export default function PricingCard({ onSelect }) {
               </Button>
             </CardFooter>
           </Card>
-        ))}
+        ))} 
       </div>
     </div>
   );
 }
-    
