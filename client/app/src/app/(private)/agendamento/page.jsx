@@ -112,6 +112,7 @@ export default function Agendamento() {
                 {step === 4 && (
                     <TimeCard
                         selectedDate={selectedDate}
+                        selectedBarber={selectedBarber}
                         onConfirm={(time) => {
                             setSelectedTime(time);
                             setStep(5);
