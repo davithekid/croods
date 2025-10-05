@@ -10,43 +10,41 @@ export default function TimeCard({ selectedDate, selectedBarber, onConfirm }) {
   const [availableTimes, setAvailableTimes] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
+  const fetchAvailableTimes = async () => {
     if (!selectedDate?.data || !selectedBarber?.id) return;
 
     setLoading(true);
-
     try {
       const [day, month, year] = selectedDate.data.split("/");
       const formattedDate = `${year}-${month}-${day}`;
 
-      fetch(`http://127.0.0.1:3333/appointments/barber/${selectedBarber.id}/date/${formattedDate}`)
-        .then(res => {
-          if (!res.ok) {
-            console.error(`Falha na requisição: Status ${res.status}`);
-            throw new Error(`HTTP error! status: ${res.status}`);
-          }
-          return res.json();
-        })
-        .then(data => {
-          setAvailableTimes(data);
-          setLoading(false);
-        })
-        .catch(err => {
-          console.error("Erro ao buscar horários:", err);
-          setAvailableTimes([]);
-          setLoading(false);
-        });
+      const res = await fetch(
+        `http://127.0.0.1:3333/appointments/barber/${selectedBarber.id}/date/${formattedDate}`
+      );
 
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
+      const data = await res.json();
+      setAvailableTimes(data);
     } catch (err) {
-      console.error("Erro ao formatar a data:", err);
+      console.error("Erro ao buscar horários:", err);
       setAvailableTimes([]);
+    } finally {
       setLoading(false);
     }
+  };
 
+  useEffect(() => {
+    fetchAvailableTimes();
   }, [selectedDate, selectedBarber]);
 
-
   const handleSelect = (time) => setSelectedTime(time);
+
+  const handleConfirm = (time) => {
+    setAvailableTimes((prev) => prev.filter((t) => t.id !== time.id));
+    setSelectedTime(null);
+    if (onConfirm) onConfirm(time);
+  };
 
   return (
     <>
@@ -67,10 +65,11 @@ export default function TimeCard({ selectedDate, selectedBarber, onConfirm }) {
             availableTimes.map((time) => (
               <Card
                 key={time.id}
-                className={`relative max-w-md w-40 cursor-pointer transition-all rounded-xl ${selectedTime?.id === time.id
+                className={`relative max-w-md w-40 cursor-pointer transition-all rounded-xl ${
+                  selectedTime?.id === time.id
                     ? "border-2 border-primary shadow-lg scale-105"
                     : "border border-border hover:shadow-md hover:scale-105"
-                  }`}
+                }`}
                 onClick={() => handleSelect(time)}
               >
                 <CardHeader className="flex flex-col items-center gap-2 py-6">
@@ -89,7 +88,7 @@ export default function TimeCard({ selectedDate, selectedBarber, onConfirm }) {
 
       {selectedTime && (
         <div className="flex justify-center mt-6">
-          <Button size="lg" className="px-8" onClick={() => onConfirm(selectedTime)}>
+          <Button size="lg" className="px-8" onClick={() => handleConfirm(selectedTime)}>
             Confirmar {selectedTime.hour}
           </Button>
         </div>

@@ -49,33 +49,39 @@ export default class AppointmentsService {
 
     static async getAvailableTimes(barberId, date) {
         try {
-            const dateObj = new Date(`${date}T00:00:00Z`);
-            if (isNaN(dateObj)) return []; // Data inválida
-            const dayOfWeek = WEEK_DAYS[dateObj.getUTCDay()];
+            const [year, month, day] = date.split("-").map(Number);
+            const dateObj = new Date(year, month - 1, day);
+            if (isNaN(dateObj)) return []; // data inválida
+
+            const dayOfWeek = WEEK_DAYS[dateObj.getDay()];
 
             const schedule = await WorkSchedule.findOne({
                 where: { barber_id: barberId, day_of_week: dayOfWeek },
             });
 
-            if (!schedule) return []; // Dia de folga
+            if (!schedule) return []; // dia de folga
 
-            const startTime = schedule.start_time; 
-            const endTime = schedule.end_time;     
+            const startTime = schedule.start_time; // "HH:MM"
+            const endTime = schedule.end_time;
 
             const generateTimes = (start, end, interval = 60) => {
                 const times = [];
                 const [hStart, mStart] = start.split(":").map(Number);
                 const [hEnd, mEnd] = end.split(":").map(Number);
 
-                const current = new Date(Date.UTC(1970, 0, 1, hStart, mStart));
-                const finish = new Date(Date.UTC(1970, 0, 1, hEnd, mEnd));
+                let current = new Date(dateObj);
+                current.setHours(hStart, mStart, 0, 0);
+
+                const finish = new Date(dateObj);
+                finish.setHours(hEnd, mEnd, 0, 0);
 
                 let id = 1;
                 while (current < finish) {
-                    const hour = current.toISOString().slice(11, 16); // HH:MM
+                    const hour = current.toTimeString().slice(0, 5); // "HH:MM"
                     times.push({ id: id++, hour });
-                    current.setUTCMinutes(current.getUTCMinutes() + interval);
+                    current.setMinutes(current.getMinutes() + interval);
                 }
+
                 return times;
             };
 
@@ -85,13 +91,17 @@ export default class AppointmentsService {
                 where: {
                     barber_id: barberId,
                     scheduled_at: {
-                        [Op.between]: [`${date} 00:00:00`, `${date} 23:59:59`],
+                        [Op.between]: [
+                            new Date(dateObj.setHours(0, 0, 0, 0)),
+                            new Date(dateObj.setHours(23, 59, 59, 999)),
+                        ],
                     },
                 },
             });
 
             const occupiedTimes = appointments.map(a => {
-                return a.scheduled_at.toISOString().slice(11, 16);
+                const d = new Date(a.scheduled_at);
+                return d.toTimeString().slice(0, 5); // "HH:MM"
             });
 
             const availableTimes = allTimes.filter(t => !occupiedTimes.includes(t.hour));
@@ -102,4 +112,5 @@ export default class AppointmentsService {
             return [];
         }
     }
+
 }

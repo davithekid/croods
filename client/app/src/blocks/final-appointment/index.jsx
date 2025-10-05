@@ -3,14 +3,14 @@ import { useState } from "react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button"; 
-import { toast } from "sonner"; 
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 export default function CardConfirmaAgendamento({
     service,
     barber,
     date,
     time,
-    onConfirm 
+    onConfirm
 }) {
     const [formData, setFormData] = useState({
         fullName: '',
@@ -31,21 +31,21 @@ export default function CardConfirmaAgendamento({
         setLoading(true);
 
         if (!formData.fullName || !formData.phone || !formData.email) {
-            toast.error("Por favor, preencha todos os campos."); 
+            toast.error("Por favor, preencha todos os campos.");
             setLoading(false);
             return;
         }
 
-        const [day, month, year] = date.data.split("/"); 
-        const scheduled_at = `${year}-${month}-${day} ${time.hour}:00`; 
+        const [day, month, year] = date.data.split("/");
+        const scheduled_at = `${year}-${month}-${day} ${time.hour}:00`;
 
         const payload = {
-            user_id: "33340069-b8be-405a-8e7a-d6674c333474", 
-            
+            user_id: "33340069-b8be-405a-8e7a-d6674c333474",
+
             full_name: formData.fullName,
             phone: formData.phone,
             email: formData.email,
-            
+
             scheduled_at: scheduled_at,
             barber_id: barber.id,
             service_id: service.id,
@@ -54,9 +54,7 @@ export default function CardConfirmaAgendamento({
         try {
             const res = await fetch('http://127.0.0.1:3333/appointments', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload),
             });
 
@@ -66,7 +64,8 @@ export default function CardConfirmaAgendamento({
             }
 
             toast.success(`Agendamento Confirmado! Seu horário com ${barber.name} foi reservado.`);
-            onConfirm(); // Move para o passo 6
+
+            onConfirm(time.hour); 
 
         } catch (error) {
             console.error("Erro no agendamento:", error.message);
@@ -89,9 +88,9 @@ export default function CardConfirmaAgendamento({
                 <form className="space-y-4" onSubmit={handleSubmit}>
                     <div className="flex flex-col space-y-1.5">
                         <Label htmlFor="fullName">Nome Completo</Label>
-                        <Input 
-                            id="fullName" 
-                            placeholder="Insira o seu nome completo" 
+                        <Input
+                            id="fullName"
+                            placeholder="Insira o seu nome completo"
                             value={formData.fullName}
                             onChange={handleChange}
                             required
@@ -99,9 +98,9 @@ export default function CardConfirmaAgendamento({
                     </div>
                     <div className="flex flex-col space-y-1.5">
                         <Label htmlFor="phone">WhatsApp</Label>
-                        <Input 
-                            id="phone" 
-                            placeholder="(11) 99999-9999" 
+                        <Input
+                            id="phone"
+                            placeholder="(11) 99999-9999"
                             value={formData.phone}
                             onChange={handleChange}
                             required
@@ -109,10 +108,10 @@ export default function CardConfirmaAgendamento({
                     </div>
                     <div className="flex flex-col space-y-1.5">
                         <Label htmlFor="email">Email</Label>
-                        <Input 
-                            id="email" 
-                            type="email" 
-                            placeholder="Insira o seu email" 
+                        <Input
+                            id="email"
+                            type="email"
+                            placeholder="Insira o seu email"
                             value={formData.email}
                             onChange={handleChange}
                             required
@@ -120,9 +119,9 @@ export default function CardConfirmaAgendamento({
                     </div>
 
                     <CardFooter className="p-0 pt-4">
-                        <Button 
-                            type="submit" 
-                            className="w-full" 
+                        <Button
+                            type="submit"
+                            className="w-full"
                             disabled={loading}
                         >
                             {loading ? "Processando..." : "Finalizar Agendamento"}
