@@ -4,7 +4,7 @@ import User from "./User.js";
 import Services from "./Services.js";
 import DayOff from "./TimeOff.js";
 
-export default class Appointments extends Model {}
+export default class Appointments extends Model { }
 
 Appointments.init(
   {
@@ -33,7 +33,7 @@ Appointments.init(
       allowNull: true,
       references: { model: DayOff, key: "id" },
     },
-    schedule_at: {
+    scheduled_at: {
       type: DataTypes.DATE,
       allowNull: false,
     },
@@ -64,7 +64,6 @@ Appointments.init(
   }
 );
 
-// Relacionamentos
 Appointments.belongsTo(User, { foreignKey: "user_id", as: "user" });
 Appointments.belongsTo(User, { foreignKey: "barber_id", as: "barber" });
 Appointments.belongsTo(Services, { foreignKey: "service_id", as: "service" });

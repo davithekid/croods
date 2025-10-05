@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,13 +8,15 @@ import { CheckCircle2 } from "lucide-react";
 export default function DateCard({ barber, service, onConfirm }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [dates, setDates] = useState([]);
+
   useEffect(() => {
     if (!barber?.id) return;
 
     fetch(`http://127.0.0.1:3333/work-schedules/barber/${barber.id}`)
       .then(res => res.json())
       .then((data) => {
-        console.log("Work schedules:", data);
+        // Garantir que temos um array
+        const schedules = Array.isArray(data) ? data : data.workSchedules || [];
 
         const hoje = new Date();
         const dias = [];
@@ -29,14 +32,15 @@ export default function DateCard({ barber, service, onConfirm }) {
             .normalize("NFD")
             .replace(/[\u0300-\u036f]/g, "");
 
-          const diaTrabalhado = data.find((s) => s.day_of_week === nomeDia);
+          const diaTrabalhado = schedules.find((s) => s.day_of_week === nomeDia);
 
           if (diaTrabalhado) {
             dias.push({
               id: i + 1,
               data: d.toLocaleDateString("pt-BR"),
               diaSemana: nomeDia.charAt(0).toUpperCase() + nomeDia.slice(1),
-              horario: `${diaTrabalhado.start_time.slice(11, 16)} às ${diaTrabalhado.end_time.slice(11, 16)}`,
+              start_time: diaTrabalhado.start_time, // manter para TimeCard
+              end_time: diaTrabalhado.end_time,     // manter para TimeCard
             });
           }
         }
@@ -45,7 +49,6 @@ export default function DateCard({ barber, service, onConfirm }) {
       })
       .catch(err => console.error("Erro ao buscar work schedules:", err));
   }, [barber]);
-
 
   const handleSelect = (date) => {
     setSelectedDate(date);
@@ -67,16 +70,17 @@ export default function DateCard({ barber, service, onConfirm }) {
         {dates.map((date) => (
           <Card
             key={date.id}
-            className={`relative max-w-md w-72 cursor-pointer transition-all rounded-xl ${selectedDate?.id === date.id
-              ? "border-2 border-primary shadow-lg scale-105"
-              : "border border-border hover:shadow-md hover:scale-105"
-              }`}
+            className={`relative max-w-md w-72 cursor-pointer transition-all rounded-xl ${
+              selectedDate?.id === date.id
+                ? "border-2 border-primary shadow-lg scale-105"
+                : "border border-border hover:shadow-md hover:scale-105"
+            }`}
             onClick={() => handleSelect(date)}
           >
             <CardHeader className="flex flex-col items-center gap-2">
               <CardTitle className="text-2xl font-bold text-center">{date.data}</CardTitle>
               <CardDescription className="text-center text-base">
-                {date.diaSemana} — {date.horario}
+                {date.diaSemana}
               </CardDescription>
             </CardHeader>
             {selectedDate?.id === date.id && (
