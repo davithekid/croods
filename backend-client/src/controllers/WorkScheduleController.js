@@ -10,4 +10,10 @@ export default class WorkScheduleController {
         const schedule = await WorkScheduleService.getById(req.params.id);
         return reply.status(200).send(schedule);
     }
+
+    static async getByBarberId(req, reply) {
+        const { id } = req.params;
+        const schedules = await WorkScheduleService.getByBarberId(id);
+        return reply.status(200).send(schedules);
+    }
 }

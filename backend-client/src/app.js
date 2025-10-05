@@ -10,6 +10,7 @@ import serviceRoutes from './routes/ServiceRoutes.js';
 import extraServiceRoutes from './routes/ExtraServicesRoutes.js';
 import appointmentsRoutes from './routes/AppointmentsRoutes.js';
 import errorHandler from './plugins/errorHandler.js';
+import barberRoutes from './routes/barberRoutes.js';
 
 const app = fastify({
     logger: {
@@ -36,6 +37,7 @@ app.register(fastifyCookie, {
     parseOptions: {}
 })
 app.register(errorHandler)
+app.register(barberRoutes, {prefix: 'barbers'})
 app.register(userRoutes, { prefix: '/users' });
 app.register(timeOffRoutes, { prefix: '/timeoff' });
 app.register(authRoutes, { prefix: '/auth' });

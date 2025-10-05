@@ -1,6 +1,5 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database.js";
-import ExtraServices from "./ExtraServices.js";
 import User from "./User.js";
 
 export default class Services extends Model { }
@@ -29,3 +28,4 @@ Services.init({
     tableName: 'services',
     timestamps: false
 })
+

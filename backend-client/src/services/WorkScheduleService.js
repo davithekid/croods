@@ -12,4 +12,13 @@ export default class WorkScheduleService {
         }
         return workSchedule;
     }
+
+    static async getWorkScheduleById(req, reply) {
+        const { id } = req.params;
+        const schedules = await WorkSchedule.findAll({
+            where: { barber_id: id },
+            order: [['day_of_week', 'ASC']]
+        })
+        return schedules;
+    }
 }

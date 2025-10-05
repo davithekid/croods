@@ -78,21 +78,23 @@ export default function Agendamento() {
                     <section className="mx-auto container">
                         <PricingCard
                             onSelect={(barber) => {
+                                console.log("Barbeiro selecionado:", barber);
                                 setSelectedBarber(barber);
                                 setStep(2);
                             }}
                         />
+
                     </section>
                 )}
                 {step === 2 && (
                     <Chose
+                        barberId={selectedBarber?.id} 
                         onSelect={(service) => {
                             setSelectedService(service);
                             setStep(3);
                         }}
                     />
                 )}
-
 
                 {step === 3 && (
                     <section>

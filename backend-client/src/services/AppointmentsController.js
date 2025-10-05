@@ -13,7 +13,13 @@ export default class AppointmentsService {
         return appointments;
     }
 
-    static async create({ user_id, barber_id, service_id, extra_services_id, date, dayoff, status }) {
+    static async create({ user_id,
+        barber_id,
+        service_id,
+        schedule_at,
+        full_name,
+        phone,
+        email, }) {
         const exists = await Appointments.findOne({
             where: { barber_id, date }
         });
@@ -23,7 +29,14 @@ export default class AppointmentsService {
         }
 
         return await Appointments.create({
-            user_id, barber_id, service_id, extra_services_id, date, dayoff, status
+            user_id,
+            barber_id,
+            service_id,
+            schedule_at,
+            full_name,
+            phone,
+            email,
+            status: "agendado",
         });
     }
 

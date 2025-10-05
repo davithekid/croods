@@ -1,31 +1,43 @@
 "use client";
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle2 } from "lucide-react";
 
-const datas = [
-  { id: 1, data: "22/09", diaSemana: "Segunda-feira" },
-  { id: 2, data: "23/09", diaSemana: "Terça-feira" },
-  { id: 3, data: "24/09", diaSemana: "Quarta-feira" },
-  { id: 4, data: "25/09", diaSemana: "Quinta-feira" },
-  { id: 5, data: "26/09", diaSemana: "Sexta-feira" },
-  { id: 6, data: "27/09", diaSemana: "Sábado" },
-  { id: 7, data: "28/09", diaSemana: "Domingo" },
-];
-
-export default function DateCard({
-  barber = "Renan Souza",
-  service = "Corte de cabelo",
-  onConfirm,
-}) {
+export default function DateCard({ barber, service, onConfirm }) {
   const [selectedDate, setSelectedDate] = useState(null);
+  const [dates, setDates] = useState([]);
+
+  useEffect(() => {
+    if (!barber?.id) return;
+
+    // Busca os dias de trabalho do barbeiro
+    fetch(`http://127.0.0.1:3333/work-schedules/${barber.id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        // Gera os próximos 7 dias a partir do que o barbeiro trabalha
+        const hoje = new Date();
+        const dias = [];
+        for (let i = 0; i < 7; i++) {
+          const d = new Date(hoje);
+          d.setDate(hoje.getDate() + i);
+          const nomeDia = d
+            .toLocaleDateString("pt-BR", { weekday: "long" })
+            .toLowerCase();
+
+          const diaTrabalhado = data.find((s) => s.day_of_week === nomeDia);
+          if (diaTrabalhado) {
+            dias.push({
+              id: i + 1,
+              data: d.toLocaleDateString("pt-BR"),
+              diaSemana: nomeDia.charAt(0).toUpperCase() + nomeDia.slice(1),
+              horario: `${diaTrabalhado.start_time.slice(0, 5)} às ${diaTrabalhado.end_time.slice(0, 5)}`,
+            });
+          }
+        }
+        setDates(dias);
+      });
+  }, [barber]);
 
   const handleSelect = (date) => {
     setSelectedDate(date);
@@ -35,15 +47,16 @@ export default function DateCard({
     <>
       <div className="text-center space-y-2">
         <h1 className="text-4xl sm:text-5xl font-bold tracking-tight font-serif">
-          Escolha sua data e horário
+          Escolha sua data
         </h1>
-        <p className="text-muted-foreground">Barbeiro: <span className="font-semibold">{barber}</span></p>
-        <p className="text-muted-foreground">{service}</p>
+        <p className="text-muted-foreground">
+          Barbeiro: <span className="font-semibold">{barber?.name}</span>
+        </p>
+        <p className="text-muted-foreground">{service?.name}</p>
       </div>
 
-      {/* Cards de datas */}
       <div className="mx-auto container flex gap-6 justify-center py-8 flex-wrap">
-        {datas.map((date) => (
+        {dates.map((date) => (
           <Card
             key={date.id}
             className={`relative max-w-md w-72 cursor-pointer transition-all rounded-xl ${
@@ -54,15 +67,11 @@ export default function DateCard({
             onClick={() => handleSelect(date)}
           >
             <CardHeader className="flex flex-col items-center gap-2">
-              <CardTitle className="text-2xl font-bold text-center">
-                {date.data}
-              </CardTitle>
+              <CardTitle className="text-2xl font-bold text-center">{date.data}</CardTitle>
               <CardDescription className="text-center text-base">
-                {date.diaSemana}
+                {date.diaSemana} — {date.horario}
               </CardDescription>
             </CardHeader>
-
-            {/* Ícone de seleção */}
             {selectedDate?.id === date.id && (
               <CheckCircle2 className="absolute top-3 right-3 text-primary h-6 w-6" />
             )}
@@ -70,14 +79,9 @@ export default function DateCard({
         ))}
       </div>
 
-      {/* Botão de confirmar */}
       {selectedDate && (
         <div className="flex justify-center mt-6">
-          <Button
-            onClick={() => onConfirm && onConfirm(selectedDate)}
-            size="lg"
-            className="px-8"
-          >
+          <Button onClick={() => onConfirm(selectedDate)} size="lg" className="px-8">
             Confirmar {selectedDate.data}
           </Button>
         </div>

@@ -7,7 +7,7 @@ export default class UserService {
     static async getAllBarbers(){
         const barbers = await User.findAll({
             where: {role: 'barber'},
-            attributes: ['name']
+            attributes: ['id' , 'name']
         })
         return barbers; 
     }

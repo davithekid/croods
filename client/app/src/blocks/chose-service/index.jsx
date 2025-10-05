@@ -1,39 +1,24 @@
 "use client";
-
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Scissors, User, Sparkles, Crown, PlusCircle } from "lucide-react";
-import { useState } from "react";
+import { Scissors, PlusCircle } from "lucide-react";
 
-export default function Chose({ onSelect }) {
+export default function Chose({ barberId, onSelect }) {
+  const [services, setServices] = useState([]);
   const [selectedService, setSelectedService] = useState(null);
   const [extras, setExtras] = useState([]);
 
-  const services = [
-    {
-      icon: <Scissors className="h-5 w-5" />,
-      title: "Corte de Cabelo",
-      price: 40,
-    },
-    {
-      icon: <User className="h-5 w-5" />,
-      title: "Corte + Barba",
-      price: 70,
-    },
-    {
-      icon: <Sparkles className="h-5 w-5" />,
-      title: "Cabelo + Barba + Sobrancelha",
-      price: 85,
-    },
-
-  ];
-
-  const extraOptions = [
-    { name: "Sobrancelha", price: 15 },
-    { name: "Hidratação Capilar", price: 30 },
-    { name: "Luzes", price: 120 },
-    { name: "Progressiva", price: 150 },
-    { name: "Toalha Quente", price: 10 },
-  ];
+  useEffect(() => {
+    console.log("barberId:", barberId);
+    if (!barberId) return;
+    const fetchServices = async () => {
+      const res = await fetch(`http://localhost:3333/barbers/${barberId}/services`);
+      const data = await res.json();
+      console.log("services:", data);
+      setServices(data);
+    };
+    fetchServices();
+  }, [barberId]);
 
   const toggleExtra = (extra) => {
     setExtras((prev) =>
@@ -55,64 +40,35 @@ export default function Chose({ onSelect }) {
           <h2 className="text-2xl font-semibold tracking-tight md:text-3xl font-serif">
             Escolha seu serviço
           </h2>
-          <p className="text-muted-foreground text-sm">
-            Primeiro selecione um serviço principal. Depois, adicione extras se quiser.
-          </p>
         </div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          {services.map((service, index) => (
+          {services.map((service) => (
             <div
-              key={index}
+              key={service.id}
               onClick={() => setSelectedService(service)}
-              className={`border-border space-y-4 rounded-lg border p-5 transition cursor-pointer hover:shadow-lg hover:border-primary/40 ${
-                selectedService?.title === service.title ? "border-primary" : ""
-              }`}
+              className={`border space-y-4 rounded-lg p-5 cursor-pointer ${selectedService?.id === service.id ? "border-primary" : ""
+                }`}
             >
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="bg-muted rounded-full p-2">{service.icon}</div>
-                  <h3 className="text-lg font-semibold">{service.title}</h3>
-                </div>
-                <span className="text-base font-bold text-primary">
-                  R$ {service.price},00
-                </span>
+                <h3>{service.name}</h3>
+                <span>R$ {service.price},00</span>
               </div>
-
             </div>
           ))}
         </div>
 
         {selectedService && (
-          <div className="space-y-6">
+          <>
             <h3 className="text-xl font-semibold flex items-center gap-2">
               <PlusCircle className="h-5 w-5 text-primary" />
               Adicionais <span className="text-red-500">*opcional</span>
             </h3>
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-              {extraOptions.map((extra, i) => (
-                <div
-                  key={i}
-                  onClick={() => toggleExtra(extra.name)}
-                  className={`flex items-center justify-between border rounded-lg p-4 cursor-pointer transition hover:shadow-md ${
-                    extras.includes(extra.name) ? "border-primary bg-primary/10" : "border-border"
-                  }`}
-                >
-                  <span className="text-sm font-medium">{extra.name}</span>
-                  <span className="text-sm font-bold text-primary">
-                    + R$ {extra.price}
-                  </span>
-                </div>
-              ))}
-            </div>
 
-            <Button
-              onClick={handleConfirm}
-              className="mt-4 w-full rounded-lg cursor-pointer  px-4 py-2 duration-200 font-medium transition"
-            >
+            <Button onClick={handleConfirm} className="mt-4 w-full rounded-lg">
               Confirmar Seleção
             </Button>
-          </div>
+          </>
         )}
       </div>
     </section>
