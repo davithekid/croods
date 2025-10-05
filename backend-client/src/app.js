@@ -11,6 +11,7 @@ import extraServiceRoutes from './routes/ExtraServicesRoutes.js';
 import appointmentsRoutes from './routes/AppointmentsRoutes.js';
 import errorHandler from './plugins/errorHandler.js';
 import barberRoutes from './routes/barberRoutes.js';
+import workScheduleRoutes from './routes/WorkScheduleRoutes.js';
 
 const app = fastify({
     logger: {
@@ -38,11 +39,12 @@ app.register(fastifyCookie, {
 })
 app.register(errorHandler)
 app.register(barberRoutes, {prefix: 'barbers'})
-app.register(userRoutes, { prefix: '/users' });
+app.register(userRoutes, { prefix: '/users' }); 
 app.register(timeOffRoutes, { prefix: '/timeoff' });
 app.register(authRoutes, { prefix: '/auth' });
 app.register(serviceRoutes, { prefix: '/services' })
 app.register(extraServiceRoutes, { prefix: '/extra-services' })
+app.register(workScheduleRoutes, {prefix: 'work-schedules'})
 app.register(appointmentsRoutes, { prefix: '/appointments' })
 
 export default app;

@@ -21,4 +21,13 @@ export default class WorkScheduleService {
         })
         return schedules;
     }
+
+    static async getByBarberId(barberId) {
+        const schedules = await WorkSchedule.findAll({
+            where: { barber_id: barberId },
+            order: [['day_of_week', 'ASC']]
+        });
+        return schedules;
+    }
+
 }

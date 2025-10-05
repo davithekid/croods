@@ -7,37 +7,45 @@ import { CheckCircle2 } from "lucide-react";
 export default function DateCard({ barber, service, onConfirm }) {
   const [selectedDate, setSelectedDate] = useState(null);
   const [dates, setDates] = useState([]);
-
   useEffect(() => {
     if (!barber?.id) return;
 
-    // Busca os dias de trabalho do barbeiro
-    fetch(`http://127.0.0.1:3333/work-schedules/${barber.id}`)
-      .then((res) => res.json())
+    fetch(`http://127.0.0.1:3333/work-schedules/barber/${barber.id}`)
+      .then(res => res.json())
       .then((data) => {
-        // Gera os próximos 7 dias a partir do que o barbeiro trabalha
+        console.log("Work schedules:", data);
+
         const hoje = new Date();
         const dias = [];
+
         for (let i = 0; i < 7; i++) {
           const d = new Date(hoje);
           d.setDate(hoje.getDate() + i);
+
           const nomeDia = d
             .toLocaleDateString("pt-BR", { weekday: "long" })
-            .toLowerCase();
+            .toLowerCase()
+            .replace("-feira", "")
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "");
 
           const diaTrabalhado = data.find((s) => s.day_of_week === nomeDia);
+
           if (diaTrabalhado) {
             dias.push({
               id: i + 1,
               data: d.toLocaleDateString("pt-BR"),
               diaSemana: nomeDia.charAt(0).toUpperCase() + nomeDia.slice(1),
-              horario: `${diaTrabalhado.start_time.slice(0, 5)} às ${diaTrabalhado.end_time.slice(0, 5)}`,
+              horario: `${diaTrabalhado.start_time.slice(11, 16)} às ${diaTrabalhado.end_time.slice(11, 16)}`,
             });
           }
         }
+
         setDates(dias);
-      });
+      })
+      .catch(err => console.error("Erro ao buscar work schedules:", err));
   }, [barber]);
+
 
   const handleSelect = (date) => {
     setSelectedDate(date);
@@ -59,11 +67,10 @@ export default function DateCard({ barber, service, onConfirm }) {
         {dates.map((date) => (
           <Card
             key={date.id}
-            className={`relative max-w-md w-72 cursor-pointer transition-all rounded-xl ${
-              selectedDate?.id === date.id
-                ? "border-2 border-primary shadow-lg scale-105"
-                : "border border-border hover:shadow-md hover:scale-105"
-            }`}
+            className={`relative max-w-md w-72 cursor-pointer transition-all rounded-xl ${selectedDate?.id === date.id
+              ? "border-2 border-primary shadow-lg scale-105"
+              : "border border-border hover:shadow-md hover:scale-105"
+              }`}
             onClick={() => handleSelect(date)}
           >
             <CardHeader className="flex flex-col items-center gap-2">

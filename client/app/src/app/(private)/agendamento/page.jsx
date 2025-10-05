@@ -88,7 +88,7 @@ export default function Agendamento() {
                 )}
                 {step === 2 && (
                     <Chose
-                        barberId={selectedBarber?.id} 
+                        barberId={selectedBarber?.id}
                         onSelect={(service) => {
                             setSelectedService(service);
                             setStep(3);
@@ -99,6 +99,8 @@ export default function Agendamento() {
                 {step === 3 && (
                     <section>
                         <DateCard
+                            barber={selectedBarber}  
+                            service={selectedService} 
                             onConfirm={(date) => {
                                 setSelectedDate(date);
                                 setStep(4);
