@@ -27,10 +27,7 @@ export default function Chose({ barberId, onSelect }) {
   };
 
   const handleConfirm = () => {
-    onSelect({
-      service: selectedService,
-      extras,
-    });
+    onSelect(selectedService); 
   };
 
   return (

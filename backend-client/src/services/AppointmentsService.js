@@ -48,63 +48,58 @@ export default class AppointmentsService {
     }
 
     static async getAvailableTimes(barberId, date) {
-        
-        const dateStr = `${date}T00:00:00`; 
-        const dateObj = new Date(dateStr); 
+        try {
+            const dateObj = new Date(`${date}T00:00:00Z`);
+            if (isNaN(dateObj)) return []; // Data inválida
+            const dayOfWeek = WEEK_DAYS[dateObj.getUTCDay()];
 
-        const dayIndex = dateObj.getDay(); 
-        const dayOfWeek = WEEK_DAYS[dayIndex];
+            const schedule = await WorkSchedule.findOne({
+                where: { barber_id: barberId, day_of_week: dayOfWeek },
+            });
 
-        // 2. Busca Horário de Trabalho
-        const schedule = await WorkSchedule.findOne({
-            where: { barber_id: barberId, day_of_week: dayOfWeek },
-        });
+            if (!schedule) return []; // Dia de folga
 
-        if (!schedule) {
-            return []; 
-        }
-        
-        const startTime = schedule.start_time; 
-        const endTime = schedule.end_time;      
+            const startTime = schedule.start_time; 
+            const endTime = schedule.end_time;     
 
-        // 3. Gera todos os horários possíveis
-        const generateTimes = (start, end, interval = 60) => {
-            const times = [];
-            const [hStart, mStart] = start.split(":").map(Number);
-            const [hEnd, mEnd] = end.split(":").map(Number);
-            
-            let current = new Date(1970, 0, 1); 
-            current.setUTCHours(hStart, mStart, 0, 0); 
-            
-            const finish = new Date(1970, 0, 1);
-            finish.setUTCHours(hEnd, mEnd, 0, 0);
+            const generateTimes = (start, end, interval = 60) => {
+                const times = [];
+                const [hStart, mStart] = start.split(":").map(Number);
+                const [hEnd, mEnd] = end.split(":").map(Number);
 
-            let id = 1;
-            while (current < finish) {
-                const hour = current.toISOString().slice(11, 16); 
-                
-                times.push({ id: id++, hour });
-                current.setMinutes(current.getMinutes() + interval);
-            }
-            return times;
-        };
+                const current = new Date(Date.UTC(1970, 0, 1, hStart, mStart));
+                const finish = new Date(Date.UTC(1970, 0, 1, hEnd, mEnd));
 
-        const allTimes = generateTimes(startTime, endTime);
+                let id = 1;
+                while (current < finish) {
+                    const hour = current.toISOString().slice(11, 16); // HH:MM
+                    times.push({ id: id++, hour });
+                    current.setUTCMinutes(current.getUTCMinutes() + interval);
+                }
+                return times;
+            };
 
-        const appointments = await Appointments.findAll({
-            where: {
-                barber_id: barberId,
-                scheduled_at: {
-                    [Op.between]: [`${date} 00:00:00`, `${date} 23:59:59`],
+            const allTimes = generateTimes(startTime, endTime);
+
+            const appointments = await Appointments.findAll({
+                where: {
+                    barber_id: barberId,
+                    scheduled_at: {
+                        [Op.between]: [`${date} 00:00:00`, `${date} 23:59:59`],
+                    },
                 },
-            },
-        });
+            });
 
-        const occupiedTimes = appointments.map(a => {
-            return a.scheduled_at.toISOString().slice(11, 16);
-        });
-        const availableTimes = allTimes.filter(t => !occupiedTimes.includes(t.hour));
+            const occupiedTimes = appointments.map(a => {
+                return a.scheduled_at.toISOString().slice(11, 16);
+            });
 
-        return availableTimes;
+            const availableTimes = allTimes.filter(t => !occupiedTimes.includes(t.hour));
+            return availableTimes;
+
+        } catch (err) {
+            console.error("Erro ao buscar horários disponíveis:", err);
+            return [];
+        }
     }
 }

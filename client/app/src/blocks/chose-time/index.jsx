@@ -7,35 +7,44 @@ import { CheckCircle2 } from "lucide-react";
 
 export default function TimeCard({ selectedDate, selectedBarber, onConfirm }) {
   const [selectedTime, setSelectedTime] = useState(null);
-  const [availableTimes, setAvailableTimes] = useState([]); 
+  const [availableTimes, setAvailableTimes] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!selectedDate || !selectedBarber?.id) return;
+    if (!selectedDate?.data || !selectedBarber?.id) return;
 
     setLoading(true);
-    const [day, month, year] = selectedDate.data.split("/");
-    const formattedDate = `${year}-${month}-${day}`;
 
-    fetch(`http://127.0.0.1:3333/appointments/barber/${selectedBarber.id}/date/${formattedDate}`)
-      .then(res => {
-        if (!res.ok) {
-          console.error(`Falha na requisição: Status ${res.status}`);
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-        return res.json();
-      })
-      .then((data) => {
-        setAvailableTimes(data);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error("Erro ao buscar horários:", err);
-        setAvailableTimes([]);
-        setLoading(false);
-      });
+    try {
+      const [day, month, year] = selectedDate.data.split("/");
+      const formattedDate = `${year}-${month}-${day}`;
+
+      fetch(`http://127.0.0.1:3333/appointments/barber/${selectedBarber.id}/date/${formattedDate}`)
+        .then(res => {
+          if (!res.ok) {
+            console.error(`Falha na requisição: Status ${res.status}`);
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
+          return res.json();
+        })
+        .then(data => {
+          setAvailableTimes(data);
+          setLoading(false);
+        })
+        .catch(err => {
+          console.error("Erro ao buscar horários:", err);
+          setAvailableTimes([]);
+          setLoading(false);
+        });
+
+    } catch (err) {
+      console.error("Erro ao formatar a data:", err);
+      setAvailableTimes([]);
+      setLoading(false);
+    }
 
   }, [selectedDate, selectedBarber]);
+
 
   const handleSelect = (time) => setSelectedTime(time);
 
@@ -58,11 +67,10 @@ export default function TimeCard({ selectedDate, selectedBarber, onConfirm }) {
             availableTimes.map((time) => (
               <Card
                 key={time.id}
-                className={`relative max-w-md w-40 cursor-pointer transition-all rounded-xl ${
-                  selectedTime?.id === time.id
+                className={`relative max-w-md w-40 cursor-pointer transition-all rounded-xl ${selectedTime?.id === time.id
                     ? "border-2 border-primary shadow-lg scale-105"
                     : "border border-border hover:shadow-md hover:scale-105"
-                }`}
+                  }`}
                 onClick={() => handleSelect(time)}
               >
                 <CardHeader className="flex flex-col items-center gap-2 py-6">

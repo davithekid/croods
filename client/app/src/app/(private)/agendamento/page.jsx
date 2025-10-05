@@ -123,11 +123,12 @@ export default function Agendamento() {
                 {step === 5 && (
                     <section className="mx-auto container flex flex-col md:flex-row justify-center gap-8">
                         <CardDadosAgendamento
-                            service={selectedService}
-                            barber={selectedBarber}
-                            date={selectedDate}
-                            time={selectedTime}
+                            service={selectedService} 
+                            barber={selectedBarber}   
+                            date={selectedDate}     
+                            time={selectedTime}       
                         />
+
                         <CardConfirmaAgendamento
                             service={selectedService}
                             barber={selectedBarber}

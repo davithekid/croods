@@ -9,7 +9,7 @@ const publicRoutes = [
   { path: '/sobre', whenAuthentication: 'next' },
 ];
     
-const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = '/login';
+const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = '/';
 
 export function middleware(request) {
   const path = request.nextUrl.pathname;
