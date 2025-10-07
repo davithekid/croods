@@ -109,7 +109,7 @@ export default function RegisterPage() {
             )}
             <FormField control={form.control} name="nome" render={({ field }) => (
               <FormItem>
-                <FormLabel>Nome</FormLabel>
+                <FormLabel>Nome Completo</FormLabel>
                 <FormControl>
                   <Input placeholder="Seu nome completo" {...field} />
                 </FormControl>
@@ -125,6 +125,7 @@ export default function RegisterPage() {
                     placeholder="000.000.000-00"
                     value={field.value}
                     onChange={e => field.onChange(formatCPF(e.target.value))}
+                    maxLength={14}
                   />
                 </FormControl>
                 <FormMessage />

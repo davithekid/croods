@@ -8,7 +8,7 @@ const publicRoutes = [
   { path: '/planos', whenAuthentication: 'next' },
   { path: '/sobre', whenAuthentication: 'next' },
 ];
-    
+
 const REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE = '/';
 
 export function middleware(request) {
@@ -16,13 +16,14 @@ export function middleware(request) {
   const publicRoute = publicRoutes.find(route => route.path === path);
   const authToken = request.cookies.get('Token');
 
-  // Usuário não autenticado
+  // Usuário não autenticado tentando acessar rota protegida
   if (!authToken) {
     if (publicRoute) {
-      return NextResponse.next(); // permite acesso
+      return NextResponse.next();
     } else {
       const redirectUrl = request.nextUrl.clone();
       redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE;
+      redirectUrl.searchParams.set('authError', 'login-required'); 
       return NextResponse.redirect(redirectUrl);
     }
   }

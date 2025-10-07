@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from "react";
+
+import React, { useState, useEffect } from "react";
 import { handleLogin } from "../../../lib/auth";
 import { ModeToggle } from "@/components/theme/button-theme";
 import { Button } from "@/components/ui/button";
@@ -18,13 +19,15 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { toast } from "sonner";
+
 const formSchema = z.object({
-  email: z.string().email('O e-mail fornecido é inválido'),
+  email: z.string().email("O e-mail fornecido é inválido"),
   password: z.string().min(6, "A senha deve conter no mínimo 6 caracteres."),
 });
+
 const Login01Page = () => {
   const [serverError, setServerError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm({
     defaultValues: {
@@ -33,28 +36,49 @@ const Login01Page = () => {
     },
     resolver: zodResolver(formSchema),
   });
+
+  // ✅ Exibe toast apenas quando o erro de servidor mudar
+  useEffect(() => {
+    if (serverError) {
+      toast.error(serverError);
+    }
+  }, [serverError]);
+
   const onSubmit = async (data) => {
     setIsLoading(true);
     setServerError(null);
 
     const formData = new FormData();
-    formData.append('email', data.email);
-    formData.append('password', data.password)
+    formData.append("email", data.email);
+    formData.append("password", data.password);
 
     const result = await handleLogin(null, formData);
 
     if (result && result.error) {
       setServerError(result.error);
       setIsLoading(false);
-      form.setError('email', { type: 'server', message: 'Credenciais inválidas' })
-      form.setError('password', { type: 'server', message: 'Credenciais inválidas' })
+      form.setError("email", {
+        type: "server",
+        message: "Credenciais inválidas",
+      });
+      form.setError("password", {
+        type: "server",
+        message: "Credenciais inválidas",
+      });
+      return;
     }
 
-
+    if (result.ok) {
+      toast.success("Login efetuado com sucesso!");
+      setIsLoading(false);
+      // Aqui você pode redirecionar, ex: router.push('/dashboard')
+    }
   };
+
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="max-w-xs w-full flex flex-col items-center">
+        {/* logo e modo */}
         <div className="flex items-center gap-8">
           <div className="block dark:hidden">
             <img src="./logo-dark.svg" className="w-13" alt="Logo" />
@@ -64,6 +88,7 @@ const Login01Page = () => {
           </div>
           <ModeToggle />
         </div>
+
         <p className="mt-4 text-xl font-semibold tracking-tight">
           Entre com sua conta croods!
         </p>
@@ -71,12 +96,13 @@ const Login01Page = () => {
         <div className="my-7 w-full flex items-center justify-center overflow-hidden">
           <Separator />
         </div>
+
+        {/* formulário */}
         <Form {...form}>
           <form
-            className="w-full space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
-            {serverError && (
-              toast.error(serverError)
-            )}
+            className="w-full space-y-4"
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
             <FormField
               control={form.control}
               name="email"
@@ -86,7 +112,7 @@ const Login01Page = () => {
                   <FormControl>
                     <Input
                       type="email"
-                      placeholder="email@exempl.com"
+                      placeholder="email@exemplo.com"
                       className="w-full"
                       {...field}
                     />
@@ -95,6 +121,7 @@ const Login01Page = () => {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="password"
@@ -113,6 +140,7 @@ const Login01Page = () => {
                 </FormItem>
               )}
             />
+
             <Button
               type="submit"
               className="mt-4 w-full"
@@ -120,9 +148,9 @@ const Login01Page = () => {
             >
               {isLoading ? "Entrando..." : "Entrar"}
             </Button>
-
           </form>
         </Form>
+
         <div className="mt-5 space-y-5">
           <Link
             href="#"
@@ -141,4 +169,5 @@ const Login01Page = () => {
     </div>
   );
 };
+
 export default Login01Page;
