@@ -23,7 +23,7 @@ const cards = [
 
 const Feature16 = () => {
   return (
-    <section className="py-16 bg-zinc-100 dark:bg-zinc-900">
+    <section className="py-16 mx-auto container">
       <div className="container">
         <div className="grid gap-8 lg:grid-cols-3">
           {cards.map((card) => {

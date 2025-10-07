@@ -16,7 +16,7 @@ export default function Home() {
         <Hero01 />
       </main>
 
-      <section className="mx-auto container">
+      <section className=" bg-zinc-100 dark:bg-zinc-900">
         <Feature16 />
       </section>
 

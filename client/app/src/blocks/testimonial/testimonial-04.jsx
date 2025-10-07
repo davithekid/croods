@@ -9,58 +9,59 @@ const testimonials = [
   {
     id: 1,
     name: "Carlos Silva",
-    designation: "Gerente de Projetos",
-    company: "InovaTech",
+    designation: "Cliente Fiel",
+    company: "São Paulo",
     testimonial:
-      "O Zenith revolucionou nossa organização! As integrações com Notion e Canva tornaram nosso fluxo de trabalho muito mais eficiente.",
+      "Sempre saio satisfeito! O corte é impecável e o atendimento é excelente. Recomendo a todos os amigos.",
     avatar: "https://randomuser.me/api/portraits/men/1.jpg",
   },
   {
     id: 2,
     name: "Ana Paula Mendes",
-    designation: "Empreendedora",
-    company: "Startup Brasil",
+    designation: "Cliente Fiel",
+    company: "São Paulo",
     testimonial:
-      "Finalmente consigo centralizar todas minhas planilhas e metas em um só lugar. As templates personalizáveis são incríveis!",
+      "Adoro o ambiente da barbearia e o cuidado com cada detalhe. Sempre me sinto bem atendida.",
     avatar: "https://randomuser.me/api/portraits/women/6.jpg",
   },
   {
     id: 3,
     name: "Ricardo Oliveira",
-    designation: "Designer Freelancer",
-    company: "CreativeStudio",
+    designation: "Cliente Fiel",
+    company: "São Paulo",
     testimonial:
-      "A integração premium com o Canva mudou completamente minha produtividade. Agora consigo gerenciar projetos e designs simultaneamente!",
+      "Os barbeiros são super profissionais. Meu corte e minha barba ficam sempre impecáveis!",
     avatar: "https://randomuser.me/api/portraits/men/3.jpg",
   },
   {
     id: 4,
     name: "Fernanda Costa",
-    designation: "Estudante de MBA",
-    company: "FGV",
+    designation: "Cliente Fiel",
+    company: "São Paulo",
     testimonial:
-      "Perfeito para organizar estudos e projetos acadêmicos. As agendas personalizáveis me ajudaram a triplicar minha produtividade!",
+      "O atendimento é muito acolhedor e o resultado final sempre supera minhas expectativas. Adoro a barbearia!",
     avatar: "https://randomuser.me/api/portraits/women/4.jpg",
   },
   {
     id: 5,
     name: "Marcos Andrade",
-    designation: "CEO",
-    company: "TechSolutions",
+    designation: "Cliente Fiel",
+    company: "São Paulo",
     testimonial:
-      "O plano empresarial do Zenith com integrações ilimitadas foi o melhor investimento para nossa equipe. Colaboração simplificada!",
+      "Ambiente agradável e cortes de primeira qualidade. Sempre recomendo para quem procura um bom barbeiro.",
     avatar: "https://randomuser.me/api/portraits/men/5.jpg",
   },
   {
     id: 6,
     name: "Juliana Santos",
-    designation: "Product Manager",
-    company: "DigitalLab",
+    designation: "Cliente Fiel",
+    company: "São Paulo",
     testimonial:
-      "A interface intuitiva e as integrações com ferramentas premium tornaram o Zenith indispensável para nosso dia a dia!",
+      "Serviço excelente e muito atenção aos detalhes. Saio sempre satisfeito e voltarei sempre!",
     avatar: "https://randomuser.me/api/portraits/women/2.jpg",
   },
 ];
+
 
 const Testimonial04 = () => {
   return (
@@ -89,9 +90,7 @@ const Testimonial04 = () => {
       </div>
 
       <style jsx>{`
-        /* Remover espaços invisíveis causados por gap extra ou margin */
         .marquee-track-left, .marquee-track-right {
-          /* garantir que o conteúdo não encolha ou quebre linha */
           flex-shrink: 0;
         }
 
@@ -118,9 +117,7 @@ const Testimonial04 = () => {
           animation: marqueeRight 25s linear infinite;
         }
 
-        /* DEBUG: bordas para visualização */
         .marquee-track-left > div, .marquee-track-right > div {
-          /* Uncomment pra ver limites dos cards */
           /* border: 1px solid red; */
         }
       `}</style>
@@ -145,30 +142,10 @@ const TestimonialList = ({ testimonials }) =>
             <p className="text-lg font-semibold">{testimonial.name}</p>
             <p className="text-sm text-gray-500">{testimonial.designation}</p>
           </div>
-        </div>
-        <Button variant="ghost" size="icon" asChild>
-          <Link href="https://x.com" target="_blank">
-            <TwitterLogo className="w-4 h-4" />
-          </Link>
-        </Button>
+        </div>   
       </div>
       <p className="mt-5 text-[17px]">{testimonial.testimonial}</p>
     </div>
   ));
-
-const TwitterLogo = (props) => (
-  <svg
-    role="img"
-    viewBox="0 0 24 24"
-    xmlns="http://www.w3.org/2000/svg"
-    {...props}
-  >
-    <title>X</title>
-    <path
-      fill="currentColor"
-      d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"
-    />
-  </svg>
-);
 
 export default Testimonial04;

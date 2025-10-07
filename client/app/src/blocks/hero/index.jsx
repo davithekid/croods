@@ -10,11 +10,12 @@ const Hero01 = () => {
       <div className="relative text-center max-w-3xl z-10">
         <Badge
           variant="secondary"
-          className="rounded-full py-2 px-4 border border-gray-600 bg-black/50 text-white backdrop-blur-sm"
+          className="rounded-full py-2 px-4 border  backdrop-blur-sm"
           asChild
         >
-          <Link href="#">
+          <Link href="/sobre">
             <Scissors className="size-4 mr-2" />
+            <p></p>
             Desde 2016
           </Link>
         </Badge>
@@ -28,15 +29,21 @@ const Hero01 = () => {
         </p>
 
         <div className="mt-12 flex items-center justify-center gap-4">
-          <Button size="lg" className="rounded-full text-base bg-amber-500 hover:bg-amber-60 shadow-lg">
-            Agendar horário <ArrowUpRight className="size-5 ml-1" />
+          <Button asChild size="lg" className="rounded-full text-base bg-amber-500 hover:bg-amber-600 shadow-lg">
+            <Link href="/agendamento" className="flex items-center gap-1">
+              Agendar horário
+              <ArrowUpRight className="h-5 w-5" />
+            </Link>
           </Button>
-          <Button
+          <Button asChild
             variant="outline"
             size="lg"
             className="rounded-full text-base border-gray-500"
           >
-            <CirclePlay className="size-5 mr-2" /> Nossos Serviços
+            <Link href="/servicos" className="flex items-center gap-1">
+              <CirclePlay className="size-5 mr-2" />
+              Nossos Serviços
+            </Link>
           </Button>
         </div>
       </div>
