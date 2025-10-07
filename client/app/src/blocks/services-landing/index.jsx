@@ -62,7 +62,7 @@ const ServicosIndex = () => {
     ];
 
     return (
-        <section className="py-20">
+        <section className="mt-10">
             <div className="container mx-auto max-w-6xl space-y-8">
                 <div className="text-center space-y-4">
                     <h2 className="text-3xl font-semibold md:text-4xl">Nossos Serviços</h2>

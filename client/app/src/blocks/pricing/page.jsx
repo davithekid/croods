@@ -9,7 +9,9 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 
 const planos = [
+  // Planos Josue
   {
+    barber: "Josue",
     name: "Básico",
     price: 40,
     cortes: "1 corte por mês",
@@ -21,6 +23,7 @@ const planos = [
     ],
   },
   {
+    barber: "Josue",
     name: "Premium",
     price: 70,
     cortes: "2 cortes + 1 barba por mês",
@@ -35,6 +38,7 @@ const planos = [
     isPopular: true,
   },
   {
+    barber: "Josue",
     name: "Super Premium",
     price: 120,
     cortes: "4 cortes + barba + sobrancelha por mês",
@@ -48,14 +52,46 @@ const planos = [
       { title: "Toalha quente e experiência premium" },
     ],
   },
+  // Planos Renan (apenas 2 para exemplo)
+  {
+    barber: "Renan",
+    name: "Básico",
+    price: 50,
+    cortes: "1 corte por mês",
+    description: "Corte simples, rápido e estiloso.",
+    features: [
+      { title: "1 corte de cabelo" },
+      { title: "Degradê ou social" },
+    ],
+  },
+  {
+    barber: "Renan",
+    name: "Premium",
+    price: 90,
+    cortes: "2 cortes + 1 barba por mês",
+    description: "Para manter cabelo e barba sempre alinhados.",
+    features: [
+      { title: "2 cortes de cabelo" },
+      { title: "1 barba aparada" },
+      { title: "Hidratação leve opcional" },
+    ],
+    isPopular: true,
+  },
 ];
 
 const barbers = ["Josue", "Renan"];
 
 const Pricing03 = () => {
   const [selectedBarber, setSelectedBarber] = useState(barbers[0]);
+  const planosFiltrados = planos.filter((plano) => plano.barber === selectedBarber);
+  const planosCompletos = [...planosFiltrados];
+  while (planosCompletos.length < 3) planosCompletos.push(null);
 
-  const planosFiltrados = planos;
+  const handleContact = (barber) => {
+    const phone = barber === "Josue" ? "5511999999999" : "5511888888888";
+    const message = `Olá ${barber}, quero mais informações sobre os planos.`;
+    window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(message)}`, "_blank");
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center py-12 px-6">
@@ -81,57 +117,59 @@ const Pricing03 = () => {
         </TabsList>
       </Tabs>
 
-      <div className="mt-12 max-w-(--breakpoint-lg) mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {planosFiltrados.map((plano) => (
-          <div
-            key={plano.name}
-            className={cn("relative border rounded-xl p-6", {
-              "border-2 border-primary py-10": plano.isPopular,
-            })}
-          >
-            {plano.isPopular && (
-              <Badge className="absolute top-0 right-1/2 translate-x-1/2 -translate-y-1/2">
-                Mais Popular
-              </Badge>
-            )}
-
-            <h3 className="text-lg font-medium">{plano.name}</h3>
-            <p className="text-sm text-muted-foreground">{plano.cortes}</p>
-
-            <p className="mt-2 text-4xl font-bold">
-              R$ {plano.price}
-              <span className="ml-1.5 text-sm text-muted-foreground font-normal">
-                /mês
-              </span>
-            </p>
-
-            <p className="mt-4 font-medium text-muted-foreground">
-              {plano.description}
-            </p>
-
-            <Button
-              variant={plano.isPopular ? "default" : "outline"}
-              size="lg"
-              className="w-full mt-6"
-              onClick={() =>
-                alert(`Entre em contato com ${selectedBarber} para assinar este plano!`)
-              }
+      <div className="mt-12 max-w-(--breakpoint-lg) mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 justify-items-center">
+        {planosCompletos.map((plano, index) =>
+          plano ? (
+            <div
+              key={plano.name}
+              className={cn("relative border rounded-xl p-6 w-full lg:w-80", {
+                "border-2 border-primary py-10": plano.isPopular,
+              })}
             >
-              Entre em contato
-            </Button>
+              {plano.isPopular && (
+                <Badge className="absolute top-0 right-1/2 translate-x-1/2 -translate-y-1/2">
+                  Mais Popular
+                </Badge>
+              )}
 
-            <Separator className="my-8" />
+              <h3 className="text-lg font-medium">{plano.name}</h3>
+              <p className="text-sm text-muted-foreground">{plano.cortes}</p>
 
-            <ul className="space-y-2">
-              {plano.features.map((feature) => (
-                <li key={feature.title} className="flex items-start gap-1.5">
-                  <CircleCheck className="h-4 w-4 mt-1 text-green-600" />
-                  {feature.title}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+              <p className="mt-2 text-4xl font-bold">
+                R$ {plano.price}
+                <span className="ml-1.5 text-sm text-muted-foreground font-normal">
+                  /mês
+                </span>
+              </p>
+
+              <p className="mt-4 font-medium text-muted-foreground">
+                {plano.description}
+              </p>
+
+              <Button
+                variant={plano.isPopular ? "default" : "outline"}
+                size="lg"
+                className="w-full mt-6"
+                onClick={() => handleContact(selectedBarber)}
+              >
+                Entre em contato
+              </Button>
+
+              <Separator className="my-8" />
+
+              <ul className="space-y-2">
+                {plano.features.map((feature) => (
+                  <li key={feature.title} className="flex items-start gap-1.5">
+                    <CircleCheck className="h-4 w-4 mt-1 text-green-600" />
+                    {feature.title}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : (
+            <div key={index} className="w-full lg:w-80"></div>
+          )
+        )}
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ const Navbar01Page = () => {
     async function fetchUser() {
       try {
         const res = await fetch("http://localhost:3333/auth/me", {
-          credentials: "include", 
+          credentials: "include",
           cache: "no-store",
         });
         const data = await res.json();
@@ -25,7 +25,7 @@ const Navbar01Page = () => {
       } catch (err) {
         console.error("Erro ao buscar usuário:", err);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     }
 
@@ -41,13 +41,16 @@ const Navbar01Page = () => {
           <NavMenu className="hidden md:block font-semibold" />
 
           <div className="flex items-center gap-3">
-            {/* enquanto carrega, não mostra nada */}
             {loading ? null : user ? (
               <div className="flex items-center gap-2">
+                <ModeToggle />
+
                 <AvatarDemo src={user.avatar} />
               </div>
             ) : (
               <>
+                <ModeToggle />
+
                 <Button variant="outline" className="hidden sm:inline-flex">
                   <Link href="/login">Login</Link>
                 </Button>
@@ -57,7 +60,6 @@ const Navbar01Page = () => {
               </>
             )}
 
-            <ModeToggle />
             <div className="md:hidden">
               <NavigationSheet />
             </div>

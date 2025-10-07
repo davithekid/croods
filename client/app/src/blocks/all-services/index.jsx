@@ -86,7 +86,7 @@ const Services = () => {
         <Tabs defaultValue={barbers[0].name}>
           <TabsList className="justify-center m-auto mb-8">
             {barbers.map((barber) => (
-              <TabsTrigger key={barber.name} value={barber.name}>
+              <TabsTrigger key={barber.name} value={barber.name} className={'cursor-pointer hover:bg-zinc-200 dark:hover:bg-amber-500 dark:hover:text-zinc-700  '}>
                 {barber.name}
               </TabsTrigger>
             ))}
