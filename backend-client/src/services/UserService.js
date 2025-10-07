@@ -29,4 +29,11 @@ export default class UserService {
         return user;
     }
 
+    static async myAppointements() {
+        const users = await User.findAll({
+            wher
+        })
+
+    }
+
 }

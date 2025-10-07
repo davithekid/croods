@@ -28,11 +28,6 @@ Appointments.init(
       allowNull: false,
       references: { model: Services, key: "id" },
     },
-    dayoff_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-      references: { model: DayOff, key: "id" },
-    },
     scheduled_at: {
       type: DataTypes.DATE,
       allowNull: false,
@@ -67,4 +62,3 @@ Appointments.init(
 Appointments.belongsTo(User, { foreignKey: "user_id", as: "user" });
 Appointments.belongsTo(User, { foreignKey: "barber_id", as: "barber" });
 Appointments.belongsTo(Services, { foreignKey: "service_id", as: "service" });
-Appointments.belongsTo(DayOff, { foreignKey: "dayoff_id", as: "dayoff" });

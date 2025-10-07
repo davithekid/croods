@@ -36,4 +36,25 @@ export default class AppointmentsController {
       return reply.status(500).send({ message: "Erro ao buscar horários disponíveis" });
     }
   }
+
+  static async getUserAppointments(req, reply) {
+    try {
+      const { id } = req.params;
+
+      if (!id) {
+        return reply.status(400).send({ message: "ID do usuário é obrigatório." });
+      }
+
+      const appointments = await AppointmentsService.getAppointmentsByUser(id);
+
+      if (!appointments || appointments.length === 0) {
+        return reply.status(404).send({ message: "Nenhum agendamento encontrado." });
+      }
+
+      return reply.status(200).send(appointments);
+    } catch (error) {
+      console.error("Erro no controller:", error);
+      return reply.status(500).send({ message: "Erro interno do servidor." });
+    }
+  }
 }

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Chose from "@/blocks/chose-service";
 import PricingCard from "@/blocks/chose-barber";
 import DateCard from "@/blocks/chose-date";
@@ -17,6 +17,25 @@ export default function Agendamento() {
     const [selectedBarber, setSelectedBarber] = useState(null);
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
+    const [loggedUser, setLoggedUser] = useState(null); 
+
+    useEffect(() => {
+        async function fetchUser() {
+            try {
+                const res = await fetch("http://localhost:3333/auth/me", {
+                    credentials: "include",
+                    cache: "no-store",
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    setLoggedUser(data.user);
+                }
+            } catch (err) {
+                console.error("Erro ao buscar usuário logado:", err);
+            }
+        }
+        fetchUser();
+    }, []);
 
     const steps = ["Barbeiro", "Serviço", "Data", "Horário", "Dados", "Finalizado"];
 
@@ -134,6 +153,7 @@ export default function Agendamento() {
                             barber={selectedBarber}
                             date={selectedDate}
                             time={selectedTime}
+                            user={loggedUser}
                             onConfirm={() => setStep(6)}
                         />
                     </section>

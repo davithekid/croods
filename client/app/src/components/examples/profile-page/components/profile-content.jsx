@@ -1,11 +1,68 @@
-import { CalendarDays, History, Clock, CheckCircle2 } from "lucide-react";
-
+'use client';
+import { useEffect, useState } from "react";
+import { CalendarDays, Clock, CheckCircle2 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 
 export default function ProfileContent() {
+  const [user, setUser] = useState(null);
+  const [upcomingAppointments, setUpcomingAppointments] = useState([]);
+  const [historyAppointments, setHistoryAppointments] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // 1️⃣ Pega usuário logado
+        const resUser = await fetch("http://localhost:3333/auth/me", {
+          credentials: "include",
+          cache: "no-store",
+        });
+        if (!resUser.ok) return;
+        const { user } = await resUser.json();
+        if (!user) return;
+
+        setUser(user);
+
+        // 2️⃣ Pega agendamentos do usuário
+        const resAppointments = await fetch(`http://localhost:3333/appointments/user/${user.id}`, {
+          credentials: "include",
+          cache: "no-store",
+        });
+        if (!resAppointments.ok) return;
+        const data = await resAppointments.json();
+
+        const now = new Date();
+        const upcoming = [];
+        const history = [];
+
+        // Confere se é array
+        const appointmentsArray = Array.isArray(data) ? data : data.appointments || [];
+
+        appointmentsArray.forEach((ag) => {
+          const agDate = new Date(ag.scheduled_at);
+          const formatted = {
+            id: ag.id,
+            servico: ag.service.name,
+            data: agDate.toLocaleDateString("pt-BR"),
+            hora: agDate.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }),
+            status: ag.status === "concluido" ? "Concluído" : "Confirmado",
+          };
+          if (agDate >= now) upcoming.push(formatted);
+          else history.push(formatted);
+        });
+
+        setUpcomingAppointments(upcoming);
+        setHistoryAppointments(history);
+
+      } catch (err) {
+        console.error("Erro ao buscar dados do usuário ou agendamentos:", err);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <Tabs defaultValue="upcoming" className="space-y-6">
       <TabsList className="grid w-full grid-cols-2 md:grid-cols-2">
@@ -20,10 +77,10 @@ export default function ProfileContent() {
             <CardDescription>Acompanhe seus horários confirmados</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            {[
-              { id: 1, servico: "Corte de cabelo", data: "25/09/2025", hora: "15:00", status: "Confirmado" },
-              { id: 2, servico: "Barba", data: "30/09/2025", hora: "10:30", status: "Pendente" },
-            ].map((ag) => (
+            {upcomingAppointments.length === 0 && (
+              <p className="text-muted-foreground">Nenhum agendamento futuro.</p>
+            )}
+            {upcomingAppointments.map((ag) => (
               <div key={ag.id} className="flex items-center justify-between rounded-lg border p-4">
                 <div>
                   <p className="font-medium">{ag.servico}</p>
@@ -50,10 +107,10 @@ export default function ProfileContent() {
             <CardDescription>Veja os serviços que você já realizou</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            {[
-              { id: 1, servico: "Corte + Barba", data: "10/09/2025", hora: "14:00", status: "Concluído" },
-              { id: 2, servico: "Corte de cabelo", data: "02/09/2025", hora: "09:00", status: "Concluído" },
-            ].map((hist) => (
+            {historyAppointments.length === 0 && (
+              <p className="text-muted-foreground">Nenhum agendamento concluído.</p>
+            )}
+            {historyAppointments.map((hist) => (
               <div key={hist.id} className="flex items-center justify-between rounded-lg border p-4">
                 <div>
                   <p className="font-medium">{hist.servico}</p>
@@ -69,7 +126,6 @@ export default function ProfileContent() {
           </CardContent>
         </Card>
       </TabsContent>
-
     </Tabs>
   );
 }

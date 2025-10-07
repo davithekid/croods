@@ -5,12 +5,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+
 export default function CardConfirmaAgendamento({
     service,
     barber,
     date,
     time,
-    onConfirm
+    onConfirm,
+    user
 }) {
     const [formData, setFormData] = useState({
         fullName: '',
@@ -19,6 +21,7 @@ export default function CardConfirmaAgendamento({
     });
     const [loading, setLoading] = useState(false);
 
+    // ✅ handleChange definido dentro do componente
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -40,12 +43,10 @@ export default function CardConfirmaAgendamento({
         const scheduled_at = `${year}-${month}-${day} ${time.hour}:00`;
 
         const payload = {
-            user_id: "33340069-b8be-405a-8e7a-d6674c333474",
-
+            user_id: user?.id, // ✅ usa o usuário autenticado
             full_name: formData.fullName,
             phone: formData.phone,
             email: formData.email,
-
             scheduled_at: scheduled_at,
             barber_id: barber.id,
             service_id: service.id,
@@ -65,7 +66,7 @@ export default function CardConfirmaAgendamento({
 
             toast.success(`Agendamento Confirmado! Seu horário com ${barber.name} foi reservado.`);
 
-            onConfirm(time.hour); 
+            onConfirm(time.hour);
 
         } catch (error) {
             console.error("Erro no agendamento:", error.message);

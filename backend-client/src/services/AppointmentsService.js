@@ -1,5 +1,7 @@
 import Appointments from "../models/Appointments.js";
+import Services from "../models/Services.js";
 import WorkSchedule from "../models/WorkSchedule.js";
+import User from "../models/User.js";
 import { Op } from "sequelize";
 
 const WEEK_DAYS = ['domingo', 'segunda', 'terca', 'quarta', 'quinta', 'sexta', 'sabado'];
@@ -110,6 +112,31 @@ export default class AppointmentsService {
         } catch (err) {
             console.error("Erro ao buscar horários disponíveis:", err);
             return [];
+        }
+    }
+
+    static async getAppointmentsByUser(userId) {
+        try {
+            const appointments = await Appointments.findAll({
+                where: { user_id: userId },
+                include: [
+                    {
+                        model: Services,
+                        as: "service",
+                        attributes: ["name", "price"]
+                    },
+                    {
+                        model: User,
+                        as: "barber",
+                        attributes: ["id", "name"]
+                    }
+                ],
+                order: [["scheduled_at", "DESC"]]
+            })
+            return appointments;
+        } catch (error) {
+            console.error("Erro ao buscar agendamentos:", error);
+            throw new Error("Erro interno ao buscar agendamentos");
         }
     }
 
