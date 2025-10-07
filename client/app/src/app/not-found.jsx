@@ -8,11 +8,11 @@ export default function NotFound() {
   const router = useRouter();
 
   return (
-    <div className="flex h-screen items-center justify-center bg-gray-50">
+    <div className="flex h-screen items-center justify-center">
       <Card className="w-full max-w-md text-center shadow-lg">
         <CardHeader>
-          <CardTitle className="text-6xl font-bol">404</CardTitle>
-          <CardDescription className="text-lg text-gray-600">
+          <CardTitle className="text-6xl">404</CardTitle>
+          <CardDescription className="text-lg">
             Ops! A página que você está procurando não existe.
           </CardDescription>
         </CardHeader>

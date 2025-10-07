@@ -10,12 +10,13 @@ export default function DateCard({ barber, service, onConfirm }) {
   const [dates, setDates] = useState([]);
 
   useEffect(() => {
+    console.log("Barber recebido:", barber);
     if (!barber?.id) return;
+
 
     fetch(`http://127.0.0.1:3333/work-schedules/barber/${barber.id}`)
       .then(res => res.json())
       .then((data) => {
-        // Garantir que temos um array
         const schedules = Array.isArray(data) ? data : data.workSchedules || [];
 
         const hoje = new Date();
@@ -70,11 +71,10 @@ export default function DateCard({ barber, service, onConfirm }) {
         {dates.map((date) => (
           <Card
             key={date.id}
-            className={`relative max-w-md w-72 cursor-pointer transition-all rounded-xl ${
-              selectedDate?.id === date.id
+            className={`relative max-w-md w-72 cursor-pointer transition-all rounded-xl ${selectedDate?.id === date.id
                 ? "border-2 border-primary shadow-lg scale-105"
                 : "border border-border hover:shadow-md hover:scale-105"
-            }`}
+              }`}
             onClick={() => handleSelect(date)}
           >
             <CardHeader className="flex flex-col items-center gap-2">

@@ -49,7 +49,7 @@ export default function Chose({ barberId, onSelect }) {
             >
               <div className="flex items-center justify-between">
                 <h3>{service.name}</h3>
-                <span>R$ {service.price},00</span>
+                <span>R$ {service.price}</span>
               </div>
             </div>
           ))}
@@ -57,10 +57,10 @@ export default function Chose({ barberId, onSelect }) {
 
         {selectedService && (
           <>
-            <h3 className="text-xl font-semibold flex items-center gap-2">
+            {/* <h3 className="text-xl font-semibold flex items-center gap-2">
               <PlusCircle className="h-5 w-5 text-primary" />
               Adicionais <span className="text-red-500">*opcional</span>
-            </h3>
+            </h3> */}
 
             <Button onClick={handleConfirm} className="mt-4 w-full rounded-lg">
               Confirmar Seleção
