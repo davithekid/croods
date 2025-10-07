@@ -19,10 +19,19 @@ const teamMembers = [
   },
 ];
 
-
 const Team05Page = () => {
+  const handleScroll = (id) => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
-    <div className="flex flex-col justify-center py-8 sm:py-12 px-6 lg:px-8 max-w-screen-xl mx-auto gap-16">
+    <div
+      id="barbeiros"
+      className="flex flex-col justify-center py-8 sm:py-12 px-6 lg:px-8 max-w-screen-xl mx-auto gap-16"
+    >
       <div className="text-center max-w-2xl mx-auto">
         <b className="text-center text-muted-foreground text-sm font-semibold uppercase font-serif">
           Sobre Nós
@@ -31,15 +40,18 @@ const Team05Page = () => {
           Conheça a nossa barbearia
         </h2>
         <p className="mt-4 text-base sm:text-lg text-muted-foreground">
-          Cortes e cuidados feitos com carinho, em um lugar para você relaxar, se sentir à vontade e sair com estilo.
+          Cortes e cuidados feitos com carinho, em um lugar para você relaxar,
+          se sentir à vontade e sair com estilo.
         </p>
 
-
-
         <div className="mt-8 flex flex-col sm:flex-row-reverse sm:justify-center gap-3">
-          <Button size="lg">Linha do tempo</Button>
-          <Button size="lg">Unidade</Button>
-          <Button size="lg" variant="outline">
+        <Button size="lg" className={'cursor-pointer'} onClick={() => handleScroll("unidade")}>
+            Unidade
+          </Button>
+          <Button size="lg" className={'cursor-pointer'} onClick={() => handleScroll("timeline")}>
+            Linha do tempo
+          </Button>
+          <Button size="lg" className={'cursor-pointer'} variant="outline" onClick={() => handleScroll("barbeiros")}>
             Barbeiros
           </Button>
         </div>
@@ -61,7 +73,6 @@ const Team05Page = () => {
 
             <h3 className="mt-4 text-lg font-semibold">{member.name}</h3>
             <p className="text-muted-foreground text-sm">{member.title}</p>
-
           </div>
         ))}
       </div>

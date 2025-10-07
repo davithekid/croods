@@ -149,7 +149,7 @@ const Pricing03 = () => {
               <Button
                 variant={plano.isPopular ? "default" : "outline"}
                 size="lg"
-                className="w-full mt-6"
+                className="w-full mt-6 cursor-pointer"
                 onClick={() => handleContact(selectedBarber)}
               >
                 Entre em contato
