@@ -1,5 +1,5 @@
 "use client";
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { handleLogin } from "../../../lib/auth";
 import { ModeToggle } from "@/components/theme/button-theme";
 import { Button } from "@/components/ui/button";
@@ -43,11 +43,11 @@ const Login01Page = () => {
 
     const result = await handleLogin(null, formData);
 
-    if(result && result.error) {
+    if (result && result.error) {
       setServerError(result.error);
       setIsLoading(false);
-      form.setError('email', {type: 'server', message: 'Credenciais inválidas'})
-      form.setError('password', {type: 'server', message: 'Credenciais inválidas'})
+      form.setError('email', { type: 'server', message: 'Credenciais inválidas' })
+      form.setError('password', { type: 'server', message: 'Credenciais inválidas' })
     }
 
 
@@ -74,9 +74,9 @@ const Login01Page = () => {
         <Form {...form}>
           <form
             className="w-full space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
-              {serverError && (
-               toast.error(serverError)
-              )}
+            {serverError && (
+              toast.error(serverError)
+            )}
             <FormField
               control={form.control}
               name="email"
@@ -113,9 +113,14 @@ const Login01Page = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="mt-4 w-full" disable={isLoading || !form.formState.isValid}>
-              {isLoading ? 'Entrando...' : 'Entrar'}
+            <Button
+              type="submit"
+              className="mt-4 w-full"
+              disabled={isLoading || !form.formState.isValid}
+            >
+              {isLoading ? "Entrando..." : "Entrar"}
             </Button>
+
           </form>
         </Form>
         <div className="mt-5 space-y-5">
@@ -127,7 +132,7 @@ const Login01Page = () => {
           </Link>
           <p className="text-sm text-center">
             Não possui uma conta?
-            <Link href="#" className="ml-1 underline text-muted-foreground">
+            <Link href="/register" className="ml-1 underline text-muted-foreground">
               Registre-se
             </Link>
           </p>

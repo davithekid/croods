@@ -47,7 +47,7 @@ export const handleLogin = async (prevState, formData) => {
             return { error: 'O token de autenticação está ausente na resposta da API.' };
         }
 
-        const cookieStore = await cookies(); 
+        const cookieStore = await cookies();
         cookieStore.set('Token', token, {
             secure: process.env.NODE_ENV === 'production',
             httpOnly: true,
