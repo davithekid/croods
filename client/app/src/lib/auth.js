@@ -9,19 +9,20 @@ const API_URL = 'http://127.0.0.1:3333';
 const loginSchema = z.object({
     email: z.string().email(),
     password: z.string().min(6)
-})
+});
 
 export const handleLogin = async (prevState, formData) => {
     try {
         const parsed = loginSchema.safeParse({
             email: formData.get('email'),
             password: formData.get('password')
-        })
+        });
 
-        if(!parsed.success){
-            return { error: 'Dados inválidos enviados ao servidor.'}
+        if (!parsed.success) {
+            return { error: 'Dados inválidos enviados ao servidor.' };
         }
-        const { email, password} = parsed.data;
+
+        const { email, password } = parsed.data;
         const endpoint = 'auth/login';
 
         const response = await fetch(`${API_URL}/${endpoint}`, {
@@ -46,48 +47,27 @@ export const handleLogin = async (prevState, formData) => {
             return { error: 'O token de autenticação está ausente na resposta da API.' };
         }
 
-        cookies().set('Token', token, {
+        const cookieStore = await cookies(); 
+        cookieStore.set('Token', token, {
             secure: process.env.NODE_ENV === 'production',
             httpOnly: true,
             sameSite: 'strict',
             maxAge: 60 * 60 // 1 hora
         });
+
         redirect('/');
 
     } catch (error) {
-        console.error("Erro fatal durante o login:", error);
-        if (error.message === 'NEXT_REDIRECT') {
-            throw error;
-        }
+        if (error.message.includes('NEXT_REDIRECT')) throw error;
 
+        console.error("Erro fatal durante o login:", error);
         return { error: "Não foi possível conectar ao servidor de autenticação. Verifique a rede." };
     }
-}
+};
 
 // logout
 export async function logoutAction() {
-    cookies().delete('Token');
-    redirect('/login')
+    const cookieStore = await cookies();
+    cookieStore.delete('Token');
+    redirect('/login');
 }
-export const handleRegister = async (_prev, formData) => {
-  try {
-    const body = { ...formData, role: 'user' };
-
-    const res = await fetch(`${API_URL}/auth/register`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-      cache: "no-store",
-    });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      return { error: data.message || "Erro ao registrar" };
-    }
-    return { success: true, user: data.user };
-  } catch (err) {
-    console.error("Erro no handleRegister:", err);
-    return { error: "Erro no servidor. Tente novamente." };
-  }
-};
