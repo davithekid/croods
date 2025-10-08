@@ -96,9 +96,9 @@ const Services = () => {
         </div>
 
         <Tabs defaultValue={barbers[0].name}>
-          <TabsList className="justify-center m-auto mb-8">
+          <TabsList className="justify-center m-auto mb-8 h-12">
             {barbers.map((barber) => (
-              <TabsTrigger key={barber.name} value={barber.name} className={'cursor-pointer hover:bg-zinc-200 dark:hover:bg-amber-500 dark:hover:text-zinc-700  '}>
+              <TabsTrigger key={barber.name} value={barber.name} className={'cursor-pointer hover:bg-zinc-200 dark:hover:bg-amber-500 dark:hover:text-zinc-700'}>
                 {barber.name}
               </TabsTrigger>
             ))}
@@ -110,12 +110,12 @@ const Services = () => {
                 {barber.services.map((service, index) => (
                   <div
                     key={index}
-                    className="border-border space-y-6 rounded-lg border p-8 transition-shadow hover:shadow-md"
+                    className="border-primary space-y-6 rounded-lg border p-8 transition-shadow hover:shadow-md"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-4">
                         <div className="bg-muted rounded-full p-3">{service.icon}</div>
-                        <h3 className="text-xl font-semibold">{service.title}</h3>
+                        <h3 className="text-xl lg:text-2xl font-semibold">{service.title}</h3>
                       </div>
                       <span className="text-primary font-bold">{service.price}</span>
                     </div>

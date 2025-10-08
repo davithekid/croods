@@ -92,7 +92,7 @@ export default function DateCard({ barber, service, onConfirm }) {
 
       {selectedDate && (
         <div className="flex justify-center mt-6">
-          <Button onClick={() => onConfirm(selectedDate)} size="lg" className="px-8">
+          <Button onClick={() => onConfirm(selectedDate)} size="lg" className="px-8 cursor-pointer">
             Confirmar {selectedDate.data}
           </Button>
         </div>

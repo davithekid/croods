@@ -123,7 +123,7 @@ export default function CardConfirmaAgendamento({
                     <CardFooter className="p-0 pt-4">
                         <Button
                             type="submit"
-                            className="w-full"
+                            className="w-full cursor-pointer"
                             disabled={loading}
                         >
                             {loading ? "Processando..." : "Finalizar Agendamento"}

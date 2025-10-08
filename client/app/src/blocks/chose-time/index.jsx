@@ -88,7 +88,7 @@ export default function TimeCard({ selectedDate, selectedBarber, onConfirm }) {
 
       {selectedTime && (
         <div className="flex justify-center mt-6">
-          <Button size="lg" className="px-8" onClick={() => handleConfirm(selectedTime)}>
+          <Button size="lg" className="px-8 cursor-pointer" onClick={() => handleConfirm(selectedTime)}>
             Confirmar {selectedTime.hour}
           </Button>
         </div>
