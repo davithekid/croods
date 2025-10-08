@@ -104,6 +104,7 @@ export default function CardConfirmaAgendamento({
                             placeholder="(11) 99999-9999"
                             value={formData.phone}
                             onChange={handleChange}
+                            maxLength={15}
                             required
                         />
                     </div>
