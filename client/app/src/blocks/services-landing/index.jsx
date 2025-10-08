@@ -83,21 +83,21 @@ const ServicosIndex = () => {
                                 {barber.services.map((service, index) => (
                                     <div
                                         key={index}
-                                        className="border-primary rounded-lg border p-8  hover:shadow-md hover:scale-102 duration-200" 
+                                        className="border-primary rounded-lg border p-8 hover:shadow-md hover:scale-102 duration-200"
                                     >
                                         <div className="flex items-center justify-between">
                                             <div className="flex flex-col m-auto items-center gap-4">
                                                 <div className="bg-muted rounded-full p-3">{service.icon}</div>
-                                                <h3 className="text-xl font-semibold">{service.title}</h3>
-                                                <span className="text-primary font-bold">{service.price}</span>
+                                                <h3 className="text-2xl font-semibold">{service.title}</h3>
+                                                <span className="text-primary text-xl font-bold">{service.price}</span>
                                             </div>
                                         </div>
                                         <p className="text-muted-foreground leading-relaxed flex justify-center">{service.description}</p>
-                                        <div className="space-y-2">
+                                        <div className="">
                                             {service.items.map((item, itemIndex) => (
                                                 <div key={itemIndex} className="flex items-center gap-2 justify-center">
                                                     <div className="bg-foreground h-1.5 w-1.5 rounded-full" />
-                                                    <span className="text-sm font-medium">{item}</span>
+                                                    <span className="text-md font-medium">{item}</span>
                                                 </div>
                                             ))}
                                         </div>
