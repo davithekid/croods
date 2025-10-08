@@ -44,12 +44,12 @@ export default function Chose({ barberId, onSelect }) {
             <div
               key={service.id}
               onClick={() => setSelectedService(service)}
-              className={`border space-y-4 rounded-lg p-5 cursor-pointer ${selectedService?.id === service.id ? "border-primary" : ""
+              className={`bg-white dark:bg-muted border space-y-4 rounded-lg p-5 cursor-pointer ${selectedService?.id === service.id ? "border-primary" : ""
                 }`}
             >
               <div className="flex items-center justify-between">
-                <h3>{service.name}</h3>
-                <span>R$ {service.price}</span>
+                <h3 className="font-bold text-lg">{service.name}</h3>
+                <span className="font-bold text-primary text-lg">R$ {service.price}</span>
               </div>
             </div>
           ))}
@@ -62,7 +62,7 @@ export default function Chose({ barberId, onSelect }) {
               Adicionais <span className="text-red-500">*opcional</span>
             </h3> */}
 
-            <Button onClick={handleConfirm} className="mt-4 w-full rounded-lg">
+            <Button onClick={handleConfirm} className="mt-4 w-full rounded-lg cursor-pointer">
               Confirmar Seleção
             </Button>
           </>

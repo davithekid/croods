@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
 import {
   Card,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -20,7 +19,7 @@ export default function PricingCard({ onSelect }) {
   useEffect(() => {
     async function fetchBarbers() {
       try {
-        const data = await get('users/barbers'); // endpoint da sua API
+        const data = await get('users/barbers');
         setBarbers(data);
       } catch (err) {
         console.error(err);
@@ -45,8 +44,8 @@ export default function PricingCard({ onSelect }) {
       <div className="flex gap-6 justify-center flex-wrap py-6">
         {barbers.map((barber, index) => (
           <Card
-            key={`${barber.id}-${index}`} // garante unicidade
-            className="max-w-xs w-full transition-shadow hover:shadow-md"
+            key={`${barber.id}-${index}`} 
+            className="max-w-xs w-full hover:shadow-md hover:border-primary duration-200 hover:scale-102"
           >
             <CardHeader className="flex flex-col items-center gap-2">
               <div className="bg-muted rounded-full p-4 flex items-center justify-center">
