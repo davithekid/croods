@@ -17,7 +17,7 @@ export default function Home() {
         <Hero01 />
       </main>
 
-      <section className=" bg-zinc-100 dark:bg-zinc-900">
+      <section className="bg-zinc-50 dark:bg-zinc-950">
         <Feature16 />
       </section>
 
