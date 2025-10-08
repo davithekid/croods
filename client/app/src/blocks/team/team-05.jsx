@@ -45,8 +45,11 @@ const Team05Page = () => {
         </p>
 
         <div className="mt-8 flex flex-col sm:flex-row-reverse sm:justify-center gap-3">
-        <Button size="lg" className={'cursor-pointer'} onClick={() => handleScroll("unidade")}>
-            Unidade
+        <Button size="lg" className={'cursor-pointer'} onClick={() => handleScroll("localization")}>
+            Localização
+          </Button>
+          <Button size="lg" className={'cursor-pointer'} onClick={() => handleScroll("valores")}>
+            Valores
           </Button>
           <Button size="lg" className={'cursor-pointer'} onClick={() => handleScroll("timeline")}>
             Linha do tempo

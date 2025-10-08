@@ -17,7 +17,7 @@ export default function Agendamento() {
     const [selectedBarber, setSelectedBarber] = useState(null);
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
-    const [loggedUser, setLoggedUser] = useState(null); 
+    const [loggedUser, setLoggedUser] = useState(null);
 
     useEffect(() => {
         async function fetchUser() {
@@ -51,29 +51,31 @@ export default function Agendamento() {
 
             <main className="mx-auto container py-6">
                 {/* barra de progresso */}
-                <div className="flex items-center justify-center gap-4 mb-8">
+                <div className="flex  sm:flex-row items-center justify-center gap-4 mb-8">
                     {steps.map((label, index) => {
                         const current = index + 1;
                         return (
                             <div
                                 key={index}
-                                className={`flex items-center gap-2 ${step >= current ? "text-primary font-semibold" : "text-muted-foreground"
-                                    }`}
+                                className={`flex items-center gap-2 ${step >= current ? "text-primary font-semibold" : "text-muted-foreground"}`}
                             >
                                 <div
-                                    className={`h-8 w-8 flex items-center justify-center rounded-full border-2 ${step >= current ? " border-primary" : "border-muted-foreground"
-                                        }`}
+                                    className={`h-8 w-8 flex items-center justify-center rounded-full border-2 ${step >= current ? "border-primary" : "border-muted-foreground"}`}
                                 >
                                     {current}
                                 </div>
                                 <span className="hidden sm:inline text-sm">{label}</span>
-                                {index < steps.length - 1 && <div className="w-10 h-[2px] bg-muted-foreground/30"></div>}
+
+                                {index < steps.length - 1 && (
+                                    <div className="hidden sm:block flex-1 h-[2px] bg-muted-foreground/30"></div>
+                                )}
                             </div>
                         );
                     })}
                 </div>
 
-                {step > 1 && (
+
+                {step > 1 && step < 6 && (
                     <div className="mb-6 flex justify-start">
                         <Button
                             onClick={goBack}
@@ -142,10 +144,10 @@ export default function Agendamento() {
                 {step === 5 && (
                     <section className="mx-auto container flex flex-col md:flex-row justify-center gap-8">
                         <CardDadosAgendamento
-                            service={selectedService} 
-                            barber={selectedBarber}   
-                            date={selectedDate}     
-                            time={selectedTime}       
+                            service={selectedService}
+                            barber={selectedBarber}
+                            date={selectedDate}
+                            time={selectedTime}
                         />
 
                         <CardConfirmaAgendamento

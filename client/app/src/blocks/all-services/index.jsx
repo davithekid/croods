@@ -42,29 +42,41 @@ const Services = () => {
       name: "Renan",
       services: [
         {
-          title: "Luzes Masculinas",
-          price: "R$ 120,00",
+          title: "Corte Masculino",
+          price: "R$ 35,00",
           icon: <Sparkles className="h-6 w-6" />,
           description: "Transforme seu visual com luzes.",
           items: ["Descoloração", "Matização"]
         },
         {
           title: "Sobrancelha",
-          price: "R$ 20,00",
+          price: "R$ 10,00",
           icon: <Brush className="h-6 w-6" />,
           description: "Design de sobrancelha discreto.",
           items: ["Limpeza com pinça", "Correção de falhas"]
         },
         {
-          title: "Sobrancelha",
-          price: "R$ 20,00",
+          title: "Corte Criança",
+          price: "R$ 25,00",
           icon: <Brush className="h-6 w-6" />,
           description: "Design de sobrancelha discreto.",
           items: ["Limpeza com pinça", "Correção de falhas"]
         },
         {
-          title: "Sobrancelha",
+          title: "Luzes",
+          price: "R$ 60,00",
+          icon: <Brush className="h-6 w-6" />,
+          description: "Design de sobrancelha discreto.",
+          items: ["Limpeza com pinça", "Correção de falhas"]
+        }, {
+          title: "Barba",
           price: "R$ 20,00",
+          icon: <Brush className="h-6 w-6" />,
+          description: "Design de sobrancelha discreto.",
+          items: ["Limpeza com pinça", "Correção de falhas"]
+        },{
+          title: "Pintar Cabelo",
+          price: "R$ 80,00",
           icon: <Brush className="h-6 w-6" />,
           description: "Design de sobrancelha discreto.",
           items: ["Limpeza com pinça", "Correção de falhas"]

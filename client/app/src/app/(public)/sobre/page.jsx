@@ -1,7 +1,7 @@
-import { Feature197 } from "@/blocks/about";
+import { FeatureAbout } from "@/blocks/features-about";
+import Localization from "@/blocks/localization";
 import Team05Page from "@/blocks/team/team-05";
 import Timeline from "@/blocks/timeline/timeline-02";
-import { Feature13 } from "@/blocks/unidade";
 import Footer05Page from "@/components/footer/footer-05";
 import Navbar01Page from "@/components/navbar/navbar-01";
 
@@ -20,10 +20,13 @@ export default function Sobre() {
                 <Timeline />
             </section>
 
-            <section id="unidade" className="mx-auto container">
-                <Feature13 />
+            <section id="valores" className="mx-auto container">
+                <FeatureAbout/>
             </section>
 
+            <section id="localization" className="mx-auto container">
+                <Localization/>
+            </section>
 
             <footer>
                 <Footer05Page />

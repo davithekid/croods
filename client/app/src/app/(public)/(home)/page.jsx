@@ -1,3 +1,4 @@
+import { Cta10 } from "@/blocks/cta";
 import { Feature16 } from "@/blocks/features";
 import Hero01 from "@/blocks/hero";
 import { ServicosIndex } from "@/blocks/services-landing";
@@ -26,6 +27,10 @@ export default function Home() {
 
       <section>
         <Testimonial04 />
+      </section>
+
+      <section className="mx-auto">
+        <Cta10 />
       </section>
 
       <footer>

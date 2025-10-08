@@ -39,7 +39,7 @@ export default function Chose({ barberId, onSelect }) {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="flex flex-col justify-center gap-4">
           {services.map((service) => (
             <div
               key={service.id}
