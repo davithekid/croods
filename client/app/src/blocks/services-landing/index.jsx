@@ -83,7 +83,7 @@ const ServicosIndex = () => {
                                 {barber.services.map((service, index) => (
                                     <div
                                         key={index}
-                                        className="border-border rounded-lg border p-8  hover:shadow-md hover:scale-102 duration-200" 
+                                        className="border-primary rounded-lg border p-8  hover:shadow-md hover:scale-102 duration-200" 
                                     >
                                         <div className="flex items-center justify-between">
                                             <div className="flex flex-col m-auto items-center gap-4">

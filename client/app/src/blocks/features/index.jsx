@@ -31,7 +31,7 @@ const Feature16 = () => {
             return (
               <div
                 key={card.title}
-                className="rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300"
+                className="rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-primary"
               >
                 <span className="mb-6 flex size-14 items-center justify-center rounded-full bg-amber-500 m-auto shadow-md">
                   <Icon className="size-7" />
