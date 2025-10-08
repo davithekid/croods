@@ -65,7 +65,7 @@ const testimonials = [
 
 const Testimonial04 = () => {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center py-12 gap-12 relative">
+    <div className="flex flex-col justify-center items-center  py-20 gap-12 relative">
       <h2 className="text-5xl font-semibold text-center tracking-[-0.03em] px-6 text-pretty">
         Feedback de nossos clientes
       </h2>

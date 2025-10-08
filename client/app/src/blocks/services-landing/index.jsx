@@ -62,14 +62,14 @@ const ServicosIndex = () => {
     ];
 
     return (
-        <section className="mt-10">
-            <div className="container mx-auto max-w-6xl space-y-8">
-                <div className="text-center space-y-4">
+        <section className="mt-10 py-7">
+            <div className="container mx-auto max-w-6xl ">
+                <div className="text-center">
                     <h2 className="text-3xl font-semibold md:text-4xl">Nossos Serviços</h2>
                 </div>
 
                 <Tabs defaultValue={barbers[0].name}>
-                    <TabsList className="justify-center m-auto mb-8">
+                    <TabsList className="justify-center m-auto mt-2 mb-2">
                         {barbers.map((barber) => (
                             <TabsTrigger key={barber.name} value={barber.name} className={'cursor-pointer hover:bg-zinc-200 dark:hover:bg-amber-500 dark:hover:text-zinc-700'}>
                                 {barber.name}
@@ -83,7 +83,7 @@ const ServicosIndex = () => {
                                 {barber.services.map((service, index) => (
                                     <div
                                         key={index}
-                                        className="border-border space-y-6 rounded-lg border p-8  hover:shadow-md hover:scale-102 duration-200" 
+                                        className="border-border rounded-lg border p-8  hover:shadow-md hover:scale-102 duration-200" 
                                     >
                                         <div className="flex items-center justify-between">
                                             <div className="flex flex-col m-auto items-center gap-4">
@@ -106,7 +106,7 @@ const ServicosIndex = () => {
                             </div>
                         </TabsContent>
                     ))}
-                    <Button className={'m-auto mt-5'}>
+                    <Button className={'mx-auto mt-5'}>
                         <Link href='/servicos'>
                             Ver todos os serviços
                         </Link>

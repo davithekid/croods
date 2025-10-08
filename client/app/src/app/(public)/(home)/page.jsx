@@ -21,7 +21,7 @@ export default function Home() {
         <Feature16 />
       </section>
 
-      <section>
+      <section className="mx-auto container">
         <ServicosIndex />
       </section>
 

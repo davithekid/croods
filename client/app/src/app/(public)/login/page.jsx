@@ -147,6 +147,15 @@ const Login01Page = () => {
               disabled={isLoading || !form.formState.isValid}
             >
               {isLoading ? "Entrando..." : "Entrar"}
+            </Button> 
+            <Button
+              type="submit"
+              className="mt-2 w-full cursor-pointer"
+              disabled={isLoading }
+            >
+              <Link href='/'>
+              {isLoading ? "Entrando..." : "Entrar sem login"}
+              </Link>
             </Button>
           </form>
         </Form>
