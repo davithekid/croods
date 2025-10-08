@@ -44,7 +44,7 @@ const Team05Page = () => {
           se sentir à vontade e sair com estilo.
         </p>
 
-        <div className="mt-8 flex flex-col sm:flex-row-reverse sm:justify-center gap-3">
+        <div className="hidden md:flex mt-8  flex-col sm:flex-row-reverse sm:justify-center gap-3">
         <Button size="lg" className={'cursor-pointer'} onClick={() => handleScroll("localization")}>
             Localização
           </Button>

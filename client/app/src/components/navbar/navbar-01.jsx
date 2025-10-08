@@ -42,10 +42,10 @@ const Navbar01Page = () => {
 
           <div className="flex items-center gap-3">
             {loading ? null : user ? (
-              <div className="flex items-center gap-2">
-                <ModeToggle />
+              <div className="flex items-center gap-2 ">
+                <ModeToggle/>
 
-                <AvatarDemo src={user.avatar} />
+                <AvatarDemo src={user.avatar}/>
               </div>
             ) : (
               <>
