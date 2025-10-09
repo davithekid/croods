@@ -1,15 +1,19 @@
 'use client';
-
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Camera, Mail } from "lucide-react";
 import { useEffect, useState } from "react";
-import { logoutAction } from "@/lib/auth"; 
+import { logoutAction } from "@/lib/auth";
+import { Button } from "@/components/ui/button";
+import EditProfile from "@/components/edit-profile/EditProfile";
 
 export default function ProfileHeader() {
   const [user, setUser] = useState(null);
+
+  // Função que será passada para o EditProfile e atualiza o estado
+  const handleUserUpdate = (updatedUser) => {
+    setUser(updatedUser); // AQUI A MÁGICA ACONTECE: O estado é atualizado!
+  };
 
   useEffect(() => {
     async function fetchUser() {
@@ -33,6 +37,8 @@ export default function ProfileHeader() {
     await logoutAction();
   }
 
+  if (!user) return <p>Carregando...</p>;
+
   return (
     <Card>
       <CardContent className="p-6">
@@ -40,11 +46,11 @@ export default function ProfileHeader() {
           <div className="relative">
             <Avatar className="h-24 w-24">
               <AvatarImage
-                src={user?.avatar || "https://bundui-images.netlify.app/avatars/08.png"}
-                alt={user?.name || "Perfil"}
+                src={user.avatar || "https://bundui-images.netlify.app/avatars/08.png"}
+                alt={user.name}
               />
               <AvatarFallback className="text-2xl">
-                {user?.name ? user.name[0] : "?"}
+                {user.name ? user.name[0] : "?"}
               </AvatarFallback>
             </Avatar>
             <Button
@@ -58,20 +64,21 @@ export default function ProfileHeader() {
 
           <div className="flex-1 space-y-2">
             <div className="flex flex-col gap-2 md:flex-row md:items-center">
-              <h1 className="text-2xl font-bold">{user?.name || "Usuário"}</h1>
-              <Badge variant="secondary">{user?.role || "Básico"}</Badge>
+              <h1 className="text-2xl font-bold">{user.name}</h1>
             </div>
             <div className="text-muted-foreground flex flex-wrap gap-4 text-sm">
               <div className="flex items-center gap-1">
                 <Mail className="size-4" />
-                {user?.email || "email@exemplo.com"}
+                {user.email}
               </div>
             </div>
           </div>
 
           <div className="flex gap-2">
-            <Button variant="default">Editar Perfil</Button>
-    
+            <EditProfile
+              user={user}
+              onUpdate={handleUserUpdate} 
+            />
           </div>
         </div>
       </CardContent>

@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcryptjs';
 
 export default class User extends Model {
-  // Método para comparar senha
+  // método para comparar senha
   async checkPassword(password) {
     return bcrypt.compare(password, this.password);
   }

@@ -24,27 +24,28 @@ const app = fastify({
 await app.register(cors, {
     origin: 'http://localhost:3000',
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 })
 
-app.register(fastifyFormbody);              
+app.register(fastifyFormbody);
 
 app.get('/', (request, reply) => {
     return reply.status(200).send({ message: 'Hello API!!!' });
 })
-    
+
 // register cookies...
 app.register(fastifyCookie, {
     secret: process.env.COOKIE_SECRET || 'supersecret',
     parseOptions: {}
 })
-app.register(errorHandler)
-app.register(barberRoutes, {prefix: 'barbers'})
-app.register(userRoutes, { prefix: '/users' }); 
+app.register(barberRoutes, { prefix: 'barbers' })
+app.register(userRoutes, { prefix: '/users' });
 app.register(timeOffRoutes, { prefix: '/timeoff' });
 app.register(authRoutes, { prefix: '/auth' });
 app.register(serviceRoutes, { prefix: '/services' })
 app.register(extraServiceRoutes, { prefix: '/extra-services' })
-app.register(workScheduleRoutes, {prefix: 'work-schedules'})
+app.register(workScheduleRoutes, { prefix: 'work-schedules' })
 app.register(appointmentsRoutes, { prefix: '/appointments' })
+app.register(errorHandler)
 
 export default app;
