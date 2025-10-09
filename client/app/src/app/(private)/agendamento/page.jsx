@@ -17,6 +17,7 @@ import {
     DialogTitle,
     DialogDescription,
 } from "@/components/ui/dialog";
+import Link from "next/link";
 
 export default function Agendamento() {
     const [step, setStep] = useState(1);

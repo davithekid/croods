@@ -20,7 +20,6 @@ export default function ProfileContent() {
         if (!resUser.ok) return;
         const { user } = await resUser.json();
         if (!user) return;
-
         setUser(user);
 
         const resAppointments = await fetch(`http://localhost:3333/appointments/user/${user.id}`, {
@@ -52,13 +51,17 @@ export default function ProfileContent() {
             status: statusLabel,
           };
 
-          if (agDate >= now && ag.status !== "cancelado") upcoming.push(formatted);
-          else history.push(formatted);
+          if (ag.status === "agendado" && agDate >= now) {
+            upcoming.push(formatted);
+          }
+
+          if (ag.status === "concluido" || (agDate < now && ag.status !== "agendado")) {
+            history.push(formatted);
+          }
         });
 
         setUpcomingAppointments(upcoming);
         setHistoryAppointments(history);
-
       } catch (err) {
         console.error("Erro ao buscar dados do usuário ou agendamentos:", err);
       }
@@ -70,8 +73,8 @@ export default function ProfileContent() {
   return (
     <Tabs defaultValue="upcoming" className="space-y-6">
       <TabsList className="grid w-full grid-cols-2 md:grid-cols-2">
-        <TabsTrigger className={'cursor-pointer'} value="upcoming">Próximos Agendamentos</TabsTrigger>
-        <TabsTrigger className={'cursor-pointer'} value="history">Histórico</TabsTrigger>
+        <TabsTrigger className="cursor-pointer" value="upcoming">Próximos Agendamentos</TabsTrigger>
+        <TabsTrigger className="cursor-pointer" value="history">Histórico</TabsTrigger>
       </TabsList>
 
       <TabsContent value="upcoming" className="space-y-6">
@@ -93,8 +96,8 @@ export default function ProfileContent() {
                   </p>
                 </div>
                 <Badge
-                  variant={ag.status === "Agendado" ? "outline" : "default"}
-                  className={ag.status === "Agendado" ? "" : "bg-green-500 text-white"}
+                  variant="outline"
+                  className=""
                 >
                   {ag.status}
                 </Badge>

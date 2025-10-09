@@ -1,4 +1,4 @@
-"use client";
+"use client"; 
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
@@ -41,9 +41,9 @@ export default function TimeCard({ selectedDate, selectedBarber, onConfirm }) {
   const handleSelect = (time) => setSelectedTime(time);
 
   const handleConfirm = (time) => {
-    setAvailableTimes((prev) => prev.filter((t) => t.id !== time.id));
     setSelectedTime(null);
     if (onConfirm) onConfirm(time);
+    fetchAvailableTimes(); 
   };
 
   return (

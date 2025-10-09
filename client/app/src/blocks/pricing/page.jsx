@@ -109,7 +109,7 @@ const Pricing03 = () => {
             <TabsTrigger
               key={barber}
               value={barber}
-              className="rounded-full data-[state=active]:shadow-none px-4"
+              className="rounded-full data-[state=active]:shadow-none px-4 cursor-pointer"
             >
               {barber}
             </TabsTrigger>

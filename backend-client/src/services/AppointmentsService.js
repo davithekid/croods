@@ -92,6 +92,9 @@ export default class AppointmentsService {
             const appointments = await Appointments.findAll({
                 where: {
                     barber_id: barberId,
+                    status: {
+                        [Op.in]: ['agendado'], 
+                    },
                     scheduled_at: {
                         [Op.between]: [
                             new Date(dateObj.setHours(0, 0, 0, 0)),
@@ -140,9 +143,10 @@ export default class AppointmentsService {
         }
     }
 
-    static async getAppointmentsByUserActive(userId){
+    static async getAppointmentsByUserActive(userId) {
         const appointment = await Appointments.findAll({
-            where: {user_id: userId,
+            where: {
+                user_id: userId,
                 status: 'agendado'
             },
         })
