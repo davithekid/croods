@@ -10,9 +10,8 @@ import EditProfile from "@/components/edit-profile/EditProfile";
 export default function ProfileHeader() {
   const [user, setUser] = useState(null);
 
-  // Função que será passada para o EditProfile e atualiza o estado
   const handleUserUpdate = (updatedUser) => {
-    setUser(updatedUser); // AQUI A MÁGICA ACONTECE: O estado é atualizado!
+    setUser(updatedUser); 
   };
 
   useEffect(() => {
