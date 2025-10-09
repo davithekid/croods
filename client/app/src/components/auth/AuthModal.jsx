@@ -31,13 +31,13 @@ export default function AuthModal() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Acesso restrito ⚠️</DialogTitle>
+          <DialogTitle>Acesso restrito </DialogTitle>
           <DialogDescription>
             Você precisa estar logado para acessar esta página.
           </DialogDescription>
         </DialogHeader>
         <div className="flex justify-end mt-4">
-          <Button onClick={handleLoginClick}>Fazer login</Button>
+          <Button className={'cursor-pointer'} onClick={handleLoginClick}>Fazer login</Button>
         </div>
       </DialogContent>
     </Dialog>

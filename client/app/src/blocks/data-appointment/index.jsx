@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/card";
 
 export default function CardDadosAgendamento({ service, barber, date, time }) {
-  // Leitura simples e direta das props
   const serviceName = service?.name || 'Não Selecionado';
   const barberName = barber?.name || 'Não Selecionado';
   const selectedDate = date?.data || 'Não Selecionada'; 

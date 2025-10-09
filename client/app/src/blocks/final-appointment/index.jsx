@@ -21,7 +21,6 @@ export default function CardConfirmaAgendamento({
     });
     const [loading, setLoading] = useState(false);
 
-    // ✅ handleChange definido dentro do componente
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -43,7 +42,7 @@ export default function CardConfirmaAgendamento({
         const scheduled_at = `${year}-${month}-${day} ${time.hour}:00`;
 
         const payload = {
-            user_id: user?.id, // ✅ usa o usuário autenticado
+            user_id: user?.id, 
             full_name: formData.fullName,
             phone: formData.phone,
             email: formData.email,
