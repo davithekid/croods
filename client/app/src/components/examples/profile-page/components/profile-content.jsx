@@ -13,7 +13,6 @@ export default function ProfileContent() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // 1️⃣ Pega usuário logado
         const resUser = await fetch("http://localhost:3333/auth/me", {
           credentials: "include",
           cache: "no-store",
@@ -24,7 +23,6 @@ export default function ProfileContent() {
 
         setUser(user);
 
-        // 2️⃣ Pega agendamentos do usuário
         const resAppointments = await fetch(`http://localhost:3333/appointments/user/${user.id}`, {
           credentials: "include",
           cache: "no-store",
@@ -36,7 +34,6 @@ export default function ProfileContent() {
         const upcoming = [];
         const history = [];
 
-        // Confere se é array
         const appointmentsArray = Array.isArray(data) ? data : data.appointments || [];
 
         appointmentsArray.forEach((ag) => {
@@ -66,8 +63,8 @@ export default function ProfileContent() {
   return (
     <Tabs defaultValue="upcoming" className="space-y-6">
       <TabsList className="grid w-full grid-cols-2 md:grid-cols-2">
-        <TabsTrigger value="upcoming">Próximos Agendamentos</TabsTrigger>
-        <TabsTrigger value="history">Histórico</TabsTrigger>
+        <TabsTrigger className={'cursor-pointer'} value="upcoming">Próximos Agendamentos</TabsTrigger>
+        <TabsTrigger className={'cursor-pointer'} value="history">Histórico</TabsTrigger>
       </TabsList>
 
       <TabsContent value="upcoming" className="space-y-6">
