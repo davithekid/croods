@@ -8,4 +8,5 @@ export default async function appointmentsRoutes(app) {
   app.delete("/:id", AppointmentsController.delete);
   app.get("/user/:id", AppointmentsController.getUserAppointments);
   app.get("/barber/:barberId/date/:date", AppointmentsController.getTimesByBarberAndDate);
+  app.get("/user/:id/active", AppointmentsController.getAppointmentsActive);
 }

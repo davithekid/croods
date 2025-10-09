@@ -38,14 +38,21 @@ export default function ProfileContent() {
 
         appointmentsArray.forEach((ag) => {
           const agDate = new Date(ag.scheduled_at);
+
+          let statusLabel = "";
+          if (ag.status === "agendado") statusLabel = "Agendado";
+          else if (ag.status === "cancelado") statusLabel = "Cancelado";
+          else if (ag.status === "concluido") statusLabel = "Concluído";
+
           const formatted = {
             id: ag.id,
-            servico: ag.service.name,
+            servico: ag.service?.name || `Serviço #${ag.service_id}`,
             data: agDate.toLocaleDateString("pt-BR"),
             hora: agDate.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }),
-            status: ag.status === "concluido" ? "Concluído" : "Confirmado",
+            status: statusLabel,
           };
-          if (agDate >= now) upcoming.push(formatted);
+
+          if (agDate >= now && ag.status !== "cancelado") upcoming.push(formatted);
           else history.push(formatted);
         });
 
@@ -71,7 +78,7 @@ export default function ProfileContent() {
         <Card>
           <CardHeader>
             <CardTitle>Próximos Agendamentos</CardTitle>
-            <CardDescription>Acompanhe seus horários confirmados</CardDescription>
+            <CardDescription>Acompanhe seus horários agendados</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {upcomingAppointments.length === 0 && (
@@ -86,8 +93,8 @@ export default function ProfileContent() {
                   </p>
                 </div>
                 <Badge
-                  variant={ag.status === "Confirmado" ? "default" : "outline"}
-                  className={ag.status === "Confirmado" ? "bg-green-500 text-white" : ""}
+                  variant={ag.status === "Agendado" ? "outline" : "default"}
+                  className={ag.status === "Agendado" ? "" : "bg-green-500 text-white"}
                 >
                   {ag.status}
                 </Badge>

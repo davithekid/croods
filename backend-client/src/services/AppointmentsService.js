@@ -140,4 +140,12 @@ export default class AppointmentsService {
         }
     }
 
+    static async getAppointmentsByUserActive(userId){
+        const appointment = await Appointments.findAll({
+            where: {user_id: userId,
+                status: 'agendado'
+            },
+        })
+        return appointment;
+    }
 }

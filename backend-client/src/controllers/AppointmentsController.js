@@ -27,18 +27,12 @@ export default class AppointmentsController {
   }
 
   static async getTimesByBarberAndDate(req, reply) {
-    try {
       const { barberId, date } = req.params;
       const times = await AppointmentsService.getAvailableTimes(barberId, date);
       return reply.status(200).send(times);
-    } catch (err) {
-      console.error(err);
-      return reply.status(500).send({ message: "Erro ao buscar horários disponíveis" });
-    }
   }
 
   static async getUserAppointments(req, reply) {
-    try {
       const { id } = req.params;
 
       if (!id) {
@@ -52,9 +46,11 @@ export default class AppointmentsController {
       }
 
       return reply.status(200).send(appointments);
-    } catch (error) {
-      console.error("Erro no controller:", error);
-      return reply.status(500).send({ message: "Erro interno do servidor." });
-    }
   }
+
+  static async getAppointmentsActive(req, reply) {
+      const {id} = req.params;
+      const appointments = await AppointmentsService.getAppointmentsByUserActive(id);
+      return reply.send(appointments)
+    }
 }
