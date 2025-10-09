@@ -35,18 +35,14 @@ export function AvatarDemo({ user }) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="start">
-          <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
           <DropdownMenuGroup>
             <DropdownMenuItem>
               <Link href='/perfil' className="cursor-pointer">Perfil e Agendamentos</Link>
-              <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
             </DropdownMenuItem>
             <DropdownMenuItem onClick={handleLogout} >
               <p className="cursor-pointer">
               Sair
-
               </p>
-              <DropdownMenuShortcut>⌘Q</DropdownMenuShortcut>
             </DropdownMenuItem>
           </DropdownMenuGroup>
         </DropdownMenuContent>
