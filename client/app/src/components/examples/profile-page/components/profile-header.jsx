@@ -45,7 +45,7 @@ export default function ProfileHeader() {
           <div className="relative">
             <Avatar className="h-24 w-24">
               <AvatarImage
-                src={user.avatar || "https://bundui-images.netlify.app/avatars/08.png"}
+                src={user.avatar}
                 alt={user.name}
               />
               <AvatarFallback className="text-2xl">

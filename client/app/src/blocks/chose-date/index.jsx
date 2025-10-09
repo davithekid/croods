@@ -22,7 +22,7 @@ export default function DateCard({ barber, service, onConfirm }) {
         const hoje = new Date();
         const dias = [];
 
-        for (let i = 0; i < 7; i++) {
+        for (let i = 0; i < 14; i++) {
           const d = new Date(hoje);
           d.setDate(hoje.getDate() + i);
 
