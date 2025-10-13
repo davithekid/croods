@@ -87,15 +87,18 @@ export default function RegisterPage() {
       <div className="max-w-xs w-full flex flex-col items-center">
         <div className="flex items-center gap-8">
           <div className="block dark:hidden">
-            <img src="./logo-dark.svg" className="w-13" alt="Logo" />
+            <img src="./images/logo-dark.svg" className="w-13" alt="Logo" />
           </div>
           <div className="hidden dark:block">
-            <img src="./logo.svg" className="w-13" alt="Logo" />
+            <img src="./images/logo.svg" className="w-13" alt="Logo" />
           </div>
           <ModeToggle />
         </div>
-        <p className="mt-4 text-xl font-semibold tracking-tight">
-          Entre com sua conta croods!
+        <h2 className="mt-4 text-2xl font-semibold tracking-tight">
+          Registre-se!
+        </h2>
+        <p className="mt-4 text-sm tracking-tight text-center">
+          Cadastre suas credenciais para criar sua conta e se tornar um crood!
         </p>
 
         <div className="my-7 w-full flex items-center justify-center overflow-hidden">

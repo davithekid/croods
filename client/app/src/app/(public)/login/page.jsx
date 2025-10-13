@@ -37,7 +37,6 @@ const Login01Page = () => {
     resolver: zodResolver(formSchema),
   });
 
-  // ✅ Exibe toast apenas quando o erro de servidor mudar
   useEffect(() => {
     if (serverError) {
       toast.error(serverError);
@@ -71,20 +70,18 @@ const Login01Page = () => {
     if (result.ok) {
       toast.success("Login efetuado com sucesso!");
       setIsLoading(false);
-      // Aqui você pode redirecionar, ex: router.push('/dashboard')
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="max-w-xs w-full flex flex-col items-center">
-        {/* logo e modo */}
         <div className="flex items-center gap-8">
           <div className="block dark:hidden">
-            <img src="./logo-dark.svg" className="w-13" alt="Logo" />
+            <img src="./images/logo-dark.svg" className="w-13" alt="Logo" />
           </div>
           <div className="hidden dark:block">
-            <img src="./logo.svg" className="w-13" alt="Logo" />
+            <img src="./images/logo.svg" className="w-13" alt="Logo" />
           </div>
           <ModeToggle />
         </div>
@@ -93,7 +90,7 @@ const Login01Page = () => {
           Entre com sua conta croods!
         </p>
 
-        <div className="my-7 w-full flex items-center justify-center overflow-hidden">
+        <div className="my-4 w-full flex items-center justify-center overflow-hidden">
           <Separator />
         </div>
 

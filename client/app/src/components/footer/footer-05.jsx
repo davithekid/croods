@@ -14,19 +14,17 @@ const footerLinks = [
 const Footer05Page = () => {
   return (
     <div className="flex flex-col">
-      <div className="grow" /> {/* Mantém footer no fundo da página */}
+      <div className="grow" /> 
       <footer className="border-t">
         <div className="max-w-(--breakpoint-xl) mx-auto">
           <div className="py-12 flex flex-col justify-center items-center space-y-6">
-            {/* Logo */}
             <div className="block dark:hidden">
-              <img src="./logo-dark.svg" className="w-28" alt="Logo" />
+              <img src="./images/logo-dark.svg" className="w-28" alt="Logo" />
             </div>
             <div className="hidden dark:block">
-              <img src="./logo.svg" className="w-28" alt="Logo" />
+              <img src="./images/logo.svg" className="w-28" alt="Logo" />
             </div>
 
-            {/* Links do footer */}
             <ul className="flex flex-wrap justify-center gap-6 text-base font-medium">
               {footerLinks.map(({ title, href }) => (
                 <li key={title}>
@@ -43,7 +41,6 @@ const Footer05Page = () => {
 
           <Separator />
 
-          {/* Copyright e redes sociais */}
           <div className="py-8 flex flex-col-reverse sm:flex-row items-center justify-between gap-y-4 gap-x-2 px-6 xl:px-0">
             <span className="text-muted-foreground text-sm sm:text-base text-center sm:text-left">
               &copy; {new Date().getFullYear()} Barber Shop Croods - Todos os direitos reservados - Desenvolvido por: Davi Chagas

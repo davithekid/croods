@@ -23,7 +23,7 @@ export function middleware(request) {
     } else {
       const redirectUrl = request.nextUrl.clone();
       redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICATED_ROUTE;
-      redirectUrl.searchParams.set('authError', 'login-required'); 
+      redirectUrl.searchParams.set('authError', 'login-required');
       return NextResponse.redirect(redirectUrl);
     }
   }
@@ -40,6 +40,7 @@ export function middleware(request) {
 
 export const config = {
   matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
+    '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|images).*)',
   ],
 };
+
