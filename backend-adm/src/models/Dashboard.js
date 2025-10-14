@@ -1,23 +1,31 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/database.js";
 
-export class TotalFaturamento extends Model {}
+export class TotalFaturamento extends Model { }
 TotalFaturamento.init(
   {
-    total_faturamento: DataTypes.DECIMAL(10, 2),
+    total_faturamento: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: true,
+      primaryKey: true,
+    },
   },
   {
     sequelize,
     modelName: "TotalFaturamento",
     tableName: "view_total_faturamento",
     timestamps: false,
+    freezeTableName: true,
   }
 );
 
-export class NovosClientes extends Model {}
+export class NovosClientes extends Model { }
 NovosClientes.init(
   {
-    mes: DataTypes.STRING,
+    mes: {
+      type: DataTypes.STRING,
+      primaryKey: true,
+    },
     total_novos_clientes: DataTypes.INTEGER,
   },
   {
@@ -25,13 +33,17 @@ NovosClientes.init(
     modelName: "NovosClientes",
     tableName: "view_novos_clientes",
     timestamps: false,
+    freezeTableName: true,
   }
 );
 
-export class AgendamentosAtivos extends Model {}
+export class AgendamentosAtivos extends Model { }
 AgendamentosAtivos.init(
   {
-    id: { type: DataTypes.INTEGER, primaryKey: true },
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+    },
     cliente: DataTypes.STRING,
     barbeiro: DataTypes.STRING,
     servico: DataTypes.STRING,
@@ -42,13 +54,17 @@ AgendamentosAtivos.init(
     modelName: "AgendamentosAtivos",
     tableName: "view_agendamentos_ativos",
     timestamps: false,
+    freezeTableName: true,
   }
 );
 
-export class TaxaCrescimentoClientes extends Model {}
+export class TaxaCrescimentoClientes extends Model { }
 TaxaCrescimentoClientes.init(
   {
-    mes: DataTypes.STRING,
+    mes: {
+      type: DataTypes.STRING,
+      primaryKey: true,
+    },
     novos_clientes: DataTypes.INTEGER,
     taxa_crescimento_percentual: DataTypes.DECIMAL(5, 2),
   },
@@ -57,10 +73,11 @@ TaxaCrescimentoClientes.init(
     modelName: "TaxaCrescimentoClientes",
     tableName: "view_taxa_crescimento_clientes",
     timestamps: false,
+    freezeTableName: true,
   }
 );
 
-export class AgendamentosPeriodo extends Model {}
+export class AgendamentosPeriodo extends Model { }
 AgendamentosPeriodo.init(
   {
     total_3_meses: DataTypes.INTEGER,
@@ -72,5 +89,9 @@ AgendamentosPeriodo.init(
     modelName: "AgendamentosPeriodo",
     tableName: "view_agendamentos_periodo",
     timestamps: false,
+    freezeTableName: true,
+    defaultScope: {
+      attributes: ["total_3_meses", "total_1_mes", "total_7_dias"],
+    },
   }
 );
