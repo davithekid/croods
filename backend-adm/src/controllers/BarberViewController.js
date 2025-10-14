@@ -1,5 +1,4 @@
-import barberRevenueService from "../services/barberRevenueService.js";
-
+import barberRevenueService from '../services/BarberService.js'
 class BarberRevenueController {
   async getAll(request, reply) {
     try {

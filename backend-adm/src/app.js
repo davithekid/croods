@@ -1,9 +1,9 @@
 import fastify from 'fastify'
-import errorHandler from './plugins/erroHandler'
-import userRoutes from './routes/userRoutes'
-import { dashboardRoutes } from './routes/dashboardRoutes'
-import { appointmentsRoutes } from './routes/appointmentsRoutes'
-import barberRevenueRoutes from './routes/barberViewsRoutes'
+import errorHandler from './plugins/erroHandler.js'
+import userRoutes from './routes/userRoutes.js'
+import { dashboardRoutes } from './routes/dashboardRoutes.js'
+import { appointmentsRoutes } from './routes/appointmentsRoutes.js'
+import barberRevenueRoutes from './routes/barberViewsRoutes.js'
 const app = fastify({
     logger: {
         transport: {

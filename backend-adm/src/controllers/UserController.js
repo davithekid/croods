@@ -1,4 +1,3 @@
-import User from "../models/User";
 import UserService from "../services/UserService.js";
 
 export default class UserController {
