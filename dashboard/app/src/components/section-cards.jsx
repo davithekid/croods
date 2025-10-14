@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { IconTrendingDown, IconTrendingUp } from "@tabler/icons-react";
 import { Badge } from "@/components/ui/badge";
@@ -11,50 +11,17 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-export function SectionCards() {
-  const cards = [
-    {
-      title: "Faturamento Total",
-      value: "R$ 12.500,00",
-      trend: "+15%",
-      trendIcon: IconTrendingUp,
-      trendColor: "bg-green-100 text-green-700",
-      footerText: "Crescimento este mês",
-      footerDesc: "Comparado com os últimos 6 meses",
-    },
-    {
-      title: "Novos Clientes",
-      value: 87,
-      trend: "+8%",
-      trendIcon: IconTrendingUp,
-      trendColor: "bg-green-100 text-green-700",
-      footerText: "Mais clientes neste período",
-      footerDesc: "Captação de clientes ativa",
-    },
-    {
-      title: "Agendamentos Ativos",
-      value: 120,
-      trend: "+10%",
-      trendIcon: IconTrendingUp,
-      trendColor: "bg-green-100 text-green-700",
-      footerText: "Crescimento de reservas",
-      footerDesc: "Mantendo ocupação saudável",
-    },
-    {
-      title: "Taxa de Crescimento",
-      value: "12%",
-      trend: "+12%",
-      trendIcon: IconTrendingUp,
-      trendColor: "bg-green-100 text-green-700",
-      footerText: "Crescimento consistente",
-      footerDesc: "Alcançando metas do salão",
-    },
-  ];
+export function SectionCards({ cards = [] }) {
+  if (!cards || cards.length === 0) {
+    return <p className="text-center text-muted-foreground">Nenhum dado disponível</p>;
+  }
 
   return (
     <div className="grid grid-cols-1 gap-4 px-4 lg:grid-cols-2 xl:grid-cols-4">
       {cards.map((card, index) => {
-        const TrendIcon = card.trendIcon;
+        const TrendIcon =
+          card.trendIcon === 'up' ? IconTrendingUp : card.trendIcon === 'down' ? IconTrendingDown : IconTrendingUp;
+
         return (
           <Card
             key={index}
@@ -70,10 +37,10 @@ export function SectionCards() {
               <CardAction>
                 <Badge
                   variant="outline"
-                  className={`flex items-center gap-1 ${card.trendColor}`}
+                  className={`flex items-center gap-1 ${card.trendColor || "bg-gray-100 text-gray-700"}`}
                 >
                   <TrendIcon className="w-4 h-4" />
-                  {card.trend}
+                  {card.trend || "+0%"}
                 </Badge>
               </CardAction>
             </CardHeader>
