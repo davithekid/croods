@@ -8,6 +8,7 @@ import { dashboardRoutes } from './routes/dashboardRoutes.js'
 import { appointmentsRoutes } from './routes/appointmentsRoutes.js'
 import barberRevenueRoutes from './routes/barberViewsRoutes.js'
 import authRoutes from '../../backend-client/src/routes/AuthRoutes.js';
+import servicesRoutes from './routes/serviceRoutes.js';
 
 const app = fastify({
     logger: {
@@ -41,5 +42,6 @@ app.register(userRoutes, { prefix: '/users' })
 app.register(dashboardRoutes, { prefix: '/dashboard' })
 app.register(appointmentsRoutes, { prefix: '/appointments' })
 app.register(barberRevenueRoutes, { prefix: '/barbers' })
+app.register(servicesRoutes, {prefix: '/services'})
 
 export default app;
