@@ -1,43 +1,54 @@
-"use client";
+'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { DollarSignIcon, UsersIcon, ActivityIcon, CalendarIcon } from "lucide-react";
+import { getReceitaMetrics } from "@/lib/receitas";
+import { useEffect, useState } from "react";
 
 export default function ReceitaCards() {
-  const metrics = [
-    {
-      id: 1,
-      title: "Receita Última Semana",
-      value: "R$ 1.250,00",
-      icon: ActivityIcon,
-      color: "bg-blue-100 text-blue-600",
-      description: "Total de receitas geradas pelos serviços concluídos hoje",
-    },
-    {
-      id: 2,
-      title: "Receita Último Mês",
-      value: "R$ 8.450,00",
-      icon: DollarSignIcon,
-      color: "bg-green-100 text-green-600",
-      description: "Receita acumulada nos últimos 30 dias",
-    },
-    {
-      id: 3,
-      title: "Receita Últimos 6 Meses",
-      value: "R$ 45.200,00",
-      icon: UsersIcon,
-      color: "bg-purple-100 text-purple-600",
-      description: "Total de receitas acumuladas nos últimos 6 meses",
-    },
-    {
-      id: 4,
-      title: "Receita Ano",
-      value: "R$ 92.800,00",
-      icon: CalendarIcon,
-      color: "bg-yellow-100 text-yellow-600",
-      description: "Receita acumulada desde o início do ano",
-    },
-  ];
+  const [metrics, setMetrics] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const data = await getReceitaMetrics();
+      setMetrics([
+        {
+          id: 1,
+          title: "Receita Última Semana",
+          value: `R$ ${data.semana.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`,
+          icon: ActivityIcon,
+          color: "bg-blue-100 text-blue-600",
+          description: "Total de receitas geradas pelos serviços concluídos esta semana",
+        },
+        {
+          id: 2,
+          title: "Receita Último Mês",
+          value: `R$ ${data.mes.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`,
+          icon: DollarSignIcon,
+          color: "bg-green-100 text-green-600",
+          description: "Receita acumulada nos últimos 30 dias",
+        },
+        {
+          id: 3,
+          title: "Receita Últimos 6 Meses",
+          value: `R$ ${data.seisMeses.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`,
+          icon: UsersIcon,
+          color: "bg-purple-100 text-purple-600",
+          description: "Total de receitas acumuladas nos últimos 6 meses",
+        },
+        {
+          id: 4,
+          title: "Receita Ano",
+          value: `R$ ${data.ano.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`,
+          icon: CalendarIcon,
+          color: "bg-yellow-100 text-yellow-600",
+          description: "Receita acumulada desde o início do ano",
+        },
+      ]);
+    }
+
+    fetchData();
+  }, []);
 
   return (
     <div className="w-full flex justify-center">
