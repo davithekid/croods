@@ -1,6 +1,7 @@
-import { IconTrendingDown, IconTrendingUp } from "@tabler/icons-react"
+"use client";
 
-import { Badge } from "@/components/ui/badge"
+import { IconTrendingDown, IconTrendingUp } from "@tabler/icons-react";
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardAction,
@@ -8,110 +9,83 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 
 export function SectionCards() {
+  const cards = [
+    {
+      title: "Faturamento Total",
+      value: "R$ 12.500,00",
+      trend: "+15%",
+      trendIcon: IconTrendingUp,
+      trendColor: "bg-green-100 text-green-700",
+      footerText: "Crescimento este mês",
+      footerDesc: "Comparado com os últimos 6 meses",
+    },
+    {
+      title: "Novos Clientes",
+      value: 87,
+      trend: "+8%",
+      trendIcon: IconTrendingUp,
+      trendColor: "bg-green-100 text-green-700",
+      footerText: "Mais clientes neste período",
+      footerDesc: "Captação de clientes ativa",
+    },
+    {
+      title: "Agendamentos Ativos",
+      value: 120,
+      trend: "+10%",
+      trendIcon: IconTrendingUp,
+      trendColor: "bg-green-100 text-green-700",
+      footerText: "Crescimento de reservas",
+      footerDesc: "Mantendo ocupação saudável",
+    },
+    {
+      title: "Taxa de Crescimento",
+      value: "12%",
+      trend: "+12%",
+      trendIcon: IconTrendingUp,
+      trendColor: "bg-green-100 text-green-700",
+      footerText: "Crescimento consistente",
+      footerDesc: "Alcançando metas do salão",
+    },
+  ];
+
   return (
-    <div
-  className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-6 @xl/main:grid-cols-2 @5xl/main:grid-cols-4">
-
-  {/* Faturamento Total */}
-  <Card className="@container/card">
-    <CardHeader>
-      <CardDescription>Faturamento Total</CardDescription>
-      <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-        R$ 12.500,00
-      </CardTitle>
-      <CardAction>
-        <Badge variant="outline">
-          <IconTrendingUp />
-          +15%
-        </Badge>
-      </CardAction>
-    </CardHeader>
-    <CardFooter className="flex-col items-start gap-1.5 text-sm">
-      <div className="line-clamp-1 flex gap-2 font-medium">
-        Crescimento este mês <IconTrendingUp className="size-4" />
-      </div>
-      <div className="text-muted-foreground">
-        Comparado com os últimos 6 meses
-      </div>
-    </CardFooter>
-  </Card>
-
-  {/* Novos Clientes */}
-  <Card className="@container/card">
-    <CardHeader>
-      <CardDescription>Novos Clientes</CardDescription>
-      <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-        87
-      </CardTitle>
-      <CardAction>
-        <Badge variant="outline">
-          <IconTrendingUp />
-          +8%
-        </Badge>
-      </CardAction>
-    </CardHeader>
-    <CardFooter className="flex-col items-start gap-1.5 text-sm">
-      <div className="line-clamp-1 flex gap-2 font-medium">
-        Mais clientes neste período <IconTrendingUp className="size-4" />
-      </div>
-      <div className="text-muted-foreground">
-        Captação de clientes ativa
-      </div>
-    </CardFooter>
-  </Card>
-
-  {/* Agendamentos Ativos */}
-  <Card className="@container/card">
-    <CardHeader>
-      <CardDescription>Agendamentos Ativos</CardDescription>
-      <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-        120
-      </CardTitle>
-      <CardAction>
-        <Badge variant="outline">
-          <IconTrendingUp />
-          +10%
-        </Badge>
-      </CardAction>
-    </CardHeader>
-    <CardFooter className="flex-col items-start gap-1.5 text-sm">
-      <div className="line-clamp-1 flex gap-2 font-medium">
-        Crescimento de reservas <IconTrendingUp className="size-4" />
-      </div>
-      <div className="text-muted-foreground">
-        Mantendo ocupação saudável
-      </div>
-    </CardFooter>
-  </Card>
-
-  {/* Taxa de Crescimento */}
-  <Card className="@container/card">
-    <CardHeader>
-      <CardDescription>Taxa de Crescimento</CardDescription>
-      <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-        12%
-      </CardTitle>
-      <CardAction>
-        <Badge variant="outline">
-          <IconTrendingUp />
-          +12%
-        </Badge>
-      </CardAction>
-    </CardHeader>
-    <CardFooter className="flex-col items-start gap-1.5 text-sm">
-      <div className="line-clamp-1 flex gap-2 font-medium">
-        Crescimento consistente <IconTrendingUp className="size-4" />
-      </div>
-      <div className="text-muted-foreground">
-        Alcançando metas do salão
-      </div>
-    </CardFooter>
-  </Card>
-
-</div>
-
+    <div className="grid grid-cols-1 gap-4 px-4 lg:grid-cols-2 xl:grid-cols-4">
+      {cards.map((card, index) => {
+        const TrendIcon = card.trendIcon;
+        return (
+          <Card
+            key={index}
+            className="@container/card bg-gradient-to-t from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 hover:scale-[1.02] hover:shadow-2xl transition-all duration-300"
+          >
+            <CardHeader className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+              <div>
+                <CardDescription>{card.title}</CardDescription>
+                <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+                  {card.value}
+                </CardTitle>
+              </div>
+              <CardAction>
+                <Badge
+                  variant="outline"
+                  className={`flex items-center gap-1 ${card.trendColor}`}
+                >
+                  <TrendIcon className="w-4 h-4" />
+                  {card.trend}
+                </Badge>
+              </CardAction>
+            </CardHeader>
+            <CardFooter className="flex-col items-start gap-1.5 text-sm mt-2">
+              <div className="line-clamp-1 flex items-center gap-2 font-medium">
+                {card.footerText} <TrendIcon className="w-4 h-4" />
+              </div>
+              <div className="text-muted-foreground">{card.footerDesc}</div>
+            </CardFooter>
+          </Card>
+        );
+      })}
+    </div>
   );
 }

@@ -31,7 +31,7 @@ const data = {
   navMain: [
     { title: "Dashboard", url: "/", icon: IconLayoutDashboard },
     { title: "Receitas", url: "/receitas", icon: IconReceipt },
-    { title: "Serviços", url: "/servicos", icon: IconTools },
+    { title: "Serviços & Planos", url: "/servicos", icon: IconTools },
     { title: "Agenda & Folgas", url: "/folgas", icon: IconCalendar },
     { title: "Suporte", url: "/suporte", icon: IconHeadset },
   ],
@@ -47,10 +47,10 @@ export function AppSidebar(props) {
               <div className="flex justify-between items-center py-6 px-4 text-2xl font-bold text-foreground dark:text-white">
                 <div className="flex items-center gap-2">
                   <div className="block dark:hidden">
-                    <img src="/logo-dark.svg" className="w-14" alt="Logo Dark" />
+                    <img src="/logo-dark.svg" className="w-12" alt="Logo Dark" />
                   </div>
                   <div className="hidden dark:block">
-                    <img src="/logo.svg" className="w-14" alt="Logo Light" />
+                    <img src="/logo.svg" className="w-12" alt="Logo Light" />
                   </div>
                 </div>
                 <ModeToggle />

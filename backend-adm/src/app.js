@@ -3,6 +3,7 @@ import errorHandler from './plugins/erroHandler'
 import userRoutes from './routes/userRoutes'
 import { dashboardRoutes } from './routes/dashboardRoutes'
 import { appointmentsRoutes } from './routes/appointmentsRoutes'
+import barberRevenueRoutes from './routes/barberViewsRoutes'
 const app = fastify({
     logger: {
         transport: {
@@ -19,5 +20,6 @@ app.register(errorHandler)
 app.register(userRoutes, { prefix: '/users' })
 app.register(dashboardRoutes, { prefix: '/dashboard' })
 app.register(appointmentsRoutes, { prefix: '/appointments' })
+app.register(barberRevenueRoutes, {prefix: '/barbers'})
 
 export default app;
