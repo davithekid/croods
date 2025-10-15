@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from "react";
 import {
@@ -25,22 +25,42 @@ export function ServicesTablePage({ loggedBarberId }) {
   const [type, setType] = useState("");
   const [extra, setExtra] = useState("");
 
+  // Buscar serviços
   const fetchServices = async () => {
     try {
-      const res = await fetch(`http://localhost:3334/services?barber_id=${loggedBarberId}`, { cache: "no-store" });
+      const res = await fetch(`http://localhost:3334/services?barber_id=${loggedBarberId}`, {
+        cache: "no-store",
+      });
+
       const data = await res.json();
-      setServices(data);
+      console.log("Resposta da API:", data);
+
+      // ✅ Garantir que sempre seja um array
+      if (Array.isArray(data)) {
+        setServices(data);
+      } else if (data && Array.isArray(data.data)) {
+        setServices(data.data);
+      } else {
+        console.error("Formato inesperado da resposta:", data);
+        setServices([]);
+      }
+
     } catch (err) {
       console.error("Erro ao buscar serviços:", err);
+      setServices([]);
     }
   };
 
   useEffect(() => {
-    fetchServices();
+    if (loggedBarberId) {
+      fetchServices();
+    }
   }, [loggedBarberId]);
 
+  // Salvar ou editar serviço
   const handleSave = async () => {
-    if (!name || !price || !type) return alert("Preencha todos os campos obrigatórios");
+    if (!name || !price || !type)
+      return alert("Preencha todos os campos obrigatórios");
 
     const payload = { name, price, type, extra, barber_id: loggedBarberId };
 
@@ -58,14 +78,19 @@ export function ServicesTablePage({ loggedBarberId }) {
           body: JSON.stringify(payload),
         });
       }
-      fetchServices();
+
+      await fetchServices();
       setEditingId(null);
-      setName(""); setPrice(""); setType(""); setExtra("");
+      setName("");
+      setPrice("");
+      setType("");
+      setExtra("");
     } catch (err) {
       console.error("Erro ao salvar serviço:", err);
     }
   };
 
+  // Editar serviço
   const handleEdit = (service) => {
     setEditingId(service.id);
     setName(service.name);
@@ -78,7 +103,7 @@ export function ServicesTablePage({ loggedBarberId }) {
   const handleDelete = async (id) => {
     try {
       await fetch(`http://localhost:3334/services/${id}`, { method: "DELETE" });
-      setServices(prev => prev.filter(s => s.id !== id));
+      setServices((prev) => prev.filter((s) => s.id !== id));
     } catch (err) {
       console.error("Erro ao deletar serviço:", err);
     }
@@ -94,23 +119,40 @@ export function ServicesTablePage({ loggedBarberId }) {
             <DialogTrigger asChild>
               <Button>{editingId ? "Editar Serviço" : "Adicionar Serviço"}</Button>
             </DialogTrigger>
+
             <DialogContent className="sm:max-w-[500px]">
               <DialogHeader>
-                <DialogTitle>{editingId ? "Editar Serviço" : "Adicionar Serviço"}</DialogTitle>
+                <DialogTitle>
+                  {editingId ? "Editar Serviço" : "Adicionar Serviço"}
+                </DialogTitle>
               </DialogHeader>
+
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-1">
                   <Label htmlFor="name">Nome</Label>
-                  <Input id="name" value={name} onChange={e => setName(e.target.value)} />
+                  <Input
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
                 </div>
+
                 <div className="flex flex-col gap-1">
                   <Label htmlFor="price">Preço</Label>
-                  <Input id="price" type="number" value={price} onChange={e => setPrice(e.target.value)} />
+                  <Input
+                    id="price"
+                    type="number"
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                  />
                 </div>
+
                 <div className="flex flex-col gap-1">
                   <Label htmlFor="type">Tipo</Label>
                   <Select value={type} onValueChange={setType}>
-                    <SelectTrigger id="type"><SelectValue placeholder="Selecione o tipo" /></SelectTrigger>
+                    <SelectTrigger id="type">
+                      <SelectValue placeholder="Selecione o tipo" />
+                    </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="cortes">Cortes</SelectItem>
                       <SelectItem value="barba">Barba</SelectItem>
@@ -118,12 +160,21 @@ export function ServicesTablePage({ loggedBarberId }) {
                     </SelectContent>
                   </Select>
                 </div>
+
                 <div className="flex flex-col gap-1">
                   <Label htmlFor="extra">Extra</Label>
-                  <Input id="extra" value={extra} onChange={e => setExtra(e.target.value)} placeholder="Opcional" />
+                  <Input
+                    id="extra"
+                    value={extra}
+                    onChange={(e) => setExtra(e.target.value)}
+                    placeholder="Opcional"
+                  />
                 </div>
+
                 <DialogFooter>
-                  <Button onClick={handleSave} className="w-full">{editingId ? "Salvar" : "Adicionar"}</Button>
+                  <Button onClick={handleSave} className="w-full">
+                    {editingId ? "Salvar" : "Adicionar"}
+                  </Button>
                 </DialogFooter>
               </div>
             </DialogContent>
@@ -131,31 +182,50 @@ export function ServicesTablePage({ loggedBarberId }) {
         </CardHeader>
 
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Nome</TableHead>
-                <TableHead>Preço</TableHead>
-                <TableHead>Tipo</TableHead>
-                <TableHead>Extra</TableHead>
-                <TableHead>Ações</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {services.map(service => (
-                <TableRow key={service.id}>
-                  <TableCell>{service.name}</TableCell>
-                  <TableCell>R$ {service.price}</TableCell>
-                  <TableCell>{service.type}</TableCell>
-                  <TableCell>{service.extra || "-"}</TableCell>
-                  <TableCell className="flex gap-2">
-                    <Button size="sm" variant="outline" onClick={() => handleEdit(service)}>Editar</Button>
-                    <Button size="sm" variant="destructive" onClick={() => handleDelete(service.id)}>Remover</Button>
-                  </TableCell>
+          {services.length === 0 ? (
+            <p className="text-center text-sm text-muted-foreground">
+              Nenhum serviço cadastrado ainda.
+            </p>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Nome</TableHead>
+                  <TableHead>Preço</TableHead>
+                  <TableHead>Tipo</TableHead>
+                  <TableHead>Extra</TableHead>
+                  <TableHead>Ações</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+
+              <TableBody>
+                {services.map((service) => (
+                  <TableRow key={service.id}>
+                    <TableCell>{service.name}</TableCell>
+                    <TableCell>R$ {service.price}</TableCell>
+                    <TableCell>{service.type}</TableCell>
+                    <TableCell>{service.extra || "-"}</TableCell>
+                    <TableCell className="flex gap-2">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleEdit(service)}
+                      >
+                        Editar
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="destructive"
+                        onClick={() => handleDelete(service.id)}
+                      >
+                        Remover
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
         </CardContent>
       </Card>
     </div>
