@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Card,
   CardHeader,
@@ -29,44 +29,83 @@ import {
 import { Calendar } from "@/components/ui/calendar";
 
 export function DayOff() {
+  // Estado
   const [dayOffs, setDayOffs] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [reason, setReason] = useState("");
   const [editingId, setEditingId] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e, closeModal) => {
+  const barberId = "22340069-b8be-405a-8e7a-d6674c333473";
+
+  const fetchDayOffs = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch(
+        `http://localhost:3334/timeoff?barber_id=${barberId}`
+      );
+      const data = await res.json();
+      setDayOffs(data);
+    } catch (error) {
+      console.error("Erro ao carregar folgas:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchDayOffs();
+  }, []);
+
+  const handleSubmit = async (e, closeModal) => {
     e.preventDefault();
 
-    const newDayOff = {
-      id: editingId || dayOffs.length + 1,
-      date: selectedDate,
-      reason,
-    };
+    try {
+      const res = await fetch("http://localhost:3334/timeoff", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          barber_id: barberId,
+          date: selectedDate.toISOString().split("T")[0],
+        }),
+      });
 
-    if (editingId) {
-      setDayOffs((prev) =>
-        prev.map((d) => (d.id === editingId ? newDayOff : d))
-      );
-      setEditingId(null);
-    } else {
-      setDayOffs((prev) => [...prev, newDayOff]);
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.error || "Erro ao cadastrar folga");
+        return;
+      }
+
+      // Atualiza lista
+      fetchDayOffs();
+      setSelectedDate(new Date());
+      setReason("");
+      closeModal();
+    } catch (error) {
+      console.error("Erro ao cadastrar folga:", error);
     }
-
-    setSelectedDate(new Date());
-    setReason("");
-
-    closeModal();
   };
 
-  const handleEdit = (dayOff, openModal) => {
-    setEditingId(dayOff.id);
-    setSelectedDate(dayOff.date);
-    setReason(dayOff.reason);
-    openModal();
-  };
+  const handleDelete = async (id) => {
+    if (!confirm("Tem certeza que deseja remover esta folga?")) return;
 
-  const handleDelete = (id) => {
-    setDayOffs((prev) => prev.filter((d) => d.id !== id));
+    try {
+      const res = await fetch(`http://localhost:3334/timeoff/${id}`, {
+        method: "DELETE",
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.error || "Erro ao remover folga");
+        return;
+      }
+
+      fetchDayOffs();
+    } catch (error) {
+      console.error("Erro ao excluir folga:", error);
+    }
   };
 
   return (
@@ -79,11 +118,10 @@ export function DayOff() {
             <DialogTrigger asChild>
               <Button>Adicionar Folga</Button>
             </DialogTrigger>
+
             <DialogContent className="sm:max-w-[500px]">
               <DialogHeader>
-                <DialogTitle>
-                  {editingId ? "Editar Folga" : "Adicionar Folga"}
-                </DialogTitle>
+                <DialogTitle>Adicionar Folga</DialogTitle>
               </DialogHeader>
 
               <form
@@ -113,7 +151,7 @@ export function DayOff() {
 
                 <DialogFooter>
                   <Button type="submit" className="w-full">
-                    {editingId ? "Salvar Alterações" : "Adicionar Folga"}
+                    Adicionar Folga
                   </Button>
                 </DialogFooter>
               </form>
@@ -122,14 +160,15 @@ export function DayOff() {
         </CardHeader>
 
         <CardContent>
-          {dayOffs.length === 0 ? (
+          {loading ? (
+            <p>Carregando folgas...</p>
+          ) : dayOffs.length === 0 ? (
             <p>Nenhuma folga cadastrada.</p>
           ) : (
             <Table>
               <TableHeader>
                 <TableRow>
                   <TableHead>Data</TableHead>
-                  <TableHead>Motivo</TableHead>
                   <TableHead>Ações</TableHead>
                 </TableRow>
               </TableHeader>
@@ -137,52 +176,9 @@ export function DayOff() {
                 {dayOffs.map((day) => (
                   <TableRow key={day.id}>
                     <TableCell>
-                      {day.date.toLocaleDateString("pt-BR")}
+                      {new Date(day.date).toLocaleDateString("pt-BR")}
                     </TableCell>
-                    <TableCell>{day.reason || "-"}</TableCell>
-                    <TableCell className="flex gap-2">
-                      <Dialog>
-                        <DialogTrigger asChild>
-                          <Button size="sm" variant="outline">
-                            Editar
-                          </Button>
-                        </DialogTrigger>
-                        <DialogContent className="sm:max-w-[500px]">
-                          <DialogHeader>
-                            <DialogTitle>Editar Folga</DialogTitle>
-                          </DialogHeader>
-                          <form
-                            className="flex flex-col gap-4"
-                            onSubmit={(e) =>
-                              handleSubmit(e, () =>
-                                document.activeElement.blur()
-                              )
-                            }
-                          >
-                            <div className="flex flex-col gap-1">
-                              <Label>Data da Folga</Label>
-                              <Calendar
-                                mode="single"
-                                selected={selectedDate}
-                                onSelect={setSelectedDate}
-                              />
-                            </div>
-                            <div className="flex flex-col gap-1">
-                              <Label htmlFor="reason">Motivo (opcional)</Label>
-                              <Input
-                                id="reason"
-                                value={reason}
-                                onChange={(e) => setReason(e.target.value)}
-                              />
-                            </div>
-                            <DialogFooter>
-                              <Button type="submit" className="w-full">
-                                Salvar Alterações
-                              </Button>
-                            </DialogFooter>
-                          </form>
-                        </DialogContent>
-                      </Dialog>
+                    <TableCell>
                       <Button
                         size="sm"
                         variant="destructive"
