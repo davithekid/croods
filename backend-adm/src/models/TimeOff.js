@@ -21,6 +21,6 @@ TimeOff.init({
     }
 }, {
     sequelize,
-    tableName: 'time_off',
+    tableName: 'time_offs',
     timestamps: false
 })
