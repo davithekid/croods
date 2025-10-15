@@ -1,96 +1,87 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
+  Card, CardHeader, CardTitle, CardContent,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
+  Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-  DialogTrigger,
+  Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogTrigger,
 } from "@/components/ui/dialog";
 
-export function ServicesTablePage() {
-  const [services, setServices] = useState([
-    { id: 1, name: "Corte Tradicional", price: "45.00", type: "cortes", extra: null },
-    { id: 2, name: "Barba Completa", price: "35.00", type: "barba", extra: "Toalha Quente" },
-    { id: 3, name: "Hidratação Especial", price: "60.00", type: "especiais", extra: "Hidratação" },
-  ]);
-
+export function ServicesTablePage({ loggedBarberId }) {
+  const [services, setServices] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [type, setType] = useState("");
   const [extra, setExtra] = useState("");
 
-  const mockExtras = [
-    { id: 1, name: "Toalha Quente" },
-    { id: 2, name: "Máscara Capilar" },
-    { id: 3, name: "Hidratação" },
-  ];
-
-  const handleSubmit = (e, closeModal) => {
-    e.preventDefault();
-    const serviceData = {
-      id: editingId || services.length + 1,
-      name,
-      price,
-      type,
-      extra: extra ? mockExtras.find((ex) => ex.id === parseInt(extra)).name : null,
-    };
-
-    if (editingId) {
-      setServices((prev) =>
-        prev.map((s) => (s.id === editingId ? serviceData : s))
-      );
-      setEditingId(null);
-    } else {
-      setServices((prev) => [...prev, serviceData]);
+  const fetchServices = async () => {
+    try {
+      const res = await fetch(`http://localhost:3334/services?barber_id=${loggedBarberId}`, { cache: "no-store" });
+      const data = await res.json();
+      setServices(data);
+    } catch (err) {
+      console.error("Erro ao buscar serviços:", err);
     }
-
-    setName("");
-    setPrice("");
-    setType("");
-    setExtra("");
-
-    closeModal();
   };
 
-  const handleEdit = (service, openModal) => {
+  useEffect(() => {
+    fetchServices();
+  }, [loggedBarberId]);
+
+  const handleSave = async () => {
+    if (!name || !price || !type) return alert("Preencha todos os campos obrigatórios");
+
+    const payload = { name, price, type, extra, barber_id: loggedBarberId };
+
+    try {
+      if (editingId) {
+        await fetch(`http://localhost:3334/services/${editingId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+      } else {
+        await fetch(`http://localhost:3334/services`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+      }
+      fetchServices();
+      setEditingId(null);
+      setName(""); setPrice(""); setType(""); setExtra("");
+    } catch (err) {
+      console.error("Erro ao salvar serviço:", err);
+    }
+  };
+
+  const handleEdit = (service) => {
     setEditingId(service.id);
     setName(service.name);
     setPrice(service.price);
     setType(service.type);
-    setExtra(service.extra ? mockExtras.find((ex) => ex.name === service.extra).id.toString() : "");
-    openModal();
+    setExtra(service.extra || "");
   };
 
-  const handleDelete = (id) => {
-    setServices((prev) => prev.filter((s) => s.id !== id));
+  // Deletar serviço
+  const handleDelete = async (id) => {
+    try {
+      await fetch(`http://localhost:3334/services/${id}`, { method: "DELETE" });
+      setServices(prev => prev.filter(s => s.id !== id));
+    } catch (err) {
+      console.error("Erro ao deletar serviço:", err);
+    }
   };
 
   return (
@@ -99,47 +90,27 @@ export function ServicesTablePage() {
         <CardHeader className="flex justify-between items-center">
           <CardTitle>Serviços Cadastrados</CardTitle>
 
-          {/* Botão para abrir modal */}
           <Dialog>
             <DialogTrigger asChild>
-              <Button>Adicionar Serviço</Button>
+              <Button>{editingId ? "Editar Serviço" : "Adicionar Serviço"}</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[500px]">
               <DialogHeader>
                 <DialogTitle>{editingId ? "Editar Serviço" : "Adicionar Serviço"}</DialogTitle>
               </DialogHeader>
-
-              <form
-                className="flex flex-col gap-4"
-                onSubmit={(e) => handleSubmit(e, () => document.activeElement.blur())}
-              >
+              <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-1">
-                  <Label htmlFor="name">Nome do Serviço</Label>
-                  <Input
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Ex: Corte Tradicional"
-                  />
+                  <Label htmlFor="name">Nome</Label>
+                  <Input id="name" value={name} onChange={e => setName(e.target.value)} />
                 </div>
-
                 <div className="flex flex-col gap-1">
                   <Label htmlFor="price">Preço</Label>
-                  <Input
-                    id="price"
-                    type="number"
-                    value={price}
-                    onChange={(e) => setPrice(e.target.value)}
-                    placeholder="Ex: 45.00"
-                  />
+                  <Input id="price" type="number" value={price} onChange={e => setPrice(e.target.value)} />
                 </div>
-
                 <div className="flex flex-col gap-1">
                   <Label htmlFor="type">Tipo</Label>
                   <Select value={type} onValueChange={setType}>
-                    <SelectTrigger id="type">
-                      <SelectValue placeholder="Selecione o tipo" />
-                    </SelectTrigger>
+                    <SelectTrigger id="type"><SelectValue placeholder="Selecione o tipo" /></SelectTrigger>
                     <SelectContent>
                       <SelectItem value="cortes">Cortes</SelectItem>
                       <SelectItem value="barba">Barba</SelectItem>
@@ -147,29 +118,14 @@ export function ServicesTablePage() {
                     </SelectContent>
                   </Select>
                 </div>
-
                 <div className="flex flex-col gap-1">
-                  <Label htmlFor="extra">Serviço Extra</Label>
-                  <Select value={extra} onValueChange={setExtra}>
-                    <SelectTrigger id="extra">
-                      <SelectValue placeholder="Selecione um extra (opcional)" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {mockExtras.map((item) => (
-                        <SelectItem key={item.id} value={String(item.id)}>
-                          {item.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <Label htmlFor="extra">Extra</Label>
+                  <Input id="extra" value={extra} onChange={e => setExtra(e.target.value)} placeholder="Opcional" />
                 </div>
-
                 <DialogFooter>
-                  <Button type="submit" className="w-full">
-                    {editingId ? "Salvar Alterações" : "Adicionar Serviço"}
-                  </Button>
+                  <Button onClick={handleSave} className="w-full">{editingId ? "Salvar" : "Adicionar"}</Button>
                 </DialogFooter>
-              </form>
+              </div>
             </DialogContent>
           </Dialog>
         </CardHeader>
@@ -186,90 +142,15 @@ export function ServicesTablePage() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {services.map((service) => (
+              {services.map(service => (
                 <TableRow key={service.id}>
                   <TableCell>{service.name}</TableCell>
                   <TableCell>R$ {service.price}</TableCell>
                   <TableCell>{service.type}</TableCell>
                   <TableCell>{service.extra || "-"}</TableCell>
                   <TableCell className="flex gap-2">
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <Button
-                          size="sm"
-                          variant="outline"
-                        >
-                          Editar
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent className="sm:max-w-[500px]">
-                        <DialogHeader>
-                          <DialogTitle>Editar Serviço</DialogTitle>
-                        </DialogHeader>
-                        <form
-                          className="flex flex-col gap-4"
-                          onSubmit={(e) => handleSubmit(e, () => document.activeElement.blur())}
-                        >
-                          <div className="flex flex-col gap-1">
-                            <Label htmlFor="name">Nome do Serviço</Label>
-                            <Input
-                              id="name"
-                              value={name}
-                              onChange={(e) => setName(e.target.value)}
-                            />
-                          </div>
-                          <div className="flex flex-col gap-1">
-                            <Label htmlFor="price">Preço</Label>
-                            <Input
-                              id="price"
-                              type="number"
-                              value={price}
-                              onChange={(e) => setPrice(e.target.value)}
-                            />
-                          </div>
-                          <div className="flex flex-col gap-1">
-                            <Label htmlFor="type">Tipo</Label>
-                            <Select value={type} onValueChange={setType}>
-                              <SelectTrigger id="type">
-                                <SelectValue placeholder="Selecione o tipo" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="cortes">Cortes</SelectItem>
-                                <SelectItem value="barba">Barba</SelectItem>
-                                <SelectItem value="especiais">Especiais</SelectItem>
-                              </SelectContent>
-                            </Select>
-                          </div>
-                          <div className="flex flex-col gap-1">
-                            <Label htmlFor="extra">Serviço Extra</Label>
-                            <Select value={extra} onValueChange={setExtra}>
-                              <SelectTrigger id="extra">
-                                <SelectValue placeholder="Selecione um extra (opcional)" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                {mockExtras.map((item) => (
-                                  <SelectItem key={item.id} value={String(item.id)}>
-                                    {item.name}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                          </div>
-                          <DialogFooter>
-                            <Button type="submit" className="w-full">
-                              Salvar Alterações
-                            </Button>
-                          </DialogFooter>
-                        </form>
-                      </DialogContent>
-                    </Dialog>
-                    <Button
-                      size="sm"
-                      variant="destructive"
-                      onClick={() => handleDelete(service.id)}
-                    >
-                      Remover
-                    </Button>
+                    <Button size="sm" variant="outline" onClick={() => handleEdit(service)}>Editar</Button>
+                    <Button size="sm" variant="destructive" onClick={() => handleDelete(service.id)}>Remover</Button>
                   </TableCell>
                 </TableRow>
               ))}
